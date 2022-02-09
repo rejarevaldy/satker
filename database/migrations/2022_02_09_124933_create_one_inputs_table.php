@@ -15,6 +15,7 @@ class CreateOneInputsTable extends Migration
     {
         Schema::create('one_inputs', function (Blueprint $table) {
             $table->id();
+            $table->integer('created_by');
             $table->string('digit');
             $table->string('kd_kro');
             $table->string('kd_ro');
