@@ -8,8 +8,8 @@ foreach ($datas as $data) {
     $dataNama = $data->nama;
     $btnDetail =
         '<a href=' .
-        '/asdf/' .
-        '><button class="btn btn-xs btn-info mx-1 shadow-sm" title="Detail">
+        route('laporan.show', $data) .
+        '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
                 <i class="fa fa-fw fa-info"></i> Detail
             </button> </a>';
 
@@ -46,7 +46,7 @@ $config = [
                     <div class="p-2 rounded bg-white">
                         <div class="row">
                             <div class="col-sm">
-                                <a href="" class="text-white text-decoration-none">
+                                <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
                                     <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i class="fas fa-plus"></i>
                                         <div class="d-none d-sm-inline  p-3">Tambah
                                     </button>
@@ -65,10 +65,6 @@ $config = [
 
                 <div class="row">
                     <div class="col-12">
-                        {{-- <div class="p-4 mb-4 border rounded shadow-sm bg-light">
-                            <x-adminlte-datatable id="table" :heads="$heads" head-theme="white" :config="$config" striped
-                                hoverable bordered />
-                        </div> --}}
                         <x-adminlte-card title="Daftar Ruangan" theme="success" theme-mode="outline">
                             <x-adminlte-datatable id="table" :heads="$heads" head-theme="white" :config="$config" striped
                                 hoverable bordered />
