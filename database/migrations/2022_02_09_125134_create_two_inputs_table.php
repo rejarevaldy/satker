@@ -15,7 +15,7 @@ class CreateTwoInputsTable extends Migration
     {
         Schema::create('two_inputs', function (Blueprint $table) {
             $table->id();
-            $table->integer('created_by');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('one_input_id')->onDelete('cascade')->nullable();
             $table->integer('volume_capaian')->nullable();
             $table->string('uraian')->nullable()->default(null);
