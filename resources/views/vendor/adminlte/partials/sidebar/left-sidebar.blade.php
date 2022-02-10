@@ -20,6 +20,16 @@
                 @endif>
                 {{-- Configured sidebar links --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
+
+                <li  class="nav-item">
+                  <form action="/logout/" method="POST">
+                      @csrf
+                      <button type="submit" class="btn btn-sm btn-danger nav-link text-white" href="/logout/" >
+                          <i class="fas fa-fw fa-sign-out-alt "></i>
+                          Keluar
+                      </button>
+                  </form>
+              </li>
             </ul>
         </nav>
     </div>
