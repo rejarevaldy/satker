@@ -235,13 +235,13 @@ return [
             // Sidebar items:
             [
                   'text'        => ' Beranda',
-                  'url'         => 'admin/pages',
+                  'url'         => '/beranda',
                   'icon'        => 'fa fa-tachometer-alt',
             ],
             ['header' => 'Menu Utama'],
             [
                   'text' => 'Laporan',
-                  'url'  => '',
+                  'url'  => '/laporan',
                   'icon' => ' fa fa-th',
             ],
             [
@@ -297,21 +297,21 @@ return [
 
       'plugins' => [
             'Datatables' => [
-                  'active' => false,
+                  'active' => true,
                   'files' => [
                         [
                               'type' => 'js',
-                              'asset' => false,
+                              'asset' => true,
                               'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                         ],
                         [
                               'type' => 'js',
-                              'asset' => false,
+                              'asset' => true,
                               'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                         ],
                         [
                               'type' => 'css',
-                              'asset' => false,
+                              'asset' => true,
                               'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                         ],
                   ],
