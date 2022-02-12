@@ -11,16 +11,16 @@
     @php( $register_url = $register_url ? url($register_url) : '' )
 @endif
 
-@section('auth_header', __('adminlte::adminlte.register_message'))
+@section('auth_header', 'Registrasi')
 
 @section('auth_body')
-    <form action="{{ $register_url }}" method="post">
+    <form action="{{ $register_url }}" method="post" enctype="multipart/form-data">
         @csrf
 
         {{-- Name field --}}
         <div class="input-group mb-3">
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                   value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
+                   value="{{ old('nama') }}" placeholder="Nama" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -28,7 +28,24 @@
                 </div>
             </div>
 
-            @error('name')
+            @error('nama')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        
+        <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                   value="{{ old('username') }}" placeholder="Username" autofocus>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+
+            @error('username')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -47,6 +64,23 @@
             </div>
 
             @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        
+        <div class="input-group mb-3">
+            <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
+                   value="{{ old('nip') }}" placeholder="NIP">
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-phone"></span>
+                </div>
+            </div>
+
+            @error('nip')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -72,18 +106,70 @@
         </div>
 
         {{-- Confirm password field --}}
+        
         <div class="input-group mb-3">
-            <input type="password" name="password_confirmation"
-                   class="form-control @error('password_confirmation') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+            <input type="number" name="nomor_telepon"
+                   class="form-control @error('nomor_telepon') is-invalid @enderror"
+                   placeholder="No Telp">
 
             <div class="input-group-append">
                 <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                    <span class="fas fa-phone"></span>
                 </div>
             </div>
 
-            @error('password_confirmation')
+            @error('nomor_telepon')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        
+        <div class="input-group mb-3">
+            <select class="form-control" name="gender">
+                <option selected disabled>Jenis Kelamin</option>
+                <option value="Pria">Pria</option>
+                <option value="Wanita">Wanita</option>
+            </select>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-venus-mars"></span>
+                </div>
+            </div>
+
+            @error('gender')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        
+        <div class="input-group mb-3">
+            <select class="form-control" name="role">
+                <option selected disabled>Role</option>
+                <option value="Monitoring">Monitoring</option>
+                <option value="Satker">Satker</option>
+            </select>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-pencil-ruler"></span>
+                </div>
+            </div>
+
+            @error('role')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        
+        <div class="input-group">
+            {{-- <input type="file" name="user_profile" class="form-control-file"> --}}
+            <x-adminlte-input-file name="user_profile" placeholder="Poto Profil" />
+
+            @error('user_profile')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -102,7 +188,7 @@
 @section('auth_footer')
     <p class="my-0">
         <a href="{{ $login_url }}">
-            {{ __('adminlte::adminlte.i_already_have_a_membership') }}
+            I already have an account
         </a>
     </p>
 @stop
