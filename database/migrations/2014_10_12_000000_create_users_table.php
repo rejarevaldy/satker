@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('user_profile')->default('user.png');
             $table->string('nip');
             $table->string('nomor_telepon')->nullable();
-            $table->enum('gender', ['Pria', 'Perempuan']);
+            $table->enum('gender', ['Pria', 'Wanita']);
             $table->enum('role' , ['Monitoring', 'Satker']);
             $table->string('password');
             $table->softDeletesTz($column = 'deleted_at', $precision = 0);
