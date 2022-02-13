@@ -18,11 +18,11 @@ class InputController extends Controller
 
       public function index()
       {
-            $bidang = Auth::user()->bidang;
+            $role = Auth::user()->role;
             $user_id = Auth::user()->id;
 
 
-            if ($bidang == 'Monitoring') {
+            if ($role == 'Monitoring') {
                   $datas = OneInput::whereYear('created_at', '=', session('year'))->get();
             } else {
                   $datas = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();

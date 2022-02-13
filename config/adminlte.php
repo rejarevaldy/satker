@@ -251,7 +251,7 @@ return [
             ],
             [
                   'text' => 'Rekap',
-                  'url'  => '',
+                  'url'  => '/rekap',
                   'icon' => 'fa fa-th',
             ],        [
                   'text' => 'Pengguna',

@@ -30,7 +30,7 @@ $config = [
 
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Laporan')
 
 @section('content_header')
 
