@@ -255,7 +255,7 @@ return [
                   'icon' => 'fa fa-th',
             ],
             [
-                  'text' => 'Pengguna',
+                  'text' => 'Profil',
                   'url'  => '/profil',
                   'icon' => 'fa fa-user',
             ],
