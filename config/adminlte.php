@@ -251,12 +251,18 @@ return [
             ],
             [
                   'text' => 'Rekap',
-                  'url'  => '',
+                  'url'  => '/rekap',
                   'icon' => 'fa fa-th',
-            ],        [
+            ],
+            [
                   'text' => 'Pengguna',
-                  'url'  => '',
+                  'url'  => '/profil',
                   'icon' => 'fa fa-user',
+            ],
+            [
+                  'text' => 'Daftar Pengguna',
+                  'url'  => '/users',
+                  'icon' => 'fa fa-users',
             ],
 
       ],
