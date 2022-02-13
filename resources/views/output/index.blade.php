@@ -184,6 +184,15 @@
             {{-- endcard --}}
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <x-adminlte-card title="Chart Pie" theme="purple" icon="fas fa-chart-pie" removable collapsible>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </x-adminlte-card>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -191,7 +200,25 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow'],
+            datasets: [{
+                label: '# of Votes',
+                data: [300, 50, 100],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4,
+            }]
+        }
+    });
         console.log('Hi!');
     </script>
 @stop
