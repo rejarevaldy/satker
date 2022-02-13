@@ -43,15 +43,21 @@ Route::post('/register', [UserController::class, 'store'])->name('register.post'
 Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete'); // not yet
 
 // Input
-Route::get('/laporan', [InputController::class, 'index'])->name('laporan');
-Route::get('/laporan/tambah', [InputController::class, 'create'])->name('laporan.create');
-Route::post('/laporan/tambah', [InputController::class, 'store'])->name('laporan.store');
-Route::get('/laporan/{oneinput}', [InputController::class, 'show'])->name('laporan.show');
-Route::get('/laporan/{oneinput}/sunting', [InputController::class, 'edit'])->name('laporan.edit');
-Route::put('/laporan/{oneinput}/sunting', [InputController::class, 'update'])->name('laporan.update');
-Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])->name('laporan.destroy');
+    // Laporan
+    Route::get('/laporan', [InputController::class, 'index'])->name('laporan');
+    Route::get('/laporan/tambah', [InputController::class, 'create'])->name('laporan.create');
+    Route::post('/laporan/tambah', [InputController::class, 'store'])->name('laporan.store');
+    Route::get('/laporan/{oneinput}', [InputController::class, 'show'])->name('laporan.show');
+    Route::get('/laporan/{oneinput}/sunting', [InputController::class, 'edit'])->name('laporan.edit');
+    Route::put('/laporan/{oneinput}/sunting', [InputController::class, 'update'])->name('laporan.update');
+    Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])->name('laporan.destroy');
+    // Dokumen
+    Route::get('/dokumen', [InputController::class, 'index_dokumen'])->name('dokumen');
+    Route::delete('/dokumen/destroy/{twoinput:id}', [InputController::class, 'destroy_dokumen'])->name('destroy.dokumen');
+    Route::post('/dokumen/store', [InputController::class, 'store_dokumen'])->name('store.dokumen');
+    Route::post('/dokumen/edit/{twoinput:id}', [InputController::class, 'edit_dokumen'])->name('edit.dokumen');
 
-// Output 
+// Output
 Route::get('/beranda', [OutputController::class, 'index'])->name('dashboard');
 Route::get('/rekap', [OutputController::class, 'rekap'])->name('rekap');
 

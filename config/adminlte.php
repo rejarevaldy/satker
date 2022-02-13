@@ -246,7 +246,7 @@ return [
             ],
             [
                   'text' => 'Dokumen',
-                  'url'  => '',
+                  'route' => 'dokumen',
                   'icon' => 'fa fa-th',
             ],
             [
@@ -263,7 +263,7 @@ return [
                   'text' => 'Daftar Pengguna',
                   'url'  => '/users',
                   'icon' => 'fa fa-users',
-            ],     
+            ],
 
       ],
 

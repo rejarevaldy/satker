@@ -7,6 +7,7 @@ use App\Models\TwoInput;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class InputController extends Controller
 {
@@ -28,7 +29,7 @@ class InputController extends Controller
                   $datas = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
             }
 
-            $oneinputs = OneInput::whereYear('created_at', session('tahun'))->get();
+            $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
             foreach ($oneinputs as $oneinput) {
                   $id = $oneinput->id;
 
@@ -166,4 +167,141 @@ class InputController extends Controller
             $oneinput->delete();
             return redirect('/laporan');
       }
+
+        // Dokumen
+
+        public function index_dokumen()
+        {
+        // Sum Volume capaian
+        $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
+        foreach ($oneinputs as $oneinput) {
+            $id = $oneinput->id;
+
+            $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
+            $oneinput = OneInput::find($id);
+            $sum = array_sum($input);
+
+            $oneinput->volume_jumlah = $sum;
+            $oneinput->update();
+        }
+
+        $role = Auth::user()->role;
+        $user_id = Auth::user()->id;
+
+        if ($role === 'Monitoring') {
+            $selection = OneInput::whereYear('created_at', session('year'))->get();
+            $datas2 = TwoInput::whereYear('tanggal', session('year'))->join('one_inputs', 'two_inputs.one_input_id', 'one_inputs.id')
+                ->select(
+                    'two_inputs.id',
+                    'two_inputs.volume_capaian',
+                    'two_inputs.uraian',
+                    'two_inputs.nomor_dokumen',
+                    'two_inputs.tanggal',
+                    'two_inputs.one_input_id',
+                    'two_inputs.file',
+                    'one_inputs.bidang',
+                    'one_inputs.nama_ro',
+                )
+                ->get();
+        } else {
+            $selection = OneInput::whereYear('created_at', session('year'))->where('id', $user_id)->get();
+            $datas2 = TwoInput::whereYear('tanggal', session('year'))->join('one_inputs', 'two_inputs.one_input_id', 'one_inputs.id')
+                ->select(
+                    'two_inputs.id',
+                    'two_inputs.volume_capaian',
+                    'two_inputs.uraian',
+                    'two_inputs.nomor_dokumen',
+                    'two_inputs.tanggal',
+                    'two_inputs.one_input_id',
+                    'two_inputs.file',
+                    'one_inputs.bidang',
+                    'one_inputs.nama_ro',
+                )
+                ->where('one_inputs.user_id', $user_id)
+                ->get();
+        }
+
+        return view('input.dokumen', [
+            'datas' => $selection,
+            'datas2' => $datas2,
+            'selection' => $selection,
+            'title' => 'Dokumen',
+        ]);
+    }
+
+    public function store_dokumen(Request $request)
+    {
+
+        $input2 = new TwoInput();
+        $id = $request->naro;
+        $data1 = OneInput::where('id', $id)->value('satuan');
+        $month = (int)date('m');
+        $m1 = array(
+            'Kegiatan', 'Dokumen', 'Pegawai', 'Rekomendasi', 'ISO',
+            'Satker', 'Laporan', 'KPPN'
+        );
+
+        if (in_array($data1, $m1)) {
+            $input2->volume_capaian = 1;
+        } else {
+            $input2->volume_capaian = $month;
+        }
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path('files'), $fileName);
+            $input2->file = $fileName;
+        } else {
+            $input2->file = '';
+        }
+
+        $input2->uraian = $request->uraian;
+        $input2->nomor_dokumen = $request->nodok;
+        $input2->tanggal = $request->tanggal;
+        $input2->one_input_id = $request->naro;
+        $input2->save();
+
+        return redirect()->back()->with('status', 'Data berhasil dimasukkan!');
+    }
+
+    public function edit_dokumen(Request $request, $id)
+    {
+        $bidang = Auth::user()->bidang;
+        $input = TwoInput::find($id);
+
+        if ($bidang == 'Admin') {
+            $input->volume_capaian = $request->volcap;
+        } else {
+            $input->uraian = $request->uraian;
+            $input->nomor_dokumen = $request->nodok;
+            $input->tanggal = $request->tanggal;
+            $input->one_input_id = $request->naro;
+        }
+
+        if ($request->hasFile('file')) {
+            if ($input->file) {
+                File::delete(public_path('/files/' . $input->file));
+            }
+            $file = $request->file('file');
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path('files'), $fileName);
+            $input->file = $fileName;
+            $input->update();
+        } else {
+            $input->file = $input->file;
+            $input->update();
+        }
+
+
+        return back()->withInput()->with('status', 'Dokumen berhasil diperbarui!');
+    }
+
+    public function destroy_dokumen($id)
+    {
+        $data = TwoInput::find($id);
+        $data->delete();
+
+        return back()->withInput();
+    }
 }
