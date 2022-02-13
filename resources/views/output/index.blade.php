@@ -184,6 +184,20 @@
             {{-- endcard --}}
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <x-adminlte-card title="Chart Bar Anggaran" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                    <canvas id="myChart" height="200"></canvas>
+                </x-adminlte-card>
+            </div>
+            <div class="col-md-6">
+                <x-adminlte-card title="Chart Bar Output" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                    <canvas id="myChart2" height="200"></canvas>
+                </x-adminlte-card>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -191,7 +205,87 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        console.log('Hi!');
+
+    const dataGroup = {
+            labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
+            datasets: [{
+                    label: 'REALISASI',
+                    data: [34378600, 0, 0, 0, 0],
+                    backgroundColor: ['rgb(255, 99, 132)'],
+                    stack: 'Stack 0',
+                    yAxisID: 'percentage'
+                },
+                {
+                    label: 'PAGU',
+                    data: [38000000, 1000000, 0, 0, 0],
+                    backgroundColor: ['rgb(54, 162, 235)'],
+                    stack: 'Stack 1',
+                    yAxisID: 'percentage'
+                },
+                {
+                    label: 'SISA',
+                    data: [3621400, 1000000, 0, 0, 0],
+                    backgroundColor: ['rgb(255, 205, 86)'],
+                    stack: 'Stack 2',
+                    yAxisID: 'currency'
+                },
+            ]
+        };
+
+        const configGroup = {
+            type: 'bar',
+            data: dataGroup,
+            options: {
+                plugins: {
+                    title: {
+                        display: true
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true
+                    },
+                    currency: {
+                        type: 'linear',
+                        position: 'left',
+                        min: 0,
+                        max: 76000000,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    percentage: {
+                        type: 'linear',
+                        position: 'right',
+                        min: 0,
+                        max: 76000000,
+                        grid: {
+                            display: false
+                        }
+                    },
+                }
+            }
+        };
+
+        const chartBarAnggaran = new Chart(
+            document.getElementById('myChart'),
+            configGroup
+        )
+        
+        const chartBarOutput = new Chart(
+            document.getElementById('myChart2'),
+            configGroup
+        )
+
     </script>
 @stop
