@@ -33,10 +33,10 @@ class OutputController extends Controller
             $role = Auth::user()->role;
 
             if ($role == 'Monitoring') {
-                  $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
+                  $oneinputs =  OneInput::whereYear('created_at', '=', session('year'));
             } else {
                   $user_id = Auth::user()->id;
-                  $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
+                  $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id);
             }
 
             // Sum Volume capaian
@@ -53,7 +53,7 @@ class OutputController extends Controller
 
             ##### UMUM Section
             // GET Bidang
-            $dataUMUM = OneInput::whereYear('created_at', session('year'))->where('bidang', 'Umum')->get();
+            $dataUMUM = $oneinputs->where('bidang', 'Umum')->get();
 
             // Chart Anggaran
             $allPaguUmum = [];
@@ -104,7 +104,7 @@ class OutputController extends Controller
 
             ##### PPAI Section
             // GET Bidang
-            $dataPPAI = OneInput::whereYear('created_at', session('year'))->where('bidang', 'PPA I')->get();
+            $dataPPAI =  $oneinputs->where('bidang', 'PPA I')->get();
 
             // Anggaran
             $allPaguPPAI = [];
@@ -156,7 +156,7 @@ class OutputController extends Controller
 
             ##### PPA II Section
             // GET Bidang
-            $dataPPAII = OneInput::whereYear('created_at', session('year'))->where('bidang', 'PPA II')->get();
+            $dataPPAII = $oneinputs->where('bidang', 'PPA II')->get();
 
             // Anggaran
             $allPaguPPAII = [];
@@ -207,7 +207,7 @@ class OutputController extends Controller
 
             ##### PAPK Section
             // GET Bidang
-            $dataPAPK = OneInput::whereYear('created_at', session('year'))->where('bidang', 'PAPK')->get();
+            $dataPAPK =  $oneinputs->where('bidang', 'PAPK')->get();
 
             // Anggaran
             $allPaguPAPK = [];
@@ -258,7 +258,7 @@ class OutputController extends Controller
 
             ##### SKKI Section
             // GET Bidang
-            $dataSKKI = OneInput::whereYear('created_at', session('year'))->where('bidang', 'SKKI')->get();
+            $dataSKKI =  $oneinputs->where('bidang', 'SKKI')->get();
 
             // Anggaran
             $allPaguSKKI = [];
