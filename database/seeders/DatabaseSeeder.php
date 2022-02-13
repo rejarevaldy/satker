@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Urk;
+use App\Models\User;
 use App\Models\Panduan;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,28 @@ class DatabaseSeeder extends Seeder
        */
       public function run()
       {
+            User::create(
+                [
+                    'nama' => 'monitor',
+                    'username' => 'monitor',
+                    'password' => bcrypt('monitor'),
+                    'nip' => '12344567890',
+                    'gender' => 'Pria',
+                    'role' => 'Monitoring',
+                ]
+            );
+
+            User::create(
+                [
+                    'nama' => 'satker',
+                    'username' => 'satker',
+                    'password' => bcrypt('satker'),
+                    'nip' => '12344567890',
+                    'gender' => 'Wanita',
+                    'role' => 'Satker',
+                ]
+            );
+
             Panduan::create(
                   [
                         'nama' => 'Cara Input Data',
