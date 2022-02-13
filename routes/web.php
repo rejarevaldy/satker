@@ -21,7 +21,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('auth');
 
 // Auth
 Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -53,6 +53,7 @@ Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])-
 
 // Output 
 Route::get('/beranda', [OutputController::class, 'index'])->name('dashboard');
+Route::get('/rekap', [OutputController::class, 'rekap'])->name('rekap');
 
 // Panduan & URK
 Route::put('/unggah/panduan/{panduan:id}', [PanduanController::class, 'update_panduan'])->name('panduan.update');
