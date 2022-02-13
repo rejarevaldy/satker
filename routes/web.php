@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\OutputController;
 use App\Http\Controllers\PanduanController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,13 +35,13 @@ Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit')
 Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update'); 
 
 // User
-Route::get('/users', [UserController::class, 'list'])->name('users.list'); // not yet
+Route::get('/users', [UserController::class, 'list'])->name('users.list'); 
 Route::get('/users/{user:username}', [UserController::class, 'userdetail'])->name('users.list.detail'); 
 Route::get('/users/{user:username}/edit', [UserController::class, 'useredit'])->name('users.edit'); 
 Route::put('/users/{user:username}/edit', [UserController::class, 'update'])->name('users.update'); 
-Route::get('/register', [UserController::class, 'reg'])->name('register'); 
-Route::post('/register', [UserController::class, 'store'])->name('register.post'); 
-Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete'); // not yet
+Route::get('/users/create', [RegisterController::class, 'reg'])->name('users.create'); 
+Route::post('/users/create', [RegisterController::class, 'store'])->name('users.post'); 
+Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete'); 
 
 // Input
 Route::get('/laporan', [InputController::class, 'index'])->name('laporan');

@@ -19,6 +19,14 @@ class OutputController extends Controller
 
       public function index()
       {
+            $role = Auth::user()->role;
+
+            if ($role == 'Monitoring') {
+                  $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
+            } else {
+                  $user_id = Auth::user()->id;
+                  $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
+            }
             $urks = Urk::all();
             $panduans = Panduan::all();
 
