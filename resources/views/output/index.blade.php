@@ -209,17 +209,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
 
+    const anggaranRealisasi = 0;
+
     const dataGroup = {
             labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
             datasets: [{
-                    label: 'REALISASI',
+                    label: 'PAGU',
                     data: [34378600, 0, 0, 0, 0],
                     backgroundColor: ['rgb(255, 99, 132)'],
                     stack: 'Stack 0',
                     yAxisID: 'percentage'
                 },
                 {
-                    label: 'PAGU',
+                    label: 'REALISASI',
                     data: [38000000, 1000000, 0, 0, 0],
                     backgroundColor: ['rgb(54, 162, 235)'],
                     stack: 'Stack 1',

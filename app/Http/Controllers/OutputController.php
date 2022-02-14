@@ -27,6 +27,11 @@ class OutputController extends Controller
                   $user_id = Auth::user()->id;
                   $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
             }
+
+            foreach ($oneinputs as $key => $item) {
+                  $item->bidang == "Umum" ?  : ''; 
+            }
+
             $urks = Urk::all();
             $panduans = Panduan::all();
 
