@@ -235,7 +235,7 @@ return [
             // Sidebar items:
             [
                   'text'        => ' Beranda',
-                  'url'         => '/beranda',
+                  'url'         => '/',
                   'icon'        => 'fa fa-tachometer-alt',
             ],
             ['header' => 'Menu Utama'],
