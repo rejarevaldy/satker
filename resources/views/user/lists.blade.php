@@ -67,7 +67,7 @@
     <div class="row">
         <div class="col-md">
             <div class="p-4 my-4 border rounded shadow-sm bg-white">
-                <h2 class="mb-2">Daftar Pengguna</h2>
+                <h2 class="mb-2">Daftar Rekap</h2>
                 <div class="p-2 rounded bg-white">
                     <div class="row">
                         <div class="col-sm">

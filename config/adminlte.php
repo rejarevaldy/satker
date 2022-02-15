@@ -249,21 +249,7 @@ return [
                   'route' => 'dokumen',
                   'icon' => 'fa fa-th',
             ],
-            [
-                  'text' => 'Rekap',
-                  'url'  => '/rekap',
-                  'icon' => 'fa fa-th',
-            ],
-            [
-                  'text' => 'Profil',
-                  'url'  => '/profil',
-                  'icon' => 'fa fa-user',
-            ],
-            [
-                  'text' => 'Daftar Pengguna',
-                  'url'  => '/users',
-                  'icon' => 'fa fa-users',
-            ],
+
 
       ],
 

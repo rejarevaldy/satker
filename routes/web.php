@@ -20,10 +20,6 @@ use App\Http\Controllers\Auth\LogoutController;
 |
 */
 
-Route::get('/', function () {
-      return view('welcome');
-})->middleware('auth');
-
 // Auth
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
@@ -59,8 +55,9 @@ Route::post('/dokumen/store', [InputController::class, 'store_dokumen'])->name('
 Route::post('/dokumen/edit/{twoinput:id}', [InputController::class, 'edit_dokumen'])->name('edit.dokumen');
 
 // Output
-Route::get('/beranda', [OutputController::class, 'index'])->name('dashboard');
-Route::get('/rekap', [OutputController::class, 'rekap'])->name('rekap');
+Route::get('/', [OutputController::class, 'index'])->name('dashboard');
+Route::get('/list', [OutputController::class, 'list'])->name('list');
+Route::get('/rekap/{user:id}', [OutputController::class, 'rekap'])->name('rekap');
 
 // Panduan & URK
 Route::put('/unggah/panduan/{panduan:id}', [PanduanController::class, 'update_panduan'])->name('panduan.update');
