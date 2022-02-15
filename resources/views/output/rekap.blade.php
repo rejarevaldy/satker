@@ -11,12 +11,19 @@
         <div class="row">
             <div class="col-12">
                 <div class="p-4 mb-4 border rounded shadow-sm bg-white">
-                    <h2 class="mb-2"> Monitoring Realisasi Dan Capaian Output Tahun 2022
-                        [{{ Auth()->user()->nama }}]
+                    <h2 class="mb-2"> Monitoring Realisasi Dan Capaian Output Tahun {{ session('year') }}
+                        [{{ $user->nama }}]
                     </h2>
                     <div class="p-2 rounded bg-white">
                         <div class="row">
                             <div class="col-sm">
+                                <a class="text-secondary text-secondary-hover d-none d-sm-inline text-decoration-none"
+                                    href="{{ route('list') }}">
+                                    <button type="button" class="px-4 py-2 btn btn-secondary fw-bold btn-sm"><i
+                                            class="fas fa-caret-square-left"></i>
+                                        Kembali
+                                    </button>
+                                </a>
                                 <a href="" class="text-white text-decoration-none">
                                     <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
                                             class="far fa-file-excel"></i>

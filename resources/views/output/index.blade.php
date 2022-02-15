@@ -19,11 +19,15 @@
                             <a href="{{ asset('files/panduan') . '/' . $panduan->file }}" class="btn btn-primary btn-sm"
                                 target="_blank" download>
                                 <i class="fas fa-download me-1"></i>
-                                Unduh @if ($panduan->nama != 'Usulan Rencana Kerja') PDF @else Excel @endif </a>
+                                Unduh @if ($panduan->nama != 'Usulan Rencana Kerja')
+                                PDF @else Excel
+                                @endif </a>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                                 data-target="#editPanduan_{{ $panduan->id }}"><i class="fas fa-upload me-1"></i>
-                                Unggah @if ($panduan->nama != 'Usulan Rencana Kerja') PDF @else Excel @endif </button>
+                                Unggah @if ($panduan->nama != 'Usulan Rencana Kerja')
+                                PDF @else Excel
+                                @endif </button>
                             @if ($panduan->nama == 'Usulan Rencana Kerja')
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#URK"><i class="fas fa-list "></i>
@@ -51,7 +55,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="card-body">
-                                                            <a href="{{ asset('files/urk').'/'.$urk->file }}"
+                                                            <a href="{{ asset('files/urk') . '/' . $urk->file }}"
                                                                 class="btn btn-primary btn-sm" target="_blank" download>
                                                                 <i class="fas fa-download me-1"></i>
                                                                 Unduh Excel
@@ -127,7 +131,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             @endif
                             {{-- Modal Bidang Edit End --}}
 
@@ -206,12 +209,13 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        const anggaranRealisasi = 0;
 
-    const anggaranRealisasi = 0;
-
-    const dataGroup = {
+        const dataGroup = {
             labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
             datasets: [{
                     label: 'PAGU',
@@ -283,11 +287,10 @@
             document.getElementById('myChart'),
             configGroup
         )
-        
+
         const chartBarOutput = new Chart(
             document.getElementById('myChart2'),
             configGroup
         )
-
     </script>
 @stop
