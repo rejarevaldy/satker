@@ -3,20 +3,26 @@ $heads = [['label' => 'No', 'width' => 1], ['label' => 'Nama RO', 'width' => 30]
 $query = [];
 $loop = 1;
 // @dd($datas);
+
+
 foreach ($datas2 as $data2) {
+    $serekshon = [];
 
     foreach ($selection as $select) {
-        $option =
-        '<option.'
         if ($select->id == $data2->one_input_id) {
-            '.'selected'.'
+            $serekshon[] = '<option selected value="'.$select->id.'">'.$select->nama_ro.'</option>';
+        } else
+        {
+            $serekshon[] = '<option value="'.$select->id.'">'.$select->nama_ro.'</option>';
         }
-        endif
-        value="'.$select->id.'">
-        {{ $select->nama_ro }}</option.>'
     }
 
+    $serekshon = implode(' ', $serekshon);
+
+    // dd($serekshon);
+
     $tanggal = \Carbon\Carbon::parse($data2->tanggal)->format('d-m-Y');
+    $tanggal_input = \Carbon\Carbon::parse($data2->tanggal)->format('Y-m-d');
 
     $btnEdit = '<button class="btn btn-xs btn-success mx-1 shadow-sm" title="Edit" data-toggle="modal" data-target="#modalSunting_'.$data2->id.'">
                 <i class="fa fa-fw fa-pen"></i> Edit
@@ -59,7 +65,7 @@ foreach ($datas2 as $data2) {
                             <div class="mb-3 input-group">
                                 <input type="date" class="form-control" id="tanggal"
                                     name="tanggal" placeholder="Masukkan Tanggal"
-                                    value="'.$tanggal.'">
+                                    value="'.$tanggal_input.'">
                             </div>
                         </div>
                     </div>
@@ -68,7 +74,7 @@ foreach ($datas2 as $data2) {
                         <div class="mb-3 input-group">
                             <select type="select" class="form-control" id="naro"
                                 name="naro" required>
-                                .''.
+                                '.$serekshon.'
                 </select>
             </div>
     </div>
@@ -116,12 +122,13 @@ foreach ($datas2 as $data2) {
         </div>
     </div>';
 
-    $query[] = [$loop, $data2->uraian, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $data2->file, '<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
+    $query[] = [$loop, $data2->one_input_id, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $data2->file, '<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
     echo($mdlEdit);
     echo($mdlDelete);
     // @dd($dataId);
     $loop++;
 }
+
 $config = [
     'data' => $query,
     'order' => [[0, 'asc']],

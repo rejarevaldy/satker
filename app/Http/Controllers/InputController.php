@@ -204,7 +204,7 @@ class InputController extends Controller
                 )
                 ->get();
         } else {
-            $selection = OneInput::whereYear('created_at', session('year'))->where('id', $user_id)->get();
+            $selection = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
             $datas2 = TwoInput::whereYear('tanggal', session('year'))->join('one_inputs', 'two_inputs.one_input_id', 'one_inputs.id')
                 ->select(
                     'two_inputs.id',
@@ -221,6 +221,7 @@ class InputController extends Controller
                 ->get();
         }
 
+        // dd($datas2);
         return view('input.dokumen', [
             'datas' => $selection,
             'datas2' => $datas2,
