@@ -21,6 +21,12 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
+    @if (session('status'))
+        <x-adminlte-alert class="bg-red" dismissable>
+            {{ session('status') }}
+        </x-adminlte-alert>
+    @endif
+
     <form action="{{ route('login.store') }}" method="post">
         @csrf
 

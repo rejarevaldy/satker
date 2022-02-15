@@ -8,9 +8,9 @@ use Intervention\Image\Facades\Image;
 
 class RegisterController extends Controller
 {
-    public function reg()
+    public function create()
     {
-        return view('user.registrasi');
+        return view('user.create');
     }
 
     public function store(Request $request)
