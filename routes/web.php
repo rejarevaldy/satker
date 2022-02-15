@@ -21,7 +21,7 @@ use App\Http\Controllers\Auth\LogoutController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+      return view('welcome');
 })->middleware('auth');
 
 // Auth
@@ -30,33 +30,33 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // Profil
-Route::get('/profil', [UserController::class, 'index'])->name('profil'); 
-Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit'); 
-Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update'); 
+Route::get('/profil', [UserController::class, 'index'])->name('profil');
+Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit');
+Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
 
 // User
-Route::get('/users', [UserController::class, 'list'])->name('users.list'); 
-Route::get('/users/{user:username}', [UserController::class, 'userdetail'])->name('users.list.detail'); 
-Route::get('/users/{user:username}/edit', [UserController::class, 'useredit'])->name('users.edit'); 
-Route::put('/users/{user:username}/edit', [UserController::class, 'update'])->name('users.update'); 
-Route::get('/users/tambah', [RegisterController::class, 'reg'])->name('users.create'); 
-Route::post('/users/tambah', [RegisterController::class, 'store'])->name('users.post'); 
-Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete'); 
+Route::get('/users', [UserController::class, 'list'])->name('users.list');
+Route::get('/users/{user:username}', [UserController::class, 'userdetail'])->name('users.list.detail');
+Route::get('/users/{user:username}/edit', [UserController::class, 'useredit'])->name('users.edit');
+Route::put('/users/{user:username}/edit', [UserController::class, 'update'])->name('users.update');
+Route::get('/user/tambah/',  [RegisterController::class, 'create'])->name('users.create');
+Route::post('/users/tambah/post', [RegisterController::class, 'store'])->name('users.post');
+Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete');
 
 // Input
-    // Laporan
-    Route::get('/laporan', [InputController::class, 'index'])->name('laporan');
-    Route::get('/laporan/tambah', [InputController::class, 'create'])->name('laporan.create');
-    Route::post('/laporan/tambah', [InputController::class, 'store'])->name('laporan.store');
-    Route::get('/laporan/{oneinput}', [InputController::class, 'show'])->name('laporan.show');
-    Route::get('/laporan/{oneinput}/sunting', [InputController::class, 'edit'])->name('laporan.edit');
-    Route::put('/laporan/{oneinput}/sunting', [InputController::class, 'update'])->name('laporan.update');
-    Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])->name('laporan.destroy');
-    // Dokumen
-    Route::get('/dokumen', [InputController::class, 'index_dokumen'])->name('dokumen');
-    Route::delete('/dokumen/destroy/{twoinput:id}', [InputController::class, 'destroy_dokumen'])->name('destroy.dokumen');
-    Route::post('/dokumen/store', [InputController::class, 'store_dokumen'])->name('store.dokumen');
-    Route::post('/dokumen/edit/{twoinput:id}', [InputController::class, 'edit_dokumen'])->name('edit.dokumen');
+// Laporan
+Route::get('/laporan', [InputController::class, 'index'])->name('laporan');
+Route::get('/laporan/tambah', [InputController::class, 'create'])->name('laporan.create');
+Route::post('/laporan/tambah', [InputController::class, 'store'])->name('laporan.store');
+Route::get('/laporan/{oneinput}', [InputController::class, 'show'])->name('laporan.show');
+Route::get('/laporan/{oneinput}/sunting', [InputController::class, 'edit'])->name('laporan.edit');
+Route::put('/laporan/{oneinput}/sunting', [InputController::class, 'update'])->name('laporan.update');
+Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])->name('laporan.destroy');
+// Dokumen
+Route::get('/dokumen', [InputController::class, 'index_dokumen'])->name('dokumen');
+Route::delete('/dokumen/destroy/{twoinput:id}', [InputController::class, 'destroy_dokumen'])->name('destroy.dokumen');
+Route::post('/dokumen/store', [InputController::class, 'store_dokumen'])->name('store.dokumen');
+Route::post('/dokumen/edit/{twoinput:id}', [InputController::class, 'edit_dokumen'])->name('edit.dokumen');
 
 // Output
 Route::get('/beranda', [OutputController::class, 'index'])->name('dashboard');
