@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InputController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OutputController;
 use App\Http\Controllers\PanduanController;
 use App\Http\Controllers\RegisterController;
@@ -32,15 +33,15 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // Profil
 Route::get('/profil', [UserController::class, 'index'])->name('profil');
 Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit');
-Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
+      Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
 
 // User
 Route::get('/users', [UserController::class, 'list'])->name('users.list');
 Route::get('/users/{user:username}', [UserController::class, 'userdetail'])->name('users.list.detail');
 Route::get('/users/{user:username}/edit', [UserController::class, 'useredit'])->name('users.edit');
 Route::put('/users/{user:username}/edit', [UserController::class, 'update'])->name('users.update');
-Route::get('/user/tambah/',  [RegisterController::class, 'create'])->name('users.create');
-Route::post('/users/tambah/post', [RegisterController::class, 'store'])->name('users.post');
+Route::get('/user/tambah',  [UserController::class, 'create'])->name('users.create');
+Route::post('/user/tambah/post', [UserController::class, 'daftar'])->name('users.post');
 Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete');
 
 // Input
@@ -61,6 +62,10 @@ Route::post('/dokumen/edit/{twoinput:id}', [InputController::class, 'edit_dokume
 // Output
 Route::get('/beranda', [OutputController::class, 'index'])->name('dashboard');
 Route::get('/rekap', [OutputController::class, 'rekap'])->name('rekap');
+
+      // Output Excel
+      Route::get('/rekap/excel/table', [ExportController::class, 'rekapExport'])->name('rekap.excel.table');
+      Route::get('/output/excel/table', [ExportController::class, 'exportWithView'])->name('output.excel.table');
 
 // Panduan & URK
 Route::put('/unggah/panduan/{panduan:id}', [PanduanController::class, 'update_panduan'])->name('panduan.update');

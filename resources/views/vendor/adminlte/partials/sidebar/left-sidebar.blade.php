@@ -21,6 +21,7 @@
                 {{-- Configured sidebar links --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
+                <li class="nav-item"></li>
                 <li  class="nav-item">
                   <form action="/logout/" method="POST">
                       @csrf

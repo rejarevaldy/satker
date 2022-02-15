@@ -36,7 +36,7 @@ class UserController extends Controller
             return view('user.create');
       }
 
-      public function store(Request $request)
+      public function daftar(Request $request)
       {
             $validatedData = $request->validate([
                   'nama' => 'required|max:40',
@@ -61,8 +61,8 @@ class UserController extends Controller
 
             User::create($validatedData);
 
-            // return $validatedData;
-            return redirect('/login');
+            // return $request;
+            return redirect('/user/tambah')->with('success', 'User berhasil ditambah!');
       }
 
       public function edit()
