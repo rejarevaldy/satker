@@ -336,6 +336,7 @@ class InputController extends Controller
     public function destroy_dokumen($id)
     {
         $data = TwoInput::find($id);
+        File::delete(public_path('/files/' . $data->file));
         $data->delete();
 
         return back()->withInput();

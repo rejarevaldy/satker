@@ -290,7 +290,7 @@ foreach ($datas2 as $data2) {
                                         <div class="mb-3 input-group">
                                             <select type="select" class="form-control" id="naro" name="naro" required>
                                                 @foreach ($selection as $select)
-                                                    <option @if ($select->id == $data2->one_input_id) {{ 'selected' }} @endif
+                                                    <option
                                                         value="{{ $select->id }}">
                                                         {{ $select->nama_ro }}</option>
                                                 @endforeach
@@ -303,7 +303,7 @@ foreach ($datas2 as $data2) {
                                         <label for="" class="mb-1"> Upload File
                                         </label>
                                         <div class="input-group">
-                                            <input value="{{ $data2->file }}" type="file" class="form-control"
+                                            <input value="" type="file" class="form-control"
                                                 name="file">
                                         </div>
                                     </div>
