@@ -61,6 +61,7 @@ Route::get('/list', [OutputController::class, 'list'])->name('list');
 Route::get('/rekap/{user:id}', [OutputController::class, 'rekap'])->name('rekap');
 
       // Output Excel
+      Route::get('/rekap/excel/all/table/', [ExportController::class, 'rekapAllExport'])->name('rekap.excel.table.all');
       Route::get('/rekap/excel/table/{user:id}', [ExportController::class, 'rekapExport'])->name('rekap.excel.table');
       Route::get('/output/excel/table', [ExportController::class, 'exportWithView'])->name('output.excel.table');
 

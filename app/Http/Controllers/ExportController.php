@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\OneInput;
 use App\Models\TwoInput;
 use App\Exports\InputExport;
+use App\Exports\RekapAllExport;
 use App\Exports\RekapExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -392,6 +393,14 @@ class ExportController extends Controller
 
 
         return Excel::download(new RekapExport, 'Laporan Rekap ' . session('year') . ' ' . $user->nama . '.xlsx');
+    }
+
+    public function rekapAllExport()
+    {
+        if (auth()->user()->role !== 'Monitoring') {
+            abort(403);
+        }
+        return Excel::download(new RekapAllExport, 'Laporan Semua Rekap Monitoring Tahun ' . session('year') . '.xlsx');
     }
     
     public function exportWithView()
