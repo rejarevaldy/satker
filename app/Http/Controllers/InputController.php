@@ -257,6 +257,8 @@ class InputController extends Controller
             $input2->file = '';
         }
 
+        // dd($input2);
+
         $input2->uraian = $request->uraian;
         $input2->nomor_dokumen = $request->nodok;
         $input2->tanggal = $request->tanggal;
@@ -268,14 +270,14 @@ class InputController extends Controller
 
     public function edit_dokumen(Request $request, $id)
     {
-        $bidang = Auth::user()->bidang;
         $input = TwoInput::find($id);
 
+        $input->one_input_id = $request->naro;
         $input->volume_capaian = $request->volcap;
         $input->uraian = $request->uraian;
         $input->nomor_dokumen = $request->nodok;
         $input->tanggal = $request->tanggal;
-        $input->one_input_id = $request->naro;
+        // dd($input);
 
         // if ($request->hasFile('file')) {
         //     dd($request->file);
@@ -290,20 +292,32 @@ class InputController extends Controller
         //     $input->file = $fileName;
         //     $input->update();
         // } else {
-        //     // dd($request);
+            // dd($request);
         //     $input->file = $input->file;
         //     $input->update();
         // }
 
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     $fileName = time() . '.' . $file->extension();
+        //     $file->move(public_path('files'), $fileName);
+        //     $input->file = $fileName;
+        //     dd('yes');
+        // } else {
+        //     dd($request);
+        //     $input->file = $input->file;
+        // }
         if ($request->hasFile('file')) {
+            dd('yas');
             $file = $request->file('file');
-            $fileName = time() . '.' . $file->extension();
+            $fileName = time() . '-' . $file->getClientOriginalName();
             $file->move(public_path('files'), $fileName);
             $input->file = $fileName;
         } else {
-            dd($request);
-            $input->file = $input->file;
+            dd('no');
         }
+
+        $input->update();
 
         return back()->withInput()->with('status', 'Dokumen berhasil diperbarui!');
     }

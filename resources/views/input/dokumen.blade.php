@@ -90,11 +90,18 @@ foreach ($datas2 as $data2) {
                         </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <label for="" class="mb-1"> Upload File
-                        </label>
-                        <div class="input-group">
-                            <input value="{{ $data2->file }}" type="file" class="form-control"
+                    <div class="col-md-6">
+                        <label for="volcap" class="form-label">Volume Capaian</label>
+                        <div class="mb-3 input-group">
+                            <input type="number" class="form-control" id="volcap"
+                                name="volcap" placeholder="Masukkan Volume Capaian"
+                                value="'.$data2->volume_capaian.'">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="file" class="mb-1"> Upload File</label>
+                        <div class="mb-3 input-group">
+                            <input value="'.$data2->file.'" type="file" class="form-control"
                                 name="file">
                         </div>
                     </div>
@@ -160,7 +167,13 @@ $config = [
 @stop
 
 @section('content')
+
     <div class="container-fluid pt-3">
+        @if (session('status'))
+        <x-adminlte-alert class="bg-teal mt-3" dismissable>
+            {{ session('status') }}
+        </x-adminlte-alert>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="p-4 mb-4 border rounded shadow-sm bg-white">
@@ -239,25 +252,7 @@ $config = [
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="volcap" class="form-label"><span class="text-danger">*</span> Volume
-                            Capaian</label>
-                        <div class="mb-3 input-group">
-                            <select type="select" class="form-control" id="volcap" name="volcap" required>
-                                <option value="-">-</option>
-                                <option value="Bulan Layanan">Bulan Layanan</option>
-                                <option value="Dokumen">Dokumen</option>
-                                <option value="ISO">ISO</option>
-                                <option value="Kegiatan">Kegiatan</option>
-                                <option value="KPPN">KPPN</option>
-                                <option value="Laporan">Laporan</option>
-                                <option value="Pegawai">Pegawai</option>
-                                <option value="Rekomendasi">Rekomendasi</option>
-                                <option value="Satker">Satker</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col">
                         <label for="" class="mb-1"> Upload File
                         </label>
                         <div class="input-group">
