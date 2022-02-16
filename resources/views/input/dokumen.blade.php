@@ -161,7 +161,7 @@ foreach ($datas2 as $data2) {
         $loop++;
 
 
-    if (auth()->user()->role == 'Monitor') {
+    if (auth()->user()->role == 'Monitoring') {
         $config = [
         'data' => $query,
         'order' => [[0, 'asc']],
