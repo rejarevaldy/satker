@@ -6,6 +6,13 @@ $loop = 1;
 
 
 foreach ($datas2 as $data2) {
+    if ($data2->file == NULL) {
+        $file = '<i class="text-muted">Tidak ada file</i>';
+    } else {
+        $file = '<a href="'.asset('files').'/'.$data2->file.'">'.$data2->file.'</a>';
+        // $file = '<a href="'.asset('files').'/'.$data2->file.'" class="btn btn-primary btn-xs">Unduh</a>';
+    };
+
     $serekshon = [];
 
     foreach ($selection as $select) {
@@ -44,11 +51,13 @@ foreach ($datas2 as $data2) {
                     <form action="'.route("edit.dokumen", $data2->id).'" method="POST">
                     <input type="hidden" name="_token" value="'.csrf_token().'" />
                     <div class="row">
-                        <label for="uraian" class="form-label">Uraian</label>
-                        <div class="mb-3 input-group">
-                            <input type="text" class="form-control" id="uraian"
-                                name="uraian" placeholder="Masukkan Uraian"
-                                value="'.$data2->uraian.'">
+                        <div class="col">
+                            <label for="uraian" class="form-label">Uraian</label>
+                            <div class="mb-3 input-group">
+                                <input type="text" class="form-control" id="uraian"
+                                    name="uraian" placeholder="Masukkan Uraian"
+                                    value="'.$data2->uraian.'">
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -70,22 +79,26 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
                     <div class="row">
-                        <label for="naro" class="form-label">Nama RO</label>
-                        <div class="mb-3 input-group">
-                            <select type="select" class="form-control" id="naro"
-                                name="naro" required>
-                                '.$serekshon.'
-                </select>
-            </div>
-    </div>
-    <div class="row">
-        <label for="" class="mb-1"> Upload File
-        </label>
-        <div class="input-group">
-            <input value="{{ $data2->file }}" type="file" class="form-control"
-                name="file">
-        </div>
-    </div>
+                        <div class="col">
+                            <label for="naro" class="form-label">Nama RO</label>
+                            <div class="mb-3 input-group">
+                                <select type="select" class="form-control" id="naro"
+                                    name="naro" required>
+                                    '.$serekshon.'
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="" class="mb-1"> Upload File
+                        </label>
+                        <div class="input-group">
+                            <input value="{{ $data2->file }}" type="file" class="form-control"
+                                name="file">
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                         <button type="button" class="mr-auto px-3 py-1 btn btn-secondary btn-sm"
@@ -122,7 +135,7 @@ foreach ($datas2 as $data2) {
         </div>
     </div>';
 
-    $query[] = [$loop, $data2->one_input_id, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $data2->file, '<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
+    $query[] = [$loop, $data2->oneInput->nama_ro, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file, '<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
     echo($mdlEdit);
     echo($mdlDelete);
     // @dd($dataId);
@@ -178,19 +191,21 @@ $config = [
         </div>
     </div>
 
+    <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
     <x-adminlte-modal id="tambahDokumen" title="Tambah Dokumen" v-centered>
-        <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
                 <div class="row">
-                    <label for="uraian" class="form-label"><span class="text-danger">*</span> Uraian</label>
-                    <div class="mb-3 input-group">
-                        <input type="text" class="form-control" id="uraian" name="uraian"
-                            placeholder="Masukkan uraian" required>
+                    <div class="col">
+                        <label for="uraian" class="form-label"><span class="text-danger">*</span> Uraian</label>
+                        <div class="mb-3 input-group">
+                            <input type="text" class="form-control" id="uraian" name="uraian"
+                                placeholder="Masukkan uraian" required>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6">
                         <label for="nodok" class="form-label"><span class="text-danger">*</span> Nomor
                             Dokumen</label>
                         <div class="mb-3 input-group">
@@ -198,7 +213,7 @@ $config = [
                                 placeholder="Masukkan nomor dokumen" required>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6">
                         <label for="tanggal" class="form-label"><span class="text-danger">*</span>
                             Tanggal</label>
                         <div class="mb-3 input-group">
@@ -243,16 +258,21 @@ $config = [
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <x-adminlte-input-file name="file" label="Unggah file" placeholder="Tekan tombol" disable-feedback/>
+                        <label for="" class="mb-1"> Upload File
+                        </label>
+                        <div class="input-group">
+                            <input value="{{ $data2->file }}" type="file" class="form-control"
+                                name="file">
+                        </div>
                     </div>
                 </div>
             </div>
-        </form>
-        <x-slot name="footerSlot">
-            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Kembali</button>
-            <button type="submit" class="btn btn-primary btn-sm">Tambah</button>
-        </x-slot>
-    </x-adminlte-modal>
+            <x-slot name="footerSlot">
+                <button type="button" class="btn btn-secondary btn-sm mr-auto" data-dismiss="modal">Kembali</button>
+                <button type="submit" class="btn btn-primary btn-sm">Tambah</button>
+            </x-slot>
+        </x-adminlte-modal>
+    </form>
 
 
 

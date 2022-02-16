@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class OneInput extends Model
 {
     use HasFactory;
+
+    public function TwoInput()
+    {
+        $this->hasMany(TwoInput::class, 'one_input_id');
+    }
 }

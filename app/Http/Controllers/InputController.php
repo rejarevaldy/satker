@@ -232,7 +232,7 @@ class InputController extends Controller
 
     public function store_dokumen(Request $request)
     {
-
+        // dd('e');
         $input2 = new TwoInput();
         $id = $request->naro;
         $data1 = OneInput::where('id', $id)->value('satuan');
@@ -271,29 +271,39 @@ class InputController extends Controller
         $bidang = Auth::user()->bidang;
         $input = TwoInput::find($id);
 
-        if ($bidang == 'Admin') {
-            $input->volume_capaian = $request->volcap;
-        } else {
-            $input->uraian = $request->uraian;
-            $input->nomor_dokumen = $request->nodok;
-            $input->tanggal = $request->tanggal;
-            $input->one_input_id = $request->naro;
-        }
+        $input->volume_capaian = $request->volcap;
+        $input->uraian = $request->uraian;
+        $input->nomor_dokumen = $request->nodok;
+        $input->tanggal = $request->tanggal;
+        $input->one_input_id = $request->naro;
+
+        // if ($request->hasFile('file')) {
+        //     dd($request->file);
+        //     if ($input->file) {
+        //         dd('deleted lol');
+        //         File::delete(public_path('/files/' . $input->file));
+        //     }
+        //     $file = $request->file('file');
+        //     dd($file);
+        //     $fileName = time() . '-' . $file->getClientOriginalName();
+        //     $file->move(public_path('files'), $fileName);
+        //     $input->file = $fileName;
+        //     $input->update();
+        // } else {
+        //     // dd($request);
+        //     $input->file = $input->file;
+        //     $input->update();
+        // }
 
         if ($request->hasFile('file')) {
-            if ($input->file) {
-                File::delete(public_path('/files/' . $input->file));
-            }
             $file = $request->file('file');
-            $fileName = time() . '-' . $file->getClientOriginalName();
+            $fileName = time() . '.' . $file->extension();
             $file->move(public_path('files'), $fileName);
             $input->file = $fileName;
-            $input->update();
         } else {
+            dd($request);
             $input->file = $input->file;
-            $input->update();
         }
-
 
         return back()->withInput()->with('status', 'Dokumen berhasil diperbarui!');
     }

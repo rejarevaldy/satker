@@ -3,11 +3,6 @@
 @section('title', 'Daftar Pengguna')
 
 @section('content_header')
-    <div class="container-fluid">
-        <div class="row">
-            <h1>Daftar Pengguna</h1>
-        </div>
-    </div>
 @stop
 
 @php
@@ -67,7 +62,26 @@
         'columns' => [null, null, null, ['className' => 'text-center']],
     ];
 @endphp
+
 @section('content')
+    <div class="row">
+        <div class="col-md">
+            <div class="p-4 my-4 border rounded shadow-sm bg-white">
+                <h2 class="mb-2">Daftar Rekap</h2>
+                <div class="p-2 rounded bg-white">
+                    <div class="row">
+                        <div class="col-sm">
+                            <a href="{{ route('users.create') }}" class="text-white text-decoration-none">
+                                <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i class="fas fa-plus"></i>
+                                    <div class="d-none d-sm-inline  p-3">Tambah
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @if (session('success'))
         <div class="row">
             <div class="col-md">
@@ -80,7 +94,7 @@
     <div class="row">
         <div class="col-md">
             <x-adminlte-card theme="lime" theme-mode="outline">
-                <x-adminlte-datatable id="table1" :heads="$heads" head-theme="dark" hoverable bordered>
+                <x-adminlte-datatable id="table1" :heads="$heads" hoverable bordered>
                     @foreach($config['data'] as $row)
                         <tr>
                             @foreach($row as $cell)
