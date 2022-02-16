@@ -221,7 +221,6 @@ foreach ($datas2 as $data2) {
 
 @section('content')
     <div class="container-fluid pt-3">
-        @if (empty($query))
             <div class="row">
                 <div class="col-12">
                     <div class="p-4 mb-4 border rounded shadow-sm bg-white">
@@ -455,9 +454,10 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
                     {{-- Col End --}}
+        @if (empty($query))
 
                     <x-adminlte-alert class="bg-danger mt-3">
-                        <h2 class="text-white text-center">Data Kosong!</h2>
+                        <h5 class="text-white text-center">Belum ada data</h5>
                     </x-adminlte-alert>
 
                     <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">

@@ -227,7 +227,7 @@ foreach ($datas2 as $data2) {
             </x-adminlte-alert>
         @endif
 
-        @if (empty($query))
+
             <div class="row">
                 <div class="col-12">
                     <div class="p-4 mb-4 border rounded shadow-sm bg-white">
@@ -247,6 +247,7 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
                     {{-- Col End --}}
+                    @if (empty($query))
                     <x-adminlte-alert class="bg-danger mt-3">
                         <h2 class="text-white text-center">Data Kosong!</h2>
                     </x-adminlte-alert>
@@ -290,7 +291,7 @@ foreach ($datas2 as $data2) {
                                         <div class="mb-3 input-group">
                                             <select type="select" class="form-control" id="naro" name="naro" required>
                                                 @foreach ($selection as $select)
-                                                    <option @if ($select->id == $data2->one_input_id) {{ 'selected' }} @endif
+                                                    <option
                                                         value="{{ $select->id }}">
                                                         {{ $select->nama_ro }}</option>
                                                 @endforeach
@@ -303,7 +304,7 @@ foreach ($datas2 as $data2) {
                                         <label for="" class="mb-1"> Upload File
                                         </label>
                                         <div class="input-group">
-                                            <input value="{{ $data2->file }}" type="file" class="form-control"
+                                            <input value="" type="file" class="form-control"
                                                 name="file">
                                         </div>
                                     </div>

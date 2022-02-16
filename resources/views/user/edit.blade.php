@@ -5,7 +5,11 @@
 @section('content_header')
     <div class="container-fluid">
         <div class="row">
-            <h1>Edit {{ $data->nama }}</h1>
+            @if (strpos(url()->current(), '/profil/edit'))
+            <h1>Profil</h1>
+            @else
+            <h1>Pengguna</h1>
+            @endif
         </div>
     </div>
 @stop
@@ -22,7 +26,7 @@
     @endif
     <div class="row">
         <div class="col-md">
-            <x-adminlte-card theme="lime" theme-mode="outline">
+            <x-adminlte-card theme="success" theme-mode="outline" title='Edit Pengguna "{{ $data->nama }}"'>
             @if (strpos(url()->current(), '/profil/edit'))
                 <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="hidden" value="profil">
@@ -56,9 +60,9 @@
                         <select name="gender" class="form-control">
                             @foreach ($kelamin as $item)
                                 @if (old('gender', $data->gender) == $item)
-                                    <option value="{{ $data->gender }}" selected>{{ $data->gender }}</option>    
+                                    <option value="{{ $data->gender }}" selected>{{ $data->gender }}</option>
                                 @else
-                                    <option value="{{ $item }}">{{ $item }}</option>    
+                                    <option value="{{ $item }}">{{ $item }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -68,9 +72,9 @@
                         <select name="role" class="form-control">
                             @foreach ($pekerjaan as $item)
                                 @if (old('role', $data->role) == $item)
-                                    <option value="{{ $data->role }}" selected>{{ $data->role }}</option>    
+                                    <option value="{{ $data->role }}" selected>{{ $data->role }}</option>
                                 @else
-                                    <option value="{{ $item }}">{{ $item }}</option>    
+                                    <option value="{{ $item }}">{{ $item }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -83,11 +87,24 @@
                 <div class="row">
                     <div class="col-md">
                         @if (strpos(url()->current(), '/profil/edit'))
-                            <a href="{{ route('profil') }}" class="btn btn-dark">Kembali</a>
+                            <a href="{{ route('profil') }}">
+                                <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
+                                    class="fas fa-caret-square-left"></i>
+                                Kembali
+                            </button>
+                            </a>
                         @else
-                            <a href="{{ route('users.list.detail', $data->username) }}" class="btn btn-dark">Kembali</a>
+                            <a href="{{ route('users.list.detail', $data->username) }}">
+                                <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
+                                        class="fas fa-caret-square-left"></i>
+                                    Kembali
+                                </button>
+                            </a>
                         @endif
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="px-4 py-2 mt-3 btn btn-primary btn-sm fw-bold"><i
+                                class="fas fa-plus"></i>
+                            <div class="d-none d-sm-inline"> Tambahkan</div>
+                        </button>
                     </div>
                 </div>
                 </form>
