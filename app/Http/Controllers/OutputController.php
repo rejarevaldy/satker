@@ -51,16 +51,16 @@ class OutputController extends Controller
             $oneinputs = OneInput::whereYear('created_at', '=', session('year'));
 
             // Sum Volume capaian
-            // foreach ($oneinputs as $oneinput) {
-            //       $id = OneInput::id;
+            // $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
+            foreach ($oneinputs as $oneinput) {
+                $id = $oneinput->id;
 
-            //       $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
-            //       $oneinput = OneInput::find($id);
-            //       $sum = array_sum($input);
-
-            //       $oneinput->volume_jumlah = $sum;
-            //       $oneinput->update();
-            // }
+                $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
+                $oneinput = OneInput::find($id);
+                $sum = array_sum($input);
+                $oneinput->volume_jumlah = $sum;
+                $oneinput->update();
+            }
 
             ##### UMUM Section
             // GET Bidang
