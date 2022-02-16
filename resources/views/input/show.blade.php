@@ -22,6 +22,7 @@
                                         <div class="d-none d-sm-inline p-3">Kembali</div>
                                     </button>
                                 </a>
+                                @if (auth()->user()->role == 'Satker')
                                 <a href="{{ route('laporan.edit', $data) }}" class="text-decoration-none">
                                     <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i class="fas fa-edit"></i>
                                         <div class="d-none d-sm-inline p-3">Sunting</div>
@@ -32,7 +33,7 @@
                                     <i class="fas fa-trash"></i>
                                     <div class="d-none d-sm-inline p-3">Hapus</div>
                                 </button>
-
+                                @endif
                             </div>
                         </div>
                     </div>

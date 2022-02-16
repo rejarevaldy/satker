@@ -204,7 +204,7 @@ class InputController extends Controller
                 )
                 ->get();
         } else {
-            $selection = OneInput::whereYear('created_at', session('year'))->where('id', $user_id)->get();
+            $selection = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
             $datas2 = TwoInput::whereYear('tanggal', session('year'))->join('one_inputs', 'two_inputs.one_input_id', 'one_inputs.id')
                 ->select(
                     'two_inputs.id',
@@ -221,6 +221,7 @@ class InputController extends Controller
                 ->get();
         }
 
+        // dd($datas2);
         return view('input.dokumen', [
             'datas' => $selection,
             'datas2' => $datas2,
@@ -231,7 +232,7 @@ class InputController extends Controller
 
     public function store_dokumen(Request $request)
     {
-
+        // dd('e');
         $input2 = new TwoInput();
         $id = $request->naro;
         $data1 = OneInput::where('id', $id)->value('satuan');
@@ -256,6 +257,8 @@ class InputController extends Controller
             $input2->file = '';
         }
 
+        // dd($input2);
+
         $input2->uraian = $request->uraian;
         $input2->nomor_dokumen = $request->nodok;
         $input2->tanggal = $request->tanggal;
@@ -267,32 +270,54 @@ class InputController extends Controller
 
     public function edit_dokumen(Request $request, $id)
     {
-        $bidang = Auth::user()->bidang;
         $input = TwoInput::find($id);
 
-        if ($bidang == 'Admin') {
-            $input->volume_capaian = $request->volcap;
-        } else {
-            $input->uraian = $request->uraian;
-            $input->nomor_dokumen = $request->nodok;
-            $input->tanggal = $request->tanggal;
-            $input->one_input_id = $request->naro;
-        }
+        $input->one_input_id = $request->naro;
+        $input->volume_capaian = $request->volcap;
+        $input->uraian = $request->uraian;
+        $input->nomor_dokumen = $request->nodok;
+        $input->tanggal = $request->tanggal;
+        // dd($input);
 
         if ($request->hasFile('file')) {
+            // dd($request->file);
             if ($input->file) {
+                // dd('deleted lol');
                 File::delete(public_path('/files/' . $input->file));
             }
             $file = $request->file('file');
+            // dd($file);
             $fileName = time() . '-' . $file->getClientOriginalName();
             $file->move(public_path('files'), $fileName);
             $input->file = $fileName;
             $input->update();
         } else {
+            // dd($request);
             $input->file = $input->file;
             $input->update();
         }
 
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     $fileName = time() . '.' . $file->extension();
+        //     $file->move(public_path('files'), $fileName);
+        //     $input->file = $fileName;
+        //     dd('yes');
+        // } else {
+        //     dd($request);
+        //     $input->file = $input->file;
+        // }
+        // if ($request->hasFile('file')) {
+        //     dd('yas');
+        //     $file = $request->file('file');
+        //     $fileName = time() . '-' . $file->getClientOriginalName();
+        //     $file->move(public_path('files'), $fileName);
+        //     $input->file = $fileName;
+        // } else {
+        //     dd($request);
+        // }
+
+        $input->update();
 
         return back()->withInput()->with('status', 'Dokumen berhasil diperbarui!');
     }
