@@ -250,6 +250,72 @@ foreach ($datas2 as $data2) {
                     <x-adminlte-alert class="bg-danger mt-3">
                         <h2 class="text-white text-center">Data Kosong!</h2>
                     </x-adminlte-alert>
+                    <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
+                        <x-adminlte-modal id="tambahDokumen" title="Tambah Dokumen" v-centered>
+                            @csrf
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="uraian" class="form-label"><span class="text-danger">*</span>
+                                            Uraian</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="text" class="form-control" id="uraian" name="uraian"
+                                                placeholder="Masukkan uraian" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="nodok" class="form-label"><span class="text-danger">*</span>
+                                            Nomor
+                                            Dokumen</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="text" class="form-control" id="nodok" name="nodok"
+                                                placeholder="Masukkan nomor dokumen" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="tanggal" class="form-label"><span class="text-danger">*</span>
+                                            Tanggal</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="date" class="form-control" id="tanggal" name="tanggal"
+                                                placeholder="Masukkan tanggal" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="naro" class="form-label"><span class="text-danger">*</span> Nama
+                                            RO</label>
+                                        <div class="mb-3 input-group">
+                                            <select type="select" class="form-control" id="naro" name="naro" required>
+                                                @foreach ($selection as $select)
+                                                    <option @if ($select->id == $data2->one_input_id) {{ 'selected' }} @endif
+                                                        value="{{ $select->id }}">
+                                                        {{ $select->nama_ro }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="mb-1"> Upload File
+                                        </label>
+                                        <div class="input-group">
+                                            <input value="{{ $data2->file }}" type="file" class="form-control"
+                                                name="file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <x-slot name="footerSlot">
+                                <button type="button" class="btn btn-secondary btn-sm mr-auto"
+                                    data-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Tambah</button>
+                            </x-slot>
+                        </x-adminlte-modal>
+                    </form>
                 @else
                     <div class="row">
                         <div class="col-12">
@@ -264,67 +330,7 @@ foreach ($datas2 as $data2) {
             </div>
     </div>
 
-    <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
-        <x-adminlte-modal id="tambahDokumen" title="Tambah Dokumen" v-centered>
-            @csrf
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <label for="uraian" class="form-label"><span class="text-danger">*</span> Uraian</label>
-                        <div class="mb-3 input-group">
-                            <input type="text" class="form-control" id="uraian" name="uraian"
-                                placeholder="Masukkan uraian" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="nodok" class="form-label"><span class="text-danger">*</span> Nomor
-                            Dokumen</label>
-                        <div class="mb-3 input-group">
-                            <input type="text" class="form-control" id="nodok" name="nodok"
-                                placeholder="Masukkan nomor dokumen" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="tanggal" class="form-label"><span class="text-danger">*</span>
-                            Tanggal</label>
-                        <div class="mb-3 input-group">
-                            <input type="date" class="form-control" id="tanggal" name="tanggal"
-                                placeholder="Masukkan tanggal" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="naro" class="form-label"><span class="text-danger">*</span> Nama RO</label>
-                        <div class="mb-3 input-group">
-                            <select type="select" class="form-control" id="naro" name="naro" required>
-                                @foreach ($selection as $select)
-                                    <option @if ($select->id == $data2->one_input_id) {{ 'selected' }} @endif
-                                        value="{{ $select->id }}">
-                                        {{ $select->nama_ro }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="" class="mb-1"> Upload File
-                        </label>
-                        <div class="input-group">
-                            <input value="{{ $data2->file }}" type="file" class="form-control" name="file">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <x-slot name="footerSlot">
-                <button type="button" class="btn btn-secondary btn-sm mr-auto" data-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary btn-sm">Tambah</button>
-            </x-slot>
-        </x-adminlte-modal>
-    </form>
+
 
 
 
