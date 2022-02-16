@@ -161,20 +161,22 @@ foreach ($datas2 as $data2) {
         $loop++;
 
 
-    if (auth()->user()->role == 'Monitor') {
+    if (auth()->user()->role == 'Monitoring') {
         $config = [
         'data' => $query,
         'order' => [[0, 'asc']],
         'columns' => [['className' => 'text-center'],['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
         'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
     ];
-    } else {
+    } elseif (auth()->user()->role == 'Satker') {
         $config = [
         'data' => $query,
         'order' => [[0, 'asc']],
         'columns' => [['className' => 'text-center'],['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
         'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
     ];
+    } else {
+        $config = [];
     }
 }
 
@@ -465,19 +467,12 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" hidden>
                     <div class="col">
                         <label for="naro" class="form-label"><span class="text-danger">*</span> Nama RO</label>
                         <div class="mb-3 input-group">
-                            <select type="select" class="form-control" id="naro" name="naro" required>
-                                @foreach ($selection as $select)
-                                    <option @if ($select->id == $data2->one_input_id)
-                                        {{ 'selected' }}
-                                @endif
-                                value="{{ $select->id }}">
-                                {{ $select->nama_ro }}</option>
-                                @endforeach
-                            </select>
+                            <input value="{{ $data->id }}" type="naro" class="form-control"
+                                name="naro" required>
                         </div>
                     </div>
                 </div>
