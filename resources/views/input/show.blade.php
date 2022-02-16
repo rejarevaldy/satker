@@ -465,19 +465,12 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" hidden>
                     <div class="col">
                         <label for="naro" class="form-label"><span class="text-danger">*</span> Nama RO</label>
                         <div class="mb-3 input-group">
-                            <select type="select" class="form-control" id="naro" name="naro" required>
-                                @foreach ($selection as $select)
-                                    <option @if ($select->id == $data2->one_input_id)
-                                        {{ 'selected' }}
-                                @endif
-                                value="{{ $select->id }}">
-                                {{ $select->nama_ro }}</option>
-                                @endforeach
-                            </select>
+                            <input value="{{ $data->id }}" type="naro" class="form-control"
+                                name="naro" required>
                         </div>
                     </div>
                 </div>
