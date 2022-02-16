@@ -46,7 +46,7 @@ class LoginController extends Controller
 
             $request->session()->put('year', $request->year);
 
-            return redirect('/beranda/');
+            return redirect('/');
       }
 
       /**

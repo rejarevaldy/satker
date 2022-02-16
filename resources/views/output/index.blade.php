@@ -11,21 +11,25 @@
         <div class="row">
             @foreach ($panduans as $panduan)
                 <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header pt-3">
+                    <div class="card" style="height: 90%;">
+                        <div class="card-header pt-3" style="min-height: 5.3rem">
                             <h5>{{ $panduan->nama }}</h5>
                         </div>
                         <div class="card-body p-3">
                             <a href="{{ asset('files/panduan') . '/' . $panduan->file }}" class="btn btn-primary btn-sm"
                                 target="_blank" download>
                                 <i class="fas fa-download me-1"></i>
-                                Unduh @if ($panduan->nama != 'Usulan Rencana Kerja') PDF @else Excel @endif </a>
+                                Unduh @if ($panduan->nama != 'Usulan Rencana Kerja')
+                                PDF @else Excel
+                                @endif </a>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                                 data-target="#editPanduan_{{ $panduan->id }}"><i class="fas fa-upload me-1"></i>
-                                Unggah @if ($panduan->nama != 'Usulan Rencana Kerja') PDF @else Excel @endif </button>
+                                Unggah @if ($panduan->nama != 'Usulan Rencana Kerja')
+                                PDF @else Excel
+                                @endif </button>
                             @if ($panduan->nama == 'Usulan Rencana Kerja')
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-primary mt-md-1" data-toggle="modal"
                                     data-target="#URK"><i class="fas fa-list "></i>
                                     Bidang
                                 </button>
@@ -51,7 +55,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="card-body">
-                                                            <a href="{{ asset('files/urk').'/'.$urk->file }}"
+                                                            <a href="{{ asset('files/urk') . '/' . $urk->file }}"
                                                                 class="btn btn-primary btn-sm" target="_blank" download>
                                                                 <i class="fas fa-download me-1"></i>
                                                                 Unduh Excel
@@ -127,7 +131,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             @endif
                             {{-- Modal Bidang Edit End --}}
 
@@ -207,89 +210,7 @@
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {{-- <script>
 
-        const anggaranRealisasi = 0;
-
-        const dataGroup = {
-            labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
-            datasets: [{
-                    label: 'PAGU',
-                    data: [34378600, 0, 0, 0, 0],
-                    backgroundColor: ['rgb(255, 99, 132)'],
-                    stack: 'Stack 0',
-                    yAxisID: 'percentage'
-                },
-                {
-                    label: 'REALISASI',
-                    data: [38000000, 1000000, 0, 0, 0],
-                    backgroundColor: ['rgb(54, 162, 235)'],
-                    stack: 'Stack 1',
-                    yAxisID: 'percentage'
-                },
-                {
-                    label: 'SISA',
-                    data: [3621400, 1000000, 0, 0, 0],
-                    backgroundColor: ['rgb(255, 205, 86)'],
-                    stack: 'Stack 2',
-                    yAxisID: 'currency'
-                },
-            ]
-        };
-
-        const configGroup = {
-            type: 'bar',
-            data: dataGroup,
-            options: {
-                plugins: {
-                    title: {
-                        display: true
-                    },
-                },
-                responsive: true,
-                interaction: {
-                    intersect: false,
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true
-                    },
-                    currency: {
-                        type: 'linear',
-                        position: 'left',
-                        min: 0,
-                        max: 76000000,
-                        grid: {
-                            display: false
-                        }
-                    },
-                    percentage: {
-                        type: 'linear',
-                        position: 'right',
-                        min: 0,
-                        max: 76000000,
-                        grid: {
-                            display: false
-                        }
-                    },
-                }
-            }
-        };
-
-        const chartBarAnggaran = new Chart(
-            document.getElementById('myChart'),
-            configGroup
-        )
-        
-        const chartBarOutput = new Chart(
-            document.getElementById('myChart2'),
-            configGroup
-        )
-
-    </script> --}}
     <script>
         const dataBarAnggaranRealisasi = [{{ $rpUMUM }}, {{ $rpPPAI }}, {{ $rpPPAII }},
             {{ $rpSKKI }}, {{ $rpPAPK }}

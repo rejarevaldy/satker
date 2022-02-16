@@ -33,11 +33,19 @@ class UserController extends Controller
 
       public function create()
       {
+            if (auth()->user()->role !== 'Monitoring') {
+                  abort(403);
+            }
+
             return view('user.create');
       }
 
       public function daftar(Request $request)
       {
+            if (auth()->user()->role !== 'Monitoring') {
+                  abort(403);
+            }
+
             $validatedData = $request->validate([
                   'nama' => 'required|max:40',
                   'username' => 'required|unique:users',
