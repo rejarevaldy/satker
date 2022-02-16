@@ -147,23 +147,34 @@ foreach ($datas2 as $data2) {
         </div>';
     }
 
-        $query[] = [$loop, $data2->oneInput->nama_ro, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file];
         if (auth()->user()->role == 'Satker') {
-            $query[] =  ['<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
+            $query[] = [$loop, $data2->oneInput->nama_ro, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file, '<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
+            // $query[] =  ['<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
+            // array_push($query, );
+            // dd($query);
             echo($mdlEdit);
             echo($mdlDelete);
+        } else {
+            $query[] = [$loop, $data2->oneInput->nama_ro, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file];
         }
         // @dd($dataId);
         $loop++;
 
-    $config = [
+
+    if (auth()->user()->role == 'Monitor') {
+        $config = [
         'data' => $query,
         'order' => [[0, 'asc']],
         'columns' => [['className' => 'text-center'],['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
         'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
     ];
-    if (auth()->user()->role == 'Satker') {
-        $config['columns'] = ['className' => 'text-center'];
+    } else {
+        $config = [
+        'data' => $query,
+        'order' => [[0, 'asc']],
+        'columns' => [['className' => 'text-center'],['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
+        'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
+    ];
     }
 }
 
