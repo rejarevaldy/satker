@@ -168,13 +168,15 @@ foreach ($datas2 as $data2) {
         'columns' => [['className' => 'text-center'],['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
         'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
     ];
-    } else {
+    } elseif (auth()->user()->role == 'Satker') {
         $config = [
         'data' => $query,
         'order' => [[0, 'asc']],
         'columns' => [['className' => 'text-center'],['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
         'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
     ];
+    } else {
+        $config = [];
     }
 }
 
