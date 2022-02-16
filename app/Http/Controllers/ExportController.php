@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\OneInput;
 use App\Models\TwoInput;
 use App\Exports\InputExport;
@@ -14,11 +15,34 @@ use Maatwebsite\Excel\Facades\Excel;
 class ExportController extends Controller
 {
 
-    public function rekapExport(OneInput $oneinput)
+    public function rekapExport(OneInput $oneinput, User $user)
     {
+        if (auth()->user()->role !== 'Monitoring') {
+            abort(403);
+        }
+
+        // $id = auth()->user()->id;
+        // $id = $user->id;
+        $id = (int) substr(url()->current(), -1);
+        // $id = 6;
+        
+        $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $id);
+
+        // Sum Volume capaian
+        // foreach ($oneinputs as $oneinput) {
+        //       $id = OneInput::id;
+
+        //       $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
+        //       $oneinput = OneInput::find($id);
+        //       $sum = array_sum($input);
+
+        //       $oneinput->volume_jumlah = $sum;
+        //       $oneinput->update();
+        // }
+
         ##### UMUM Section
         // GET Bidang
-        $dataUMUM = $oneinput->whereYear('created_at', session('tahun'))->where('bidang', 'Umum')->get();
+        $dataUMUM = $oneinputs->where('bidang', 'Umum')->get();
 
         // Chart Anggaran
         $allPaguUmum = [];
@@ -30,38 +54,38 @@ class ExportController extends Controller
 
         // Loop data and push to an empty array above
         foreach ($dataUMUM as $data) {
-            array_push($allPaguUmum, $data['pagu']);
-            array_push($allRPUmum, $data['rp']);
-            array_push($allTargetUmum, $data['volume_target']);
-            array_push($allRP2Umum, $data['volume_jumlah']);
+                array_push($allPaguUmum, $data['pagu']);
+                array_push($allRPUmum, $data['rp']);
+                array_push($allTargetUmum, $data['volume_target']);
+                array_push($allRP2Umum, $data['volume_jumlah']);
         }
 
         // Result Chart Anggaran
         if ($allPaguUmum and $allRPUmum) {
-            $resultPaguUMUM = array_sum($allPaguUmum);
-            $resultRPUMUM = array_sum($allRPUmum);
+                $resultPaguUMUM = array_sum($allPaguUmum);
+                $resultRPUMUM = array_sum($allRPUmum);
 
-            // Result Percentage Pie Chart Anggaran
-            $percentageUMUM = ($resultRPUMUM / $resultPaguUMUM) * 100;
-            $resultPercentageUMUM =  number_format(floor($percentageUMUM * 100) / 100, 1, '.', '');
+                // Result Percentage Pie Chart Anggaran
+                $percentageUMUM = ($resultRPUMUM / $resultPaguUMUM) * 100;
+                $resultPercentageUMUM =  number_format(floor($percentageUMUM * 100) / 100, 1, '.', '');
         } else {
-            $resultPaguUMUM = 0;
-            $resultRPUMUM = 0;
-            $resultPercentageUMUM = 0;
+                $resultPaguUMUM = 0;
+                $resultRPUMUM = 0;
+                $resultPercentageUMUM = 0;
         }
 
         // Result Chart Output
         if ($allTargetUmum and $allRP2Umum) {
-            $resultTargetUMUM = array_sum($allTargetUmum);
-            $resultRP2UMUM = array_sum($allRP2Umum);
+                $resultTargetUMUM = array_sum($allTargetUmum);
+                $resultRP2UMUM = array_sum($allRP2Umum);
 
-            // Result Percentage Pie Chart Output
-            $percentageUMUM2 = ($resultRP2UMUM / $resultTargetUMUM) * 100;
-            $resultPercentageUMUM2 =  number_format(floor($percentageUMUM2 * 100) / 100, 2, '.', '');
+                // Result Percentage Pie Chart Output
+                $percentageUMUM2 = ($resultRP2UMUM / $resultTargetUMUM) * 100;
+                $resultPercentageUMUM2 =  number_format(floor($percentageUMUM2 * 100) / 100, 2, '.', '');
         } else {
-            $resultTargetUMUM = 0;
-            $resultRP2UMUM = 0;
-            $resultPercentageUMUM2 = 0;
+                $resultTargetUMUM = 0;
+                $resultRP2UMUM = 0;
+                $resultPercentageUMUM2 = 0;
         }
 
         $sisaUMUM = $resultPaguUMUM - $resultRPUMUM;
@@ -69,7 +93,7 @@ class ExportController extends Controller
 
         ##### PPAI Section
         // GET Bidang
-        $dataPPAI = $oneinput->whereYear('created_at', session('tahun'))->where('bidang', 'PPA I')->get();
+        $dataPPAI =  $oneinputs->where('bidang', 'PPA I')->get();
 
         // Anggaran
         $allPaguPPAI = [];
@@ -81,38 +105,38 @@ class ExportController extends Controller
 
         // Loop data and push to an empty array above
         foreach ($dataPPAI as $data) {
-            array_push($allPaguPPAI, $data['pagu']);
-            array_push($allRPPPAI, $data['rp']);
-            array_push($allTargetPPAI, $data['volume_target']);
-            array_push($allRP2PPAI, $data['volume_jumlah']);
+                array_push($allPaguPPAI, $data['pagu']);
+                array_push($allRPPPAI, $data['rp']);
+                array_push($allTargetPPAI, $data['volume_target']);
+                array_push($allRP2PPAI, $data['volume_jumlah']);
         }
 
         // Result Chart Anggaran
         if ($allPaguPPAI and $allRPPPAI) {
-            $resultPaguPPAI = array_sum($allPaguPPAI);
-            $resultRPPPAI = array_sum($allRPPPAI);
+                $resultPaguPPAI = array_sum($allPaguPPAI);
+                $resultRPPPAI = array_sum($allRPPPAI);
 
-            // Result Percentage Pie Chart Anggaran
-            $percentagePPAI = ($resultRPPPAI / $resultPaguPPAI) * 100;
-            $resultPercentagePPAI =  number_format(floor($percentagePPAI * 100) / 100, 1, '.', '');
+                // Result Percentage Pie Chart Anggaran
+                $percentagePPAI = ($resultRPPPAI / $resultPaguPPAI) * 100;
+                $resultPercentagePPAI =  number_format(floor($percentagePPAI * 100) / 100, 1, '.', '');
         } else {
-            $resultPaguPPAI = 0;
-            $resultRPPPAI = 0;
-            $resultPercentagePPAI = 0;
+                $resultPaguPPAI = 0;
+                $resultRPPPAI = 0;
+                $resultPercentagePPAI = 0;
         }
 
         // Result Chart Output
         if ($allTargetPPAI and $allRP2PPAI) {
-            $resultTargetPPAI = array_sum($allTargetPPAI);
-            $resultRP2PPAI = array_sum($allRP2PPAI);
+                $resultTargetPPAI = array_sum($allTargetPPAI);
+                $resultRP2PPAI = array_sum($allRP2PPAI);
 
-            // Result Percentage Pie Chart Output
-            $percentagePPAI2 = ($resultRP2PPAI / $resultTargetPPAI) * 100;
-            $resultPercentagePPAI2 =  number_format(floor($percentagePPAI2 * 100) / 100, 2, '.', '');
+                // Result Percentage Pie Chart Output
+                $percentagePPAI2 = ($resultRP2PPAI / $resultTargetPPAI) * 100;
+                $resultPercentagePPAI2 =  number_format(floor($percentagePPAI2 * 100) / 100, 2, '.', '');
         } else {
-            $resultTargetPPAI = 0;
-            $resultRP2PPAI = 0;
-            $resultPercentagePPAI2 = 0;
+                $resultTargetPPAI = 0;
+                $resultRP2PPAI = 0;
+                $resultPercentagePPAI2 = 0;
         }
 
         $sisaPPAI = $resultPaguPPAI - $resultRPPPAI;
@@ -121,7 +145,7 @@ class ExportController extends Controller
 
         ##### PPA II Section
         // GET Bidang
-        $dataPPAII = $oneinput->whereYear('created_at', session('tahun'))->where('bidang', 'PPA II')->get();
+        $dataPPAII = $oneinputs->where('bidang', 'PPA II')->get();
 
         // Anggaran
         $allPaguPPAII = [];
@@ -133,38 +157,38 @@ class ExportController extends Controller
 
         // Loop data and push to an empty array above
         foreach ($dataPPAII as $data) {
-            array_push($allPaguPPAII, $data['pagu']);
-            array_push($allRPPPAII, $data['rp']);
-            array_push($allTargetPPAII, $data['volume_target']);
-            array_push($allRP2PPAII, $data['volume_jumlah']);
+                array_push($allPaguPPAII, $data['pagu']);
+                array_push($allRPPPAII, $data['rp']);
+                array_push($allTargetPPAII, $data['volume_target']);
+                array_push($allRP2PPAII, $data['volume_jumlah']);
         }
 
         // Result Chart Anggaran
         if ($allPaguPPAII and $allRPPPAII) {
-            $resultPaguPPAII = array_sum($allPaguPPAII);
-            $resultRPPPAII = array_sum($allRPPPAII);
+                $resultPaguPPAII = array_sum($allPaguPPAII);
+                $resultRPPPAII = array_sum($allRPPPAII);
 
-            // Result Percentage Pie Chart Anggaran
-            $percentagePPAII = ($resultRPPPAII / $resultPaguPPAII) * 100;
-            $resultPercentagePPAII =  number_format(floor($percentagePPAII * 100) / 100, 1, '.', '');
+                // Result Percentage Pie Chart Anggaran
+                $percentagePPAII = ($resultRPPPAII / $resultPaguPPAII) * 100;
+                $resultPercentagePPAII =  number_format(floor($percentagePPAII * 100) / 100, 1, '.', '');
         } else {
-            $resultPaguPPAII = 0;
-            $resultRPPPAII = 0;
-            $resultPercentagePPAII = 0;
+                $resultPaguPPAII = 0;
+                $resultRPPPAII = 0;
+                $resultPercentagePPAII = 0;
         }
 
         // Result Chart Output
         if ($allTargetPPAII and $allRP2PPAII) {
-            $resultTargetPPAII = array_sum($allTargetPPAII);
-            $resultRP2PPAII = array_sum($allRP2PPAII);
+                $resultTargetPPAII = array_sum($allTargetPPAII);
+                $resultRP2PPAII = array_sum($allRP2PPAII);
 
-            // Result Percentage Pie Chart Output
-            $percentagePPAII2 = ($resultRP2PPAII / $resultTargetPPAII) * 100;
-            $resultPercentagePPAII2 =  number_format(floor($percentagePPAII2 * 100) / 100, 2, '.', '');
+                // Result Percentage Pie Chart Output
+                $percentagePPAII2 = ($resultRP2PPAII / $resultTargetPPAII) * 100;
+                $resultPercentagePPAII2 =  number_format(floor($percentagePPAII2 * 100) / 100, 2, '.', '');
         } else {
-            $resultTargetPPAII = 0;
-            $resultRP2PPAII = 0;
-            $resultPercentagePPAII2 = 0;
+                $resultTargetPPAII = 0;
+                $resultRP2PPAII = 0;
+                $resultPercentagePPAII2 = 0;
         }
 
         $sisaPPAII = $resultPaguPPAII - $resultRPPPAII;
@@ -172,7 +196,7 @@ class ExportController extends Controller
 
         ##### PAPK Section
         // GET Bidang
-        $dataPAPK = $oneinput->whereYear('created_at', session('tahun'))->where('bidang', 'PAPK')->get();
+        $dataPAPK =  $oneinputs->where('bidang', 'PAPK')->get();
 
         // Anggaran
         $allPaguPAPK = [];
@@ -184,38 +208,38 @@ class ExportController extends Controller
 
         // Loop data and push to an empty array above
         foreach ($dataPAPK as $data) {
-            array_push($allPaguPAPK, $data['pagu']);
-            array_push($allRPPAPK, $data['rp']);
-            array_push($allTargetPAPK, $data['volume_target']);
-            array_push($allRP2PAPK, $data['volume_jumlah']);
+                array_push($allPaguPAPK, $data['pagu']);
+                array_push($allRPPAPK, $data['rp']);
+                array_push($allTargetPAPK, $data['volume_target']);
+                array_push($allRP2PAPK, $data['volume_jumlah']);
         }
 
         // Result Chart Anggaran
         if ($allPaguPAPK and $allRPPAPK) {
-            $resultPaguPAPK = array_sum($allPaguPAPK);
-            $resultRPPAPK = array_sum($allRPPAPK);
+                $resultPaguPAPK = array_sum($allPaguPAPK);
+                $resultRPPAPK = array_sum($allRPPAPK);
 
-            // Result Percentage Pie Chart Anggaran
-            $percentagePAPK = ($resultRPPAPK / $resultPaguPAPK) * 100;
-            $resultPercentagePAPK =  number_format(floor($percentagePAPK * 100) / 100, 1, '.', '');
+                // Result Percentage Pie Chart Anggaran
+                $percentagePAPK = ($resultRPPAPK / $resultPaguPAPK) * 100;
+                $resultPercentagePAPK =  number_format(floor($percentagePAPK * 100) / 100, 1, '.', '');
         } else {
-            $resultPaguPAPK = 0;
-            $resultRPPAPK = 0;
-            $resultPercentagePAPK = 0;
+                $resultPaguPAPK = 0;
+                $resultRPPAPK = 0;
+                $resultPercentagePAPK = 0;
         }
 
         // Result Chart Output
         if ($allTargetPAPK and $allRP2PAPK) {
-            $resultTargetPAPK = array_sum($allTargetPAPK);
-            $resultRP2PAPK = array_sum($allRP2PAPK);
+                $resultTargetPAPK = array_sum($allTargetPAPK);
+                $resultRP2PAPK = array_sum($allRP2PAPK);
 
-            // Result Percentage Pie Chart Output
-            $percentagePAPK2 = ($resultRP2PAPK / $resultTargetPAPK) * 100;
-            $resultPercentagePAPK2 =  number_format(floor($percentagePAPK2 * 100) / 100, 2, '.', '');
+                // Result Percentage Pie Chart Output
+                $percentagePAPK2 = ($resultRP2PAPK / $resultTargetPAPK) * 100;
+                $resultPercentagePAPK2 =  number_format(floor($percentagePAPK2 * 100) / 100, 2, '.', '');
         } else {
-            $resultTargetPAPK = 0;
-            $resultRP2PAPK = 0;
-            $resultPercentagePAPK2 = 0;
+                $resultTargetPAPK = 0;
+                $resultRP2PAPK = 0;
+                $resultPercentagePAPK2 = 0;
         }
 
         $sisaPAPK = $resultPaguPAPK - $resultRPPAPK;
@@ -223,7 +247,7 @@ class ExportController extends Controller
 
         ##### SKKI Section
         // GET Bidang
-        $dataSKKI = $oneinput->whereYear('created_at', session('tahun'))->where('bidang', 'SKKI')->get();
+        $dataSKKI =  $oneinputs->where('bidang', 'SKKI')->get();
 
         // Anggaran
         $allPaguSKKI = [];
@@ -235,51 +259,85 @@ class ExportController extends Controller
 
         // Loop data and push to an empty array above
         foreach ($dataSKKI as $data) {
-            array_push($allPaguSKKI, $data['pagu']);
-            array_push($allRPSKKI, $data['rp']);
-            array_push($allTargetSKKI, $data['volume_target']);
-            array_push($allRP2SKKI, $data['volume_jumlah']);
+                array_push($allPaguSKKI, $data['pagu']);
+                array_push($allRPSKKI, $data['rp']);
+                array_push($allTargetSKKI, $data['volume_target']);
+                array_push($allRP2SKKI, $data['volume_jumlah']);
         }
 
         // Result Chart Anggaran
         if ($allPaguSKKI and $allRPSKKI) {
-            $resultPaguSKKI = array_sum($allPaguSKKI);
-            $resultRPSKKI = array_sum($allRPSKKI);
+                $resultPaguSKKI = array_sum($allPaguSKKI);
+                $resultRPSKKI = array_sum($allRPSKKI);
 
-            // Result Percentage Pie Chart Anggaran
-            $percentageSKKI = ($resultRPSKKI / $resultPaguSKKI) * 100;
-            $resultPercentageSKKI =  number_format(floor($percentageSKKI * 100) / 100, 1, '.', '');
+                // Result Percentage Pie Chart Anggaran
+                $percentageSKKI = ($resultRPSKKI / $resultPaguSKKI) * 100;
+                $resultPercentageSKKI =  number_format(floor($percentageSKKI * 100) / 100, 1, '.', '');
         } else {
-            $resultPaguSKKI = 0;
-            $resultRPSKKI = 0;
-            $resultPercentageSKKI = 0;
+                $resultPaguSKKI = 0;
+                $resultRPSKKI = 0;
+                $resultPercentageSKKI = 0;
         }
 
         // Result Chart Output
         if ($allTargetSKKI and $allRP2SKKI) {
-            $resultTargetSKKI = array_sum($allTargetSKKI);
-            $resultRP2SKKI = array_sum($allRP2SKKI);
+                $resultTargetSKKI = array_sum($allTargetSKKI);
+                $resultRP2SKKI = array_sum($allRP2SKKI);
 
-            // Result Percentage Pie Chart Output
-            $percentageSKKI2 = ($resultRP2SKKI / $resultTargetSKKI) * 100;
-            $resultPercentageSKKI2 =  number_format(floor($percentageSKKI2 * 100) / 100, 2, '.', '');
+                // Result Percentage Pie Chart Output
+                $percentageSKKI2 = ($resultRP2SKKI / $resultTargetSKKI) * 100;
+                $resultPercentageSKKI2 =  number_format(floor($percentageSKKI2 * 100) / 100, 2, '.', '');
         } else {
-            $resultTargetSKKI = 0;
-            $resultRP2SKKI = 0;
-            $resultPercentageSKKI2 = 0;
+                $resultTargetSKKI = 0;
+                $resultRP2SKKI = 0;
+                $resultPercentageSKKI2 = 0;
         }
 
+
+
         $sisaSKKI = $resultPaguSKKI - $resultRPSKKI;
+        $totalPagu = $resultPaguPAPK + $resultPaguSKKI + $resultPaguPPAII + $resultPaguPPAI + $resultPaguUMUM;
+        $totalRP = $resultRPPAPK + $resultRPSKKI + $resultRPPPAII + $resultRPPPAI + $resultRPUMUM;
+        $totalSisa = $sisaPAPK + $sisaSKKI + $sisaPPAII + $sisaPPAI + $sisaUMUM;
+        $totalTarget = $resultTargetPAPK + $resultTargetSKKI + $resultTargetPPAII + $resultTargetPPAI + $resultTargetUMUM;
+        $totalRP2 = $resultRP2PAPK + $resultRP2SKKI + $resultRP2PPAII + $resultRP2PPAI + $resultRP2UMUM;
+
+        if ($totalRP2 and $totalTarget) {
+                $totalPercentage =  ($totalRP2 / $totalTarget) * 100;
+                $resultPercentage = number_format(floor($totalPercentage * 100) / 100, 2, '.', '');
+        } else {
+                $totalPercentage = 0;
+                $resultPercentage = number_format(floor($totalPercentage * 100) / 100, 2, '.', '');
+        }
+
+        if ($totalRP and $totalPagu) {
+                $totalRpPagu = ($totalRP / $totalPagu) * 100;
+                $resultTotalRpPagu =  number_format(floor($totalRpPagu * 100) / 100, 2, '.', '');
+        } else {
+                $totalRpPagu = 0;
+                $resultTotalRpPagu =  number_format(floor($totalRpPagu * 100) / 100, 2, '.', '');
+        }
 
         
 
-        // return view('output.excel.rekapExcel', [
+        // return view('output.rekapExcel', [
+        //     // Total
+
+        //     'totalPagu' => $totalPagu,
+        //     'totalRP' => $totalRP,
+        //     'totalSisa' => $totalSisa,
+        //     'totalRpPagu' => $resultTotalRpPagu,
+        //     'totalTarget' => $totalTarget,
+        //     'totalRP2' => $totalRP2,
+        //     'totalPercentage' => $resultPercentage,
+
         //     'title' => 'Rekap',
         //     // UMUM
         //     'paguUMUM' => $resultPaguUMUM,
         //     'rpUMUM' => $resultRPUMUM,
         //     'sisaUMUM' => $sisaUMUM,
         //     'percentageUMUM' => $resultPercentageUMUM,
+
 
         //     // PPA I
         //     'paguPPAI' => $resultPaguPPAI,
@@ -333,7 +391,7 @@ class ExportController extends Controller
         // ]);
 
 
-        return Excel::download(new RekapExport, 'Laporan Rekap ' . session('tahun') . '.xlsx');
+        return Excel::download(new RekapExport, 'Laporan Rekap ' . session('year') . ' ' . $user->nama . '.xlsx');
     }
     
     public function exportWithView()
@@ -352,15 +410,17 @@ class ExportController extends Controller
             $twoinput = TwoInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
         }
 
-        $input = TwoInput::with('OneInput')->get();
+        // $input = TwoInput::with('OneInput')->get();
         // $oneinput = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
-        // dd(count($oneinputs));
-        // return view('output.sheet1', [
-        //     'title' => 'Dashboard',
-        //     'input' => $input,
-        //     'oneinput' => $oneinputs,
-        //     'twoinput' => $twoinput
-        // ]);
+        // if(!$twoinput) {
+        //     dd('empty');
+        // }
+        return view('output.sheet1', [
+            'title' => 'Dashboard',
+            // 'input' => $input,
+            'oneinput' => $oneinputs,
+            'twoinput' => $twoinput
+        ]);
 
         return Excel::download(new InputExport, 'Laporan Realisasi ' . session('year') . '.xlsx');
     }
