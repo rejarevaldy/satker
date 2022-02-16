@@ -52,8 +52,7 @@ $config = [
                         <table id="datatable" class="table table-bordered " style="width:100%">
                             <thead>
                                 <tr style="background-color: #EDECEC">
-                                    <th rowspan="2" style="width: 1%" class="text-center">No</th>
-                                    <th rowspan="2" style="width: 1%" class="text-center">Bidang</th>
+                                    <th rowspan="2" style="width: 9%" class="text-center"></th>
                                     <th colspan="4" class="text-center">Anggaran</th>
                                     <th colspan="3" class="text-center">Output</th>
                                 </tr>
@@ -70,79 +69,16 @@ $config = [
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Umum</td>
-                                    <td>Rp. {{ number_format($paguUMUM, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($rpUMUM, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($paguUMUM - $rpUMUM, 0, '.', '.') }}</td>
-                                    <td>{{ $percentageUMUM }} % </td>
-                                    <td>{{ $targetUMUM }}</td>
-                                    <td>{{ $rp2UMUM }}</td>
-                                    <td>{{ $percentageUMUM2 }} % </td>
+                                    <td>Semua Data</td>
+                                    <td>Rp. {{ number_format($pagu, 0, '.', '.') }}</td>
+                                    <td>Rp. {{ number_format($rp, 0, '.', '.') }}</td>
+                                    <td>Rp. {{ number_format($pagu - $rp, 0, '.', '.') }}</td>
+                                    <td>{{ $percentage }} % </td>
+                                    <td>{{ $target }}</td>
+                                    <td>{{ $rp2 }}</td>
+                                    <td>{{ $percentage2 }} % </td>
                                 </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>PPAI</td>
-                                    <td>Rp. {{ number_format($paguPPAI, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($rpPPAI, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($paguPPAI - $rpPPAI, 0, '.', '.') }}</td>
-                                    <td>{{ $percentagePPAI }} % </td>
-                                    <td>{{ $targetPPAI }}</td>
-                                    <td>{{ $rp2PPAI }}</td>
-                                    <td>{{ $percentagePPAI2 }} % </td>
-                                </tr>
-
-                                <tr>
-                                    <td>3</td>
-                                    <td>PPAII</td>
-                                    <td>Rp. {{ number_format($paguPPAII, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($rpPPAII, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($paguPPAII - $rpPPAII, 0, '.', '.') }}</td>
-                                    <td>{{ $percentagePPAII }} % </td>
-                                    <td>{{ $targetPPAII }}</td>
-                                    <td>{{ $rp2PPAII }}</td>
-                                    <td>{{ $percentagePPAII2 }} % </td>
-                                </tr>
-
-                                <tr>
-                                    <td>4</td>
-                                    <td>SKKI</td>
-                                    <td>Rp. {{ number_format($paguSKKI, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($rpSKKI, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($paguSKKI - $rpSKKI, 0, '.', '.') }}</td>
-                                    <td>{{ $percentageSKKI }} % </td>
-                                    <td>{{ $targetSKKI }}</td>
-                                    <td>{{ $rp2SKKI }}</td>
-                                    <td>{{ $percentageSKKI2 }} % </td>
-                                </tr>
-
-                                <tr>
-                                    <td>5</td>
-                                    <td>PAPK</td>
-                                    <td>Rp. {{ number_format($paguPAPK, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($rpPAPK, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($paguPAPK - $rpPAPK, 0, '.', '.') }}</td>
-                                    <td>{{ $percentagePAPK }} % </td>
-                                    <td>{{ $targetPAPK }}</td>
-                                    <td>{{ $rp2PAPK }}</td>
-                                    <td>{{ $percentagePAPK2 }} % </td>
-                                </tr>
-
                             </tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>Rp.
-                                    {{ number_format($totalPagu, 0, '.', '.') }}
-                                </td>
-                                <td>Rp. {{ number_format($totalRP, 0, '.', '.') }}</td>
-                                <td>Rp. {{ number_format($totalSisa, 0, '.', '.') }}</td>
-                                <td>{{ $totalRpPagu }} % </td>
-                                <td>{{ $totalTarget }}</td>
-                                <td>{{ $totalRP2 }}</td>
-                                <td>{{ $totalPercentage }} % </td>
-                            </tr>
                         </table>
                     </div>
                 </div>

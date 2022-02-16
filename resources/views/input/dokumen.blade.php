@@ -228,28 +228,28 @@ foreach ($datas2 as $data2) {
         @endif
 
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="p-4 mb-4 border rounded shadow-sm bg-white">
-                        <h2 class="mb-2">Dokumen {{ session('year') }} - [{{ Auth()->user()->nama }}]
-                        </h2>
-                        <div class="p-2 rounded bg-white">
-                            @if (auth()->user()->role == 'Satker')
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm" data-toggle="modal"
-                                            data-target="#tambahDokumen"><i class="fas fa-plus"></i>
-                                            <div class="d-none d-sm-inline  p-3">Tambah
-                                        </button>
-                                    </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="p-4 mb-4 border rounded shadow-sm bg-white">
+                    <h2 class="mb-2">Dokumen {{ session('year') }} - [{{ Auth()->user()->nama }}]
+                    </h2>
+                    <div class="p-2 rounded bg-white">
+                        @if (auth()->user()->role == 'Satker')
+                            <div class="row">
+                                <div class="col-sm">
+                                    <button class="px-4 py-2 btn btn-primary fw-bold btn-sm" data-toggle="modal"
+                                        data-target="#tambahDokumen"><i class="fas fa-plus"></i>
+                                        <div class="d-none d-sm-inline  p-3">Tambah
+                                    </button>
                                 </div>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
-                    {{-- Col End --}}
-                    @if (empty($query))
-                    <x-adminlte-alert class="bg-danger mt-3">
-                        <h2 class="text-white text-center">Data Kosong!</h2>
+                </div>
+                {{-- Col End --}}
+                @if (empty($query))
+                    <x-adminlte-alert class="bg-white mt-3 border-danger">
+                        <h5 class="text-danger text-center">Data Kosong</h5>
                     </x-adminlte-alert>
                     <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
                         <x-adminlte-modal id="tambahDokumen" title="Tambah Dokumen" v-centered>
@@ -291,8 +291,7 @@ foreach ($datas2 as $data2) {
                                         <div class="mb-3 input-group">
                                             <select type="select" class="form-control" id="naro" name="naro" required>
                                                 @foreach ($selection as $select)
-                                                    <option
-                                                        value="{{ $select->id }}">
+                                                    <option value="{{ $select->id }}">
                                                         {{ $select->nama_ro }}</option>
                                                 @endforeach
                                             </select>
@@ -301,11 +300,21 @@ foreach ($datas2 as $data2) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
+                                        <label for="naro" class="form-label">Volume
+                                            Capaian</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="number" class="form-control" id="volume_capaian"
+                                                name="volume_capaian"
+                                                placeholder="Jika satuan volume adalah Bulan Layanan maka kosongkan">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
                                         <label for="" class="mb-1"> Upload File
                                         </label>
                                         <div class="input-group">
-                                            <input value="" type="file" class="form-control"
-                                                name="file">
+                                            <input value="" type="file" class="form-control" name="file">
                                         </div>
                                     </div>
                                 </div>
@@ -327,24 +336,91 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
 
-                </div>
+                    <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
+                        <x-adminlte-modal id="tambahDokumen" title="Tambah Dokumen" v-centered>
+                            @csrf
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="uraian" class="form-label"><span class="text-danger">*</span>
+                                            Uraian</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="text" class="form-control" id="uraian" name="uraian"
+                                                placeholder="Masukkan uraian" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="nodok" class="form-label"><span class="text-danger">*</span>
+                                            Nomor
+                                            Dokumen</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="text" class="form-control" id="nodok" name="nodok"
+                                                placeholder="Masukkan nomor dokumen" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="tanggal" class="form-label"><span class="text-danger">*</span>
+                                            Tanggal</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="date" class="form-control" id="tanggal" name="tanggal"
+                                                placeholder="Masukkan tanggal" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="naro" class="form-label"><span class="text-danger">*</span>
+                                            Nama
+                                            RO</label>
+                                        <div class="mb-3 input-group">
+                                            <select type="select" class="form-control" id="naro" name="naro" required>
+                                                @foreach ($selection as $select)
+                                                    <option value="{{ $select->id }}">
+                                                        {{ $select->nama_ro }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="naro" class="form-label">Volume
+                                            Capaian</label>
+                                        <div class="mb-3 input-group">
+                                            <input type="number" class="form-control" id="volume_capaian"
+                                                name="volume_capaian"
+                                                placeholder="Jika satuan volume adalah Bulan Layanan maka kosongkan">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="mb-1"> Upload File
+                                        </label>
+                                        <div class="input-group">
+                                            <input value="" type="file" class="form-control" name="file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <x-slot name="footerSlot">
+                                <button type="button" class="btn btn-secondary btn-sm mr-auto"
+                                    data-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Tambah</button>
+                            </x-slot>
+                        </x-adminlte-modal>
+                    </form>
+
             </div>
+        </div>
     </div>
 
 
 
 
 
-    {{-- <div class="modal fade" id="tambahDokumen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Dokumen Baru</h5>
-                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     @endif
 @stop
 

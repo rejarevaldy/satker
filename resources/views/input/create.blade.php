@@ -8,19 +8,48 @@
 
 @section('content')
 
+    <div class="pt-3"></div>
+
     @if (session('status'))
         <x-adminlte-alert class="bg-teal" dismissable>
             {{ session('status') }}
         </x-adminlte-alert>
     @endif
 
-
     <x-adminlte-card title="Tambahkan Laporan" theme="primary" theme-mode="outline">
         <!-- Form Start -->
         <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-1">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
+                            ID</label>
+                        <div class="input-group">
+                            <input value="" placeholder="ID" class="form-control" name="digit" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-1">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
+                            KD KRO</label>
+                        <div class="input-group">
+                            <input value="" placeholder="KD KRO" class="form-control" name="kd_kro" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
+                            KD RO</label>
+                        <div class="input-group">
+                            <input value="" placeholder="KD RO" class="form-control" name="kd_ro" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
                     <div class="mb-4 form-input">
                         <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
                             Nama Ro</label>
@@ -29,45 +58,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
+                    <div class="mb-4 input-group">
+                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
+                            Satuan Volume
+                        </label>
+                        <div class="input-group">
+                            <input type="text" list="bulan" value="" placeholder="Satuan Volume" class="form-control" name="satuan">
+                            <datalist id="bulan">
+                              <option value="Bulan Layanan">
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
+                            Target Volume</label>
+                        <div class="input-group">
+                            <input type="number" value="" placeholder="Target Volume" class="form-control"
+                                name="volume_target" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
                     <div class="mb-4 form-input">
                         <label for="" class="mb-1 fw-bold">
-                            Capaian Ro</label>
+                            Jumlah Volume</label>
                         <div class="input-group">
-                            <input value="" placeholder="Capaian Ro" class="form-control" name="capaian_ro">
+                            <input type="number" value="" placeholder="Jumlah Volume" class="form-control"
+                                name="volume_jumlah">
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="mb-4 input-group">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            Bagian/Bidang
-                        </label>
-                        <div class="input-group">
-                            <select class="custom-select" id="inputGroupSelect01" name="bidang" required>
-                                @foreach ($bidangs as $bidang)
-                                    <option value="{{ $bidang }}">
-                                        {{ $bidang }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="mb-4 input-group">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            Satuan
-                        </label>
-                        <div class="input-group">
-                            <select class="custom-select" id="inputGroupSelect01" name="satuan" required>
-                                @foreach ($satuans as $satuan)
-                                    <option value="{{ $satuan }}">
-                                        {{ $satuan }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="row">
@@ -93,64 +123,12 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            ID</label>
-                        <div class="input-group">
-                            <input value="" placeholder="ID" class="form-control" name="digit" required>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-2">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            KD KRO</label>
-                        <div class="input-group">
-                            <input value="" placeholder="KD KRO" class="form-control" name="kd_kro" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            KD RO</label>
-                        <div class="input-group">
-                            <input value="" placeholder="KD RO" class="form-control" name="kd_ro" required>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-3">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            Target Volume</label>
-                        <div class="input-group">
-                            <input type="number" value="" placeholder="Target Volume" class="form-control"
-                                name="volume_target" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            Jumlah Volume</label>
-                        <div class="input-group">
-                            <input type="number" value="" placeholder="Jumlah Volume" class="form-control"
-                                name="volume_jumlah">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-between">
                     <div class="div">
-                  <a class="text-secondary text-secondary-hover d-none d-sm-inline text-decoration-none"
+                        <a class="text-secondary text-secondary-hover d-none d-sm-inline text-decoration-none"
                             href="{{ route('laporan') }}">
                             <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
                                     class="fas fa-caret-square-left"></i>

@@ -1,5 +1,5 @@
 @php
-$heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Bidang', 'width' => 10], 'Nama Ro', 'Capaian Ro', ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
+$heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Nama RO', 'width' => 50], ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
 $query = [];
 $loop = 1;
 // @dd($datas);
@@ -15,14 +15,14 @@ foreach ($datas as $data) {
 
     $percent = round($data->volume_jumlah / $data->volume_target, 2) * 100 . ' %';
 
-    $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->bidang, $data->nama_ro, $data->capaian_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
+    $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->nama_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
     // @dd($dataId);
     $loop++;
 }
 $config = [
     'data' => $query,
     'order' => [[0, 'asc']],
-    'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
+    'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
     'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
 ];
 
@@ -47,11 +47,12 @@ $config = [
                         <div class="row">
                             <div class="col-sm">
                                 @if (auth()->user()->role == 'Satker')
-                                <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
-                                    <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i class="fas fa-plus"></i>
-                                        <div class="d-none d-sm-inline  p-3">Tambah
-                                    </button>
-                                </a>
+                                    <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
+                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i
+                                                class="fas fa-plus"></i>
+                                            <div class="d-none d-sm-inline  p-3">Tambah
+                                        </button>
+                                    </a>
                                 @endif
                                 <a href="{{ route('output.excel.table') }}" class="text-white text-decoration-none">
                                     <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
