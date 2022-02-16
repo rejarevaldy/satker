@@ -279,23 +279,23 @@ class InputController extends Controller
         $input->tanggal = $request->tanggal;
         // dd($input);
 
-        // if ($request->hasFile('file')) {
-        //     dd($request->file);
-        //     if ($input->file) {
-        //         dd('deleted lol');
-        //         File::delete(public_path('/files/' . $input->file));
-        //     }
-        //     $file = $request->file('file');
-        //     dd($file);
-        //     $fileName = time() . '-' . $file->getClientOriginalName();
-        //     $file->move(public_path('files'), $fileName);
-        //     $input->file = $fileName;
-        //     $input->update();
-        // } else {
+        if ($request->hasFile('file')) {
+            // dd($request->file);
+            if ($input->file) {
+                // dd('deleted lol');
+                File::delete(public_path('/files/' . $input->file));
+            }
+            $file = $request->file('file');
+            // dd($file);
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path('files'), $fileName);
+            $input->file = $fileName;
+            $input->update();
+        } else {
             // dd($request);
-        //     $input->file = $input->file;
-        //     $input->update();
-        // }
+            $input->file = $input->file;
+            $input->update();
+        }
 
         // if ($request->hasFile('file')) {
         //     $file = $request->file('file');
@@ -307,15 +307,15 @@ class InputController extends Controller
         //     dd($request);
         //     $input->file = $input->file;
         // }
-        if ($request->hasFile('file')) {
-            dd('yas');
-            $file = $request->file('file');
-            $fileName = time() . '-' . $file->getClientOriginalName();
-            $file->move(public_path('files'), $fileName);
-            $input->file = $fileName;
-        } else {
-            dd('no');
-        }
+        // if ($request->hasFile('file')) {
+        //     dd('yas');
+        //     $file = $request->file('file');
+        //     $fileName = time() . '-' . $file->getClientOriginalName();
+        //     $file->move(public_path('files'), $fileName);
+        //     $input->file = $fileName;
+        // } else {
+        //     dd($request);
+        // }
 
         $input->update();
 
