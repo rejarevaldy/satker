@@ -104,8 +104,19 @@ class InputController extends Controller
 
       public function show(OneInput $oneinput)
       {
+        $datas2 = TwoInput::where('one_input_id', $oneinput->id)->get();
+        $role = auth()->user()->role;
+        $user_id = auth()->user()->id;
+
+        if ($role === 'Monitoring') {
+            $selection = OneInput::whereYear('created_at', session('year'))->get();
+        } else {
+            $selection = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
+        }
             return view('input.show', [
-                  'data' => $oneinput
+                  'data' => $oneinput,
+                  'datas2' => $datas2,
+                  'selection' => $selection
             ]);
       }
 

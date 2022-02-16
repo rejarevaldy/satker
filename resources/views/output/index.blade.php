@@ -11,8 +11,8 @@
         <div class="row">
             @foreach ($panduans as $panduan)
                 <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header pt-3">
+                    <div class="card" style="height: 90%;">
+                        <div class="card-header pt-3" style="min-height: 5.3rem">
                             <h5>{{ $panduan->nama }}</h5>
                         </div>
                         <div class="card-body p-3">
@@ -29,7 +29,7 @@
                                 PDF @else Excel
                                 @endif </button>
                             @if ($panduan->nama == 'Usulan Rencana Kerja')
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-primary mt-md-1" data-toggle="modal"
                                     data-target="#URK"><i class="fas fa-list "></i>
                                     Bidang
                                 </button>
@@ -190,12 +190,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Anggaran" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                <x-adminlte-card title="Chart Bar Anggaran" theme="primary" style="outline" icon="fas fa-chart-bar">
                     <canvas id="myChart" height="200"></canvas>
                 </x-adminlte-card>
             </div>
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Output" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                <x-adminlte-card title="Chart Bar Output" theme="primary" style="outline" icon="fas fa-chart-bar">
                     <canvas id="myChart2" height="200"></canvas>
                 </x-adminlte-card>
             </div>

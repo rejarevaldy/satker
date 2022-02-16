@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Daftar Pengguna')
+@section('title', 'Rekap')
 
 @section('content_header')
 @stop
 
 @php
-$heads = [['label' => 'ID', 'width' => 1], 'Nama', 'Username', 'Bidang', ['label' => 'Opsi', 'width' => 8]];
+$heads = [['label' => 'ID', 'width' => 1], 'Nama', 'Username', 'Bidang', ['label' => 'Opsi', 'width' => 10]];
 
 $query = [];
 foreach ($data as $key => $item) {
@@ -16,8 +16,8 @@ foreach ($data as $key => $item) {
     $btnDetails =
         '<a href=" ' .
         route('rekap', $item) .
-        '" class="btn btn-primary btn-sm ">
-                        <i class="fa fa-lg fa-fw fa-info"></i>Rekap</a>';
+        '" class="btn btn-primary btn-xs ">
+                        <i class="fa fa-fw fa-info"></i>Rekap</a>';
 
     $query[] = [$item->id, $item->nama, $item->username, $item->role, $btnDetails];
 }
