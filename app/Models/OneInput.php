@@ -9,8 +9,12 @@ class OneInput extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'id'
+    ];
+
     public function TwoInput()
     {
-        $this->hasMany(TwoInput::class, 'one_input_id');
+        $this->hasMany(TwoInput::class);
     }
 }

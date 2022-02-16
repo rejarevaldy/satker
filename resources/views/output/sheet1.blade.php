@@ -63,7 +63,7 @@
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->kd_ro }}</td>
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->volume_target }}</td>
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->satuan }}</td>
-
+                {{-- @dd($one->)
                 @if (!empty($one->TwoInput[0]))
                     <td>{{ !empty($one->TwoInput[0]->volume_capaian) ? $one->TwoInput[0]->volume_capaian : '' }}</td>
                     <td>{{ !empty($one->TwoInput[0]->uraian) ? $one->TwoInput[0]->uraian : '' }}</td>
@@ -74,7 +74,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                @endif
+                @endif --}}
     
     
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->volume_jumlah }}</td>
@@ -93,7 +93,8 @@
                 <td></td>
             @else
                 @foreach ($twoinput as $keytwo => $two)
-                    @if (($two->one_input_id == $one->id) && ($two->deleted_at == null))
+                {{-- @dd($two) --}}
+                    {{-- @if (($two->one_input_id == $one->id) && ($two->deleted_at == null))
                         @if ($one->TwoInput->first() == $two)
                             <div class="kosong"></div>
                         @else
@@ -104,13 +105,14 @@
                                 <td>{{ \Carbon\Carbon::parse($two->tanggal)->format('d-m-Y') }}</td>
                             </tr>
                         @endif
-                    @endif
+                    @endif --}}
                 @endforeach
             @endif
             @php
                 $index++;
             @endphp
-        @endforeach        
+        @endforeach
+                
         
     </table>
     

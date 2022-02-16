@@ -415,9 +415,10 @@ class ExportController extends Controller
             $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         } else {
             $user_id = Auth::user()->id;
-            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
+            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
+            $twoinput = TwoInput::with('OneInput')->whereYear('created_at', session('year'))->get();
         }
+        // dd($twoinput);
 
         // $input = TwoInput::with('OneInput')->get();
         // $oneinput = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();

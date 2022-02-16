@@ -25,8 +25,8 @@ class InputExport implements FromView, ShouldAutoSize, WithEvents
             $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         } else {
             $user_id = Auth::user()->id;
-            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
+            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
+            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         }
         
         return view('output.sheet1', [
