@@ -23,14 +23,19 @@
                                 PDF @else Excel
                                 @endif </a>
                             <!-- Button trigger modal -->
+                            @if(auth()->user()->role == 'Monitoring')
                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                                 data-target="#editPanduan_{{ $panduan->id }}"><i class="fas fa-upload me-1"></i>
                                 Unggah @if ($panduan->nama != 'Usulan Rencana Kerja')
                                 PDF @else Excel
                                 @endif </button>
+                            @endif
                             @if ($panduan->nama == 'Usulan Rencana Kerja')
-                                <button type="button" class="btn btn-sm btn-primary mt-md-1" data-toggle="modal"
-                                    data-target="#URK"><i class="fas fa-list "></i>
+                                @if(auth()->user()->role == 'Monitoring')
+                                <button type="button" class="btn btn-sm btn-primary mt-md-1" data-toggle="modal" data-target="#URK"><i class="fas fa-list "></i>
+                                @elseif(auth()->user()->role == 'Satker')
+                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#URK"><i class="fas fa-list "></i>
+                                @endif
                                     Bidang
                                 </button>
 
@@ -60,10 +65,12 @@
                                                                 <i class="fas fa-download me-1"></i>
                                                                 Unduh Excel
                                                             </a>
+                                                            @if(auth()->user()->role == 'Monitoring')
                                                             <button type="button" class="btn btn-sm btn-success"
                                                                 data-target="#editURK_{{ $urk->id }}"
                                                                 data-toggle="modal"> <i class="fas fa-upload me-1"></i>
                                                                 Unggah Excel</button>
+                                                            @endif
                                                             <div class="modal fade" id="editURK_{{ $urk->id }}"
                                                                 tabindex="-1" aria-labelledby="editModalLabel"
                                                                 aria-hidden="true">
@@ -190,12 +197,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Anggaran" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                <x-adminlte-card title="Chart Bar Anggaran" theme="primary" icon="fas fa-chart-bar">
                     <canvas id="chartBarAnggaran" height="200"></canvas>
                 </x-adminlte-card>
             </div>
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Output" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                <x-adminlte-card title="Chart Bar Output" theme="primary" icon="fas fa-chart-bar">
                     <canvas id="chartBarOutput" height="200"></canvas>
                 </x-adminlte-card>
             </div>

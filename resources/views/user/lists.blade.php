@@ -7,20 +7,20 @@
 
 @php
     $heads = [
-        'ID',
-        'Name',
-        'Role',
-        'Action',
+        ['label' => 'No', 'no-export' => true, 'width' => 1],
+        'Nama',
+        ['label' => 'Role', 'no-export' => true, 'width' => 5],
+        ['label' => 'Opsi', 'no-export' => true, 'width' => 16],
     ];
-    
+
     $x = 1;
     $query = [];
     foreach ($data as $key => $item) {
         $dataUsername = $item->username;
         $dataName = $item->nama;
 
-        $btnDelete = '<button type="button" class="btn btn-sm mx-auto btn-default text-danger" data-toggle="modal" data-target="#exampleModal_' . $x . '">
-                        <i class="fa fa-lg fa-fw fa-trash"></i>
+        $btnDelete = '<button class="btn btn-xs btn-danger mx-1 shadow-sm" title="Detail" data-toggle="modal" data-target="#exampleModal_' . $x . '">
+                        <i class="fa fa-fw fa-trash"></i> Hapus
                     </button>';
 
         $modalDelete = '
@@ -31,7 +31,7 @@
                                     <h5 class="modal-title" id="exampleModalLabel">' . $dataName . '</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="forum">    
+                                <div class="forum">
                                     <form action="' . route("users.delete", $item->id) . '" method="POST" style="display: inline;">
                                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                                     <input type="hidden" name="_method" value="delete" />
@@ -47,19 +47,21 @@
                             </div>
                         </div>
                     </div>';
-        $btnDetails = '<a href=" ' . route("users.list.detail", $item->username) . '" class="btn btn-sm mx-auto btn-default text-teal">
-                        <i class="fa fa-lg fa-fw fa-eye"></i>
-                    </a>';
+        $btnDetails ='<a href=' .
+                    route("users.list.detail", $item->username) .
+                    '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
+                            <i class="fa fa-fw fa-info"></i> Detail
+                        </button> </a>';
 
         $query[] = [$x, $item->nama, $item->role, $btnDetails .  ' ' . $btnDelete];
         echo $modalDelete;
         $x++;
-    }    
+    }
 
     $config = [
         'data' => $query,
         'order' => [[1, 'asc']],
-        'columns' => [null, null, null, ['className' => 'text-center']],
+        'columns' => [['className' => 'text-center'], null, null, ['className' => 'text-center']],
     ];
 @endphp
 
@@ -67,7 +69,7 @@
     <div class="row">
         <div class="col-md">
             <div class="p-4 my-4 border rounded shadow-sm bg-white">
-                <h2 class="mb-2">Daftar Rekap</h2>
+                <h2 class="mb-2">Pengguna</h2>
                 <div class="p-2 rounded bg-white">
                     <div class="row">
                         <div class="col-sm">
@@ -93,7 +95,7 @@
     @endif
     <div class="row">
         <div class="col-md">
-            <x-adminlte-card theme="lime" theme-mode="outline">
+            <x-adminlte-card theme="success" theme-mode="outline" title="Daftar Pengguna">
                 <x-adminlte-datatable id="table1" :heads="$heads" hoverable bordered>
                     @foreach($config['data'] as $row)
                         <tr>
