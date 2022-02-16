@@ -454,11 +454,6 @@ foreach ($datas2 as $data2) {
                         </div>
                     </div>
                     {{-- Col End --}}
-        @if (empty($query))
-
-                    <x-adminlte-alert class="bg-danger mt-3">
-                        <h5 class="text-white text-center">Belum ada data</h5>
-                    </x-adminlte-alert>
 
                     <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">
                         <x-adminlte-modal id="tambahDokumen" title="Tambah Dokumen" v-centered>
@@ -520,6 +515,13 @@ foreach ($datas2 as $data2) {
                             </x-slot>
                         </x-adminlte-modal>
                     </form>
+
+        @if (empty($query))
+
+                    <x-adminlte-alert class="bg-danger mt-3">
+                        <h5 class="text-white text-center">Belum ada data</h5>
+                    </x-adminlte-alert>
+
                 @else
 
                     <div class="row">
