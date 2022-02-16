@@ -190,13 +190,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Anggaran" theme="primary" style="outline" icon="fas fa-chart-bar">
-                    <canvas id="myChart" height="200"></canvas>
+                <x-adminlte-card title="Chart Bar Anggaran" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                    <canvas id="chartBarAnggaran" height="200"></canvas>
                 </x-adminlte-card>
             </div>
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Output" theme="primary" style="outline" icon="fas fa-chart-bar">
-                    <canvas id="myChart2" height="200"></canvas>
+                <x-adminlte-card title="Chart Bar Output" theme="purple" icon="fas fa-chart-bar" removable collapsible>
+                    <canvas id="chartBarOutput" height="200"></canvas>
                 </x-adminlte-card>
             </div>
         </div>
@@ -209,31 +209,45 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"
-        integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        const anggaranRealisasi = 0;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script>
+        const dataBarAnggaranRealisasi = [{{ $rpUMUM }}, {{ $rpPPAI }}, {{ $rpPPAII }},
+            {{ $rpSKKI }}, {{ $rpPAPK }}
+        ]
+        const dataBarAnggaranPagu = [{{ $paguUMUM }}, {{ $paguPPAI }}, {{ $paguPPAII }}, {{ $paguSKKI }},
+            {{ $paguPAPK }}
+        ]
+        const dataBarAnggaranSisa = [{{ $sisaUMUM }}, {{ $sisaPPAI }}, {{ $sisaPPAII }}, {{ $sisaSKKI }},
+            {{ $sisaPAPK }}
+        ]
+
+        const ResultMax = data => {
+            return data * 2
+        }
+
+        console.log({{ max([$sisaUMUM, $sisaPPAI, $sisaPPAII, $sisaSKKI, $sisaPAPK]) }})
+
+        // setup chart bar group
         const dataGroup = {
             labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
             datasets: [{
-                    label: 'PAGU',
-                    data: [34378600, 0, 0, 0, 0],
+                    label: 'REALISASI',
+                    data: dataBarAnggaranRealisasi,
                     backgroundColor: ['rgb(255, 99, 132)'],
                     stack: 'Stack 0',
                     yAxisID: 'percentage'
                 },
                 {
-                    label: 'REALISASI',
-                    data: [38000000, 1000000, 0, 0, 0],
+                    label: 'PAGU',
+                    data: dataBarAnggaranPagu,
                     backgroundColor: ['rgb(54, 162, 235)'],
                     stack: 'Stack 1',
                     yAxisID: 'percentage'
                 },
                 {
                     label: 'SISA',
-                    data: [3621400, 1000000, 0, 0, 0],
+                    data: dataBarAnggaranSisa,
                     backgroundColor: ['rgb(255, 205, 86)'],
                     stack: 'Stack 2',
                     yAxisID: 'currency'
@@ -241,6 +255,7 @@
             ]
         };
 
+        // config chart bar group
         const configGroup = {
             type: 'bar',
             data: dataGroup,
@@ -265,7 +280,8 @@
                         type: 'linear',
                         position: 'left',
                         min: 0,
-                        max: 76000000,
+                        max: ResultMax({{ $paguUMUM }}, {{ $paguPPAI }}, {{ $paguPPAII }},
+                            {{ $paguSKKI }}, {{ $paguPAPK }}),
                         grid: {
                             display: false
                         }
@@ -274,7 +290,8 @@
                         type: 'linear',
                         position: 'right',
                         min: 0,
-                        max: 76000000,
+                        max: ResultMax({{ $paguUMUM }}, {{ $paguPPAI }}, {{ $paguPPAII }},
+                            {{ $paguSKKI }}, {{ $paguPAPK }}),
                         grid: {
                             display: false
                         }
@@ -284,13 +301,85 @@
         };
 
         const chartBarAnggaran = new Chart(
-            document.getElementById('myChart'),
+            document.getElementById('chartBarAnggaran'),
             configGroup
         )
 
+        const dataBarOutputRealisasi = [{{ $rp2UMUM }}, {{ $rp2PPAI }}, {{ $rp2PPAII }},
+            {{ $rp2SKKI }}, {{ $rp2PAPK }}
+        ]
+        const dataBarOutputTarget = [{{ $targetUMUM }}, {{ $targetPPAI }}, {{ $targetPPAII }},
+            {{ $targetSKKI }}, {{ $targetPAPK }}
+        ]
+
+        const dataBarOutput = {
+            labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
+            datasets: [{
+                    label: 'REALISASI',
+                    data: dataBarOutputRealisasi,
+                    backgroundColor: ['rgb(255, 99, 132)'],
+                    stack: 'Stack 0',
+                    yAxisID: 'percentage'
+                },
+                {
+                    label: 'TARGET',
+                    data: dataBarOutputTarget,
+                    backgroundColor: ['rgb(54, 162, 235)'],
+                    stack: 'Stack 1',
+                    yAxisID: 'percentage'
+                }
+            ]
+        };
+
+        const configBarOutput = {
+            type: 'bar',
+            data: dataBarOutput,
+            options: {
+                plugins: {
+                    title: {
+                        display: true
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true
+                    },
+                    currency: {
+                        type: 'linear',
+                        position: 'left',
+                        min: 0,
+                        max: ResultMax(
+                            {{ max([$targetUMUM, $targetPPAI, $targetPPAII, $targetSKKI, $targetPAPK]) }}
+                        ),
+                        grid: {
+                            display: false
+                        }
+                    },
+                    percentage: {
+                        type: 'linear',
+                        position: 'right',
+                        min: 0,
+                        max: ResultMax(
+                            {{ max([$targetUMUM, $targetPPAI, $targetPPAII, $targetSKKI, $targetPAPK]) }}
+                        ),
+                        grid: {
+                            display: false
+                        }
+                    },
+                }
+            }
+        };
+
         const chartBarOutput = new Chart(
-            document.getElementById('myChart2'),
-            configGroup
+            document.querySelector('#chartBarOutput'),
+            configBarOutput
         )
     </script>
 @stop
