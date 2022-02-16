@@ -63,7 +63,7 @@
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->kd_ro }}</td>
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->volume_target }}</td>
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->satuan }}</td>
-    
+
                 @if (!empty($one->TwoInput[0]))
                     <td>{{ !empty($one->TwoInput[0]->volume_capaian) ? $one->TwoInput[0]->volume_capaian : '' }}</td>
                     <td>{{ !empty($one->TwoInput[0]->uraian) ? $one->TwoInput[0]->uraian : '' }}</td>
