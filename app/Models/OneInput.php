@@ -17,4 +17,9 @@ class OneInput extends Model
     {
         return $this->hasMany(TwoInput::class, 'one_input_id');
     }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

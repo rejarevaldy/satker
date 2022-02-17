@@ -246,9 +246,10 @@ foreach ($datas2 as $data2) {
                                         <div class="d-none d-sm-inline  p-3">Tambah
                                     </button>
                                 </div>
-                            </div>
+                              </div>
                         @endif
                     </div>
+
                 </div>
                 {{-- Col End --}}
                 @if (empty($query))
@@ -290,7 +291,8 @@ foreach ($datas2 as $data2) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="naro" class="form-label"><span class="text-danger">*</span> Nama
+                                        <label for="naro" class="form-label"><span class="text-danger">*</span>
+                                            Nama
                                             RO</label>
                                         <div class="mb-3 input-group">
                                             <select type="select" class="form-control" id="naro" name="naro" required>
