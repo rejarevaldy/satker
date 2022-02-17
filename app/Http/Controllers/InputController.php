@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\OneInput;
 use App\Models\TwoInput;
 use Illuminate\Http\Request;
@@ -17,17 +18,17 @@ class InputController extends Controller
             $this->middleware('auth');
       }
 
-      public function index()
+      public function index(User $user)
       {
-            $role = Auth::user()->role;
-            $user_id = Auth::user()->id;
+            // $role = Auth::user()->role;
+            // $user_id = Auth::user()->id;
 
 
-            if ($role == 'Monitoring') {
-                  $datas = OneInput::whereYear('created_at', '=', session('year'))->get();
-            } else {
-                  $datas = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
-            }
+            // if ($role == 'Monitoring') {
+            //       $datas = OneInput::whereYear('created_at', '=', session('year'))->get();
+            // } else {
+            //       $datas = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
+            // }
 
             $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
             foreach ($oneinputs as $oneinput) {
@@ -42,7 +43,7 @@ class InputController extends Controller
             }
 
             return view('input.index', [
-                  'datas' => $datas
+                  'data' => $user->where('role', 'Satker')->get()
             ]);
       }
 
@@ -168,6 +169,72 @@ class InputController extends Controller
 
       public function index_dokumen()
       {
+            $user = Auth()->user();
+
+            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user->id);
+
+            // Sum Volume capaian
+            foreach ($oneinputs as $oneinput) {
+                  $id = $oneinput->id;
+
+                  $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
+                  $oneinput = OneInput::find($id);
+                  $sum = array_sum($input);
+                  $oneinput->volume_jumlah = $sum;
+                  $oneinput->update();
+            }
+
+            ##### UMUM Section
+            // GET Bidang
+            $datas = $oneinputs->get();
+
+            // Chart Anggaran
+            $allPagu = [];
+            $allRP = [];
+
+            // Chart Output
+            $allTarget = [];
+            $allRP2 = [];
+
+            // Loop data and push to an empty array above
+            foreach ($datas as $data) {
+                  array_push($allPagu, $data['pagu']);
+                  array_push($allRP, $data['rp']);
+                  array_push($allTarget, $data['volume_target']);
+                  array_push($allRP2, $data['volume_jumlah']);
+            }
+
+            // Result Chart Anggaran
+            if ($allPagu and $allRP) {
+                  $resultPagu = array_sum($allPagu);
+                  $resultRP = array_sum($allRP);
+
+                  // Result Percentage Pie Chart Anggaran
+                  $percentage = ($resultRP / $resultPagu) * 100;
+                  $resultPercentage =  number_format(floor($percentage * 100) / 100, 1, '.', '');
+            } else {
+                  $resultPagu = 0;
+                  $resultRP = 0;
+                  $resultPercentage = 0;
+            }
+
+            // Result Chart Output
+            if ($allTarget and $allRP2) {
+                  $resultTarget = array_sum($allTarget);
+                  $resultRP2 = array_sum($allRP2);
+
+                  // Result Percentage Pie Chart Output
+                  $percentage2 = ($resultRP2 / $resultTarget) * 100;
+                  $resultPercentage2 =  number_format(floor($percentage2 * 100) / 100, 2, '.', '');
+            } else {
+                  $resultTarget = 0;
+                  $resultRP2 = 0;
+                  $resultPercentage2 = 0;
+            }
+
+            $sisa = $resultPagu - $resultRP;
+            ##### end section
+
             // Sum Volume capaian
             $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
             foreach ($oneinputs as $oneinput) {
@@ -221,6 +288,14 @@ class InputController extends Controller
                   'datas2' => $datas2,
                   'selection' => $selection,
                   'title' => 'Dokumen',
+                  'user' => $user,
+                  'pagu' => $resultPagu,
+                  'rp' => $resultRP,
+                  'rp2' => $resultRP2,
+                  'sisa' => $sisa,
+                  'percentage' => $resultPercentage,
+                  'percentage2' => $resultPercentage2,
+                  'target' => $resultTarget
             ]);
       }
 

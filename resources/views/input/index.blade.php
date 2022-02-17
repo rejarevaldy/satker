@@ -1,32 +1,54 @@
 @php
-$heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Nama RO', 'width' => 50], ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
+// $heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Nama RO', 'width' => 50], ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
+// $query = [];
+// $loop = 1;
+// // @dd($datas);
+// foreach ($datas as $data) {
+//     $dataId = $data->id;
+//     $dataNama = $data->nama;
+//     $btnDetail =
+//         '<a href=' .
+//         route('laporan.show', $data) .
+//         '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
+//                 <i class="fa fa-fw fa-info"></i> Detail
+//             </button> </a>';
+
+//     $percent = round($data->volume_jumlah / $data->volume_target, 2) * 100 . ' %';
+
+//     $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->nama_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
+//     // @dd($dataId);
+//     $loop++;
+// }
+// $config = [
+//     'data' => $query,
+//     'order' => [[0, 'asc']],
+//     'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
+//     'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
+// ];
+
+$heads = [['label' => 'ID', 'width' => 1], 'Nama', 'Username', ['label' => 'Opsi', 'width' => 10]];
+
 $query = [];
-$loop = 1;
-// @dd($datas);
-foreach ($datas as $data) {
-    $dataId = $data->id;
-    $dataNama = $data->nama;
-    $btnDetail =
-        '<a href=' .
-        route('laporan.show', $data) .
-        '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
-                <i class="fa fa-fw fa-info"></i> Detail
-            </button> </a>';
+foreach ($data as $key => $item) {
+    $dataUsername = $item->username;
+    $dataName = $item->nama;
 
-    $percent = round($data->volume_jumlah / $data->volume_target, 2) * 100 . ' %';
+    $btnDetails =
+        '<a href=" ' .
+        route('rekap', $item) .
+        '" class="btn btn-primary btn-xs ">
+                        <i class="fa fa-fw fa-info"></i>Laporan</a>';
 
-    $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->nama_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
-    // @dd($dataId);
-    $loop++;
+    $query[] = [$item->id, $item->nama, $item->username, $btnDetails];
 }
+
 $config = [
     'data' => $query,
-    'order' => [[0, 'asc']],
-    'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
-    'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
+    'order' => [[1, 'asc']],
+    'columns' => [null, null, null, ['className' => 'text-center']],
 ];
-
 @endphp
+
 
 @extends('adminlte::page')
 
