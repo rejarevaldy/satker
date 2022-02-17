@@ -19,17 +19,11 @@ class InputExport implements FromView, ShouldAutoSize, WithEvents
     public function view(): View
     {
         $role = Auth::user()->role;
-        $id = (int) substr(url()->current(), -1);
+        $id = (int) substr(url()->current(), strrpos(url()->current(), '/' )+1);
         
-        if ($role == 'Monitoring') {
-            $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-        } else {
-            $user_id = Auth::user()->id;
-            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $id)->get();
-        //     $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-        }
+        $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $id)->get();
+        // $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
+        $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         
         return view('output.sheet1', [
             // 'oneinput' => OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get(),
@@ -45,14 +39,9 @@ class InputExport implements FromView, ShouldAutoSize, WithEvents
             AfterSheet::class => function(AfterSheet $event) {
                 $role = Auth::user()->role;
 
-                if ($role == 'Monitoring') {
-                    $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
-                    $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-                } else {
-                    $user_id = Auth::user()->id;
-                    $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
-                    $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-                }
+                $user_id = Auth::user()->id;
+                $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
+                $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
 
                 $oneinput = OneInput::whereYear('created_at', session('year'))->get();
                 $countBorder = count($twoinput) == 0 ? count($oneinputs) : count($twoinput);

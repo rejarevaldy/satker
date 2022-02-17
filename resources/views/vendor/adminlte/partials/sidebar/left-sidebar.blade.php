@@ -18,7 +18,35 @@
                 {{-- Configured sidebar links --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
 
+                @if (Auth()->user()->role == 'Satker')
+                    <li class="nav-item">
+                        {{-- <a class="nav-link" href="{{ route('laporan.list', Auth()->user()->username) }}"> --}}
+                        <a class="nav-link" href="/laporan/{{ auth()->user()->username }}">
+                            <i class="fa fa-th "></i>
+                            <p>
+                                Laporan
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dokumen') }}">
+                            <i class="fa fa-th "></i>
+                            <p>
+                                Dokumen
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
                 @if (Auth()->user()->role == 'Monitoring')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('laporan') }}">
+                            <i class="fa fa-th "></i>
+                            <p>
+                                Laporan
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('list') }}">
                             <i class="fa fa-th "></i>

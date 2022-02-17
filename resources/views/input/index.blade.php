@@ -1,32 +1,100 @@
 @php
-$heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Nama RO', 'width' => 50], ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
+// $heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Nama RO', 'width' => 50], ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
+// $query = [];
+// $loop = 1;
+// // @dd($datas);
+// foreach ($datas as $data) {
+//     $dataId = $data->id;
+//     $dataNama = $data->nama;
+//     $btnDetail =
+//         '<a href=' .
+//         route('laporan.show', $data) .
+//         '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
+//                 <i class="fa fa-fw fa-info"></i> Detail
+//             </button> </a>';
+
+//     $percent = round($data->volume_jumlah / $data->volume_target, 2) * 100 . ' %';
+
+//     $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->nama_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
+//     // @dd($dataId);
+//     $loop++;
+// }
+// $config = [
+//     'data' => $query,
+//     'order' => [[0, 'asc']],
+//     'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
+//     'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
+// ];
+
+$heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', '% Realisasi', '% Volume RO', ['label' => 'Opsi', 'width' => 10]];
+
+$x = 1;
 $query = [];
-$loop = 1;
-// @dd($datas);
-foreach ($datas as $data) {
-    $dataId = $data->id;
-    $dataNama = $data->nama;
-    $btnDetail =
-        '<a href=' .
-        route('laporan.show', $data) .
-        '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
-                <i class="fa fa-fw fa-info"></i> Detail
-            </button> </a>';
+foreach ($data as $key => $item) {
+    $datas = $item->oneinput()->all();
+    // Chart Anggaran
+    $allPagu = [];
+    $allRP = [];
 
-    $percent = round($data->volume_jumlah / $data->volume_target, 2) * 100 . ' %';
+    // Chart Output
+    $allTarget = [];
+    $allRP2 = [];
 
-    $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->nama_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
-    // @dd($dataId);
-    $loop++;
+    // Loop data and push to an empty array above
+    foreach ($datas as $data) {
+        array_push($allPagu, $data['pagu']);
+        array_push($allRP, $data['rp']);
+        array_push($allTarget, $data['volume_target']);
+        array_push($allRP2, $data['volume_jumlah']);
+    }
+
+    // Result Chart Anggaran
+    if ($allPagu and $allRP) {
+        $resultPagu = array_sum($allPagu);
+        $resultRP = array_sum($allRP);
+
+        // Result Percentage Pie Chart Anggaran
+        $percentage = ($resultRP / $resultPagu) * 100;
+        $resultPercentage = number_format(floor($percentage * 100) / 100, 1, '.', '');
+    } else {
+        $resultPagu = 0;
+        $resultRP = 0;
+        $resultPercentage = 0;
+    }
+
+    // Result Chart Output
+    if ($allTarget and $allRP2) {
+        $resultTarget = array_sum($allTarget);
+        $resultRP2 = array_sum($allRP2);
+
+        // Result Percentage Pie Chart Output
+        $percentage2 = ($resultRP2 / $resultTarget) * 100;
+        $resultPercentage2 = number_format(floor($percentage2 * 100) / 100, 2, '.', '');
+    } else {
+        $resultTarget = 0;
+        $resultRP2 = 0;
+        $resultPercentage2 = 0;
+    }
+
+    $dataUsername = $item->username;
+    $dataName = $item->nama;
+
+    $btnDetails =
+        '<a href="/laporan/' . $item->username .
+        '" class="btn btn-primary btn-xs ">
+                        <i class="fa fa-fw fa-info"></i>Laporan</a>';
+
+    $query[] = [$x, $item->nama, $item->username, $resultPercentage . '%', $resultPercentage2 . '%', $btnDetails];
 }
+$x++;
+
 $config = [
     'data' => $query,
-    'order' => [[0, 'asc']],
-    'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
-    'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
+    'order' => [[1, 'asc']],
+    'columns' => [null, null, null, null, null, ['className' => 'text-center']],
 ];
-
 @endphp
+
 
 @extends('adminlte::page')
 
@@ -48,18 +116,21 @@ $config = [
                             <div class="col-sm">
                                 @if (auth()->user()->role == 'Satker')
                                     <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
-                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i class="fas fa-plus"></i>
+                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i
+                                                class="fas fa-plus"></i>
                                             <div class="d-none d-sm-inline  p-3">Tambah
                                         </button>
                                     </a>
-                                    <a href="{{ route('output.excel.table', auth()->user()->id) }}" class="text-white text-decoration-none">
+                                    <a href="{{ route('output.excel.table', auth()->user()->id) }}"
+                                        class="text-white text-decoration-none">
                                         <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
                                                 class="far fa-file-excel"></i>
                                             <div class="d-none d-sm-inline  p-3">Excel
                                         </button>
                                     </a>
                                 @else
-                                    <a href="{{ route('output.excel.table.all') }}" class="text-white text-decoration-none">
+                                    <a href="{{ route('output.excel.table.all') }}"
+                                        class="text-white text-decoration-none">
                                         <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
                                                 class="far fa-file-excel"></i>
                                             <div class="d-none d-sm-inline  p-3">Excel
