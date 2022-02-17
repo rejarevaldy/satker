@@ -10,11 +10,14 @@
     <div class="pt-3"></div>
 
     @if (session('status'))
-        <x-adminlte-alert class="bg-teal" dismissable>
-            {{ session('status') }}
-        </x-adminlte-alert>
-    @endif
-
+    <div class="row">
+        <div class="col">
+            <x-adminlte-alert theme="success" title="Success">
+                {{ session('status') }}
+            </x-adminlte-alert>
+        </div>
+    </div>
+@endif
 
     <x-adminlte-card title="Sunting Laporan" theme="primary" theme-mode="outline">
         <form action="{{ route('laporan.update', $data) }}" method="POST" enctype="multipart/form-data">

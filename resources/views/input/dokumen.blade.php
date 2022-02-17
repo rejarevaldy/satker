@@ -220,14 +220,18 @@ foreach ($datas2 as $data2) {
 @stop
 
 @section('content')
-    <div class="container-fluid pt-3">
+    <div class="pt-3"></div>
+
+    <div class="container-fluid">
         @if (session('status'))
-            <x-adminlte-alert class="bg-teal mt-3" dismissable>
-                {{ session('status') }}
-            </x-adminlte-alert>
+            <div class="row">
+                <div class="col">
+                    <x-adminlte-alert theme="success" title="Success">
+                        {{ session('status') }}
+                    </x-adminlte-alert>
+                </div>
+            </div>
         @endif
-
-
         <div class="row">
             <div class="col-12">
                 <div class="p-4 mb-4 border rounded shadow-sm bg-white">
@@ -292,7 +296,7 @@ foreach ($datas2 as $data2) {
                                             <select type="select" class="form-control" id="naro" name="naro" required>
                                                 @foreach ($selection as $select)
                                                     <option value="{{ $select->id }}">
-                                                        {{ $select->nama_ro }}</option>
+                                                        {{ $select->nama_ro . ' - ' . $select->satuan }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -378,7 +382,7 @@ foreach ($datas2 as $data2) {
                                             <select type="select" class="form-control" id="naro" name="naro" required>
                                                 @foreach ($selection as $select)
                                                     <option value="{{ $select->id }}">
-                                                        {{ $select->nama_ro }}</option>
+                                                        {{ $select->nama_ro . ' - ' . $select->satuan }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

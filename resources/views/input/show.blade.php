@@ -220,7 +220,18 @@ foreach ($datas2 as $data2) {
 @stop
 
 @section('content')
-    <div class="container-fluid pt-3">
+    <div class="pt-3"></div>
+
+    <div class="container-fluid">
+        @if (session('status'))
+            <div class="row">
+                <div class="col">
+                    <x-adminlte-alert theme="success" title="Success">
+                        {{ session('status') }}
+                    </x-adminlte-alert>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="p-4 mb-4 border rounded shadow-sm bg-white">
@@ -262,8 +273,8 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         ID</label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->digit }}" class="form-control" name="digit"  value="{{ $data->digit }}"
-                                            disabled>
+                                        <input placeholder="{{ $data->digit }}" class="form-control" name="digit"
+                                            value="{{ $data->digit }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -273,8 +284,8 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         KD KRO</label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->kd_kro }}" class="form-control" name="kd_kro" value="{{ $data->kd_kro }}" 
-                                            disabled>
+                                        <input placeholder="{{ $data->kd_kro }}" class="form-control" name="kd_kro"
+                                            value="{{ $data->kd_kro }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -284,8 +295,8 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         KD RO</label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->kd_ro }}" class="form-control" name="kd_ro" value="{{ $data->kd_ro }}"
-                                            disabled>
+                                        <input placeholder="{{ $data->kd_ro }}" class="form-control" name="kd_ro"
+                                            value="{{ $data->kd_ro }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -294,8 +305,8 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         Nama RO</label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->nama_ro }}" class="form-control" name="nama_ro" value="{{ $data->nama_ro }}" 
-                                            disabled>
+                                        <input placeholder="{{ $data->nama_ro }}" class="form-control" name="nama_ro"
+                                            value="{{ $data->nama_ro }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -305,8 +316,8 @@ foreach ($datas2 as $data2) {
                                         Satuan Volume
                                     </label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->satuan }}" class="form-control" name="capaian_ro" value="{{ $data->satuan }}"
-                                            disabled>
+                                        <input placeholder="{{ $data->satuan }}" class="form-control"
+                                            name="capaian_ro" value="{{ $data->satuan }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -318,8 +329,9 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         Target Volume</label>
                                     <div class="input-group">
-                                        <input type="text" placeholder="{{ $data->volume_target }}" value="{{ $data->volume_target }}"
-                                            class="form-control" name="volume_target" disabled>
+                                        <input type="text" placeholder="{{ $data->volume_target }}"
+                                            value="{{ $data->volume_target }}" class="form-control"
+                                            name="volume_target" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -329,8 +341,9 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         Jumlah Volume</label>
                                     <div class="input-group">
-                                        <input type="text" placeholder="{{ $data->volume_jumlah }}"  value="{{ $data->volume_jumlah }}"
-                                            class="form-control" name="volume_jumlah" disabled>
+                                        <input type="text" placeholder="{{ $data->volume_jumlah }}"
+                                            value="{{ $data->volume_jumlah }}" class="form-control"
+                                            name="volume_jumlah" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -378,8 +391,8 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         RVO</label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->rvo * 100 }} %" class="form-control" name=""  value="{{ $data->rvo * 100 }} %"
-                                            disabled>
+                                        <input placeholder="{{ $data->rvo * 100 }} %" class="form-control" name=""
+                                            value="{{ $data->rvo * 100 }} %" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -388,8 +401,8 @@ foreach ($datas2 as $data2) {
                                     <label for="" class="mb-1 fw-bold">
                                         RVO Maksimal</label>
                                     <div class="input-group">
-                                        <input placeholder="{{ $data->rvo_maksimal }}" class="form-control" name="" value="{{ $data->rvo_maksimal }}"
-                                            disabled>
+                                        <input placeholder="{{ $data->rvo_maksimal }}" class="form-control" name=""
+                                            value="{{ $data->rvo_maksimal }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -399,7 +412,8 @@ foreach ($datas2 as $data2) {
                                         Capaian</label>
                                     <div class="input-group">
                                         <input
-                                            placeholder="{{ number_format(floor($data->capaian * 100), 2, '.', '') }} % " value="{{ number_format(floor($data->capaian * 100), 2, '.', '') }} % "
+                                            placeholder="{{ number_format(floor($data->capaian * 100), 2, '.', '') }} % "
+                                            value="{{ number_format(floor($data->capaian * 100), 2, '.', '') }} % "
                                             class="form-control" name="capaian_ro" disabled>
                                     </div>
                                 </div>
@@ -478,16 +492,16 @@ foreach ($datas2 as $data2) {
                             </div>
 
                             <div class="row">
-                              <div class="col">
-                                  <label for="naro" class="form-label">Volume
-                                      Capaian</label>
-                                  <div class="mb-3 input-group">
-                                      <input type="number" class="form-control" id="volume_capaian"
-                                          name="volume_capaian"
-                                          placeholder="Jika satuan volume adalah Bulan Layanan maka kosongkan">
-                                  </div>
-                              </div>
-                          </div>
+                                <div class="col">
+                                    <label for="naro" class="form-label">Volume
+                                        Capaian</label>
+                                    <div class="mb-3 input-group">
+                                        <input type="number" class="form-control" id="volume_capaian"
+                                            name="volume_capaian"
+                                            placeholder="Jika satuan volume adalah Bulan Layanan maka kosongkan">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <label for="" class="mb-1"> Upload File
@@ -507,7 +521,7 @@ foreach ($datas2 as $data2) {
                 </form>
 
                 @if (empty($query))
-                    <x-adminlte-alert class="bg-white mt-3 border-danger" >
+                    <x-adminlte-alert class="bg-white mt-3 border-danger">
                         <h5 class="text-danger text-center">Data Kosong</h5>
                     </x-adminlte-alert>
                 @else
