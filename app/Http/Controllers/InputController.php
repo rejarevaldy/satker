@@ -30,25 +30,21 @@ class InputController extends Controller
             //       $datas = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
             // }
 
-            $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
+            // foreach ($oneinputs as $oneinput) {
+            //       $id = $oneinput->id;
 
-            foreach ($oneinputs as $oneinput) {
-                  $id = $oneinput->id;
+            //       $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
+            //       $oneinput = OneInput::find($id);
+            //       $sum = array_sum($input);
 
-                  $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
-                  $oneinput = OneInput::find($id);
-                  $sum = array_sum($input);
+            //       $oneinput->volume_jumlah = $sum;
+            //       $oneinput->update();
+            // }
 
-                  $oneinput->volume_jumlah = $sum;
-                  $oneinput->update();
-            }
-
-            $oneinputs = OneInput::whereYear('created_at', session('year'))->where('user_id', $user->id)->get();
-
+            $users = $user->where('role', 'Satker')->get();
 
             return view('input.index', [
-                  'data' => $user->where('role', 'Satker')->get(),
-
+                  'data' => $users,
             ]);
       }
 

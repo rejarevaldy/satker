@@ -26,11 +26,12 @@
 //     'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
 // ];
 
-$heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', ['label' => 'Opsi', 'width' => 10]];
+$heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', '% Realisasi', '% Volume RO', ['label' => 'Opsi', 'width' => 10]];
 
 $x = 1;
 $query = [];
 foreach ($data as $key => $item) {
+      
     $dataUsername = $item->username;
     $dataName = $item->nama;
 
@@ -40,14 +41,14 @@ foreach ($data as $key => $item) {
         '" class="btn btn-primary btn-xs ">
                         <i class="fa fa-fw fa-info"></i>Laporan</a>';
 
-    $query[] = [$x, $item->nama, $item->username, $btnDetails];
+    $query[] = [$x, $item->nama, $item->username, 'persen 1', 'persen 2', $btnDetails];
 }
 $x++;
 
 $config = [
     'data' => $query,
     'order' => [[1, 'asc']],
-    'columns' => [null, null, null, ['className' => 'text-center']],
+    'columns' => [null, null, null, null, null, ['className' => 'text-center']],
 ];
 @endphp
 
@@ -72,18 +73,21 @@ $config = [
                             <div class="col-sm">
                                 @if (auth()->user()->role == 'Satker')
                                     <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
-                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i class="fas fa-plus"></i>
+                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i
+                                                class="fas fa-plus"></i>
                                             <div class="d-none d-sm-inline  p-3">Tambah
                                         </button>
                                     </a>
-                                    <a href="{{ route('output.excel.table', auth()->user()->id) }}" class="text-white text-decoration-none">
+                                    <a href="{{ route('output.excel.table', auth()->user()->id) }}"
+                                        class="text-white text-decoration-none">
                                         <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
                                                 class="far fa-file-excel"></i>
                                             <div class="d-none d-sm-inline  p-3">Excel
                                         </button>
                                     </a>
                                 @else
-                                    <a href="{{ route('output.excel.table.all') }}" class="text-white text-decoration-none">
+                                    <a href="{{ route('output.excel.table.all') }}"
+                                        class="text-white text-decoration-none">
                                         <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
                                                 class="far fa-file-excel"></i>
                                             <div class="d-none d-sm-inline  p-3">Excel

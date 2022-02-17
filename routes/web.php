@@ -47,8 +47,8 @@ Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->nam
 Route::get('/laporan', [InputController::class, 'index'])->name('laporan');
 Route::get('/laporan/{user:username}', [InputController::class, 'list'])->name('laporan.list');
 Route::get('/laporan/tambah', [InputController::class, 'create'])->name('laporan.create');
-Route::post('/laporan/tambah', [InputController::class, 'store'])->name('laporan.store');
-Route::get('/laporan/{oneinput}', [InputController::class, 'show'])->name('laporan.show');
+Route::post('/laporan/tambahkan', [InputController::class, 'store'])->name('laporan.store');
+Route::get('/laporan/{oneinput}/detail', [InputController::class, 'show'])->name('laporan.show');
 Route::get('/laporan/{oneinput}/sunting', [InputController::class, 'edit'])->name('laporan.edit');
 Route::put('/laporan/{oneinput}/sunting', [InputController::class, 'update'])->name('laporan.update');
 Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])->name('laporan.destroy');
