@@ -8,6 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class TwoInput extends Model
 {
     use HasFactory;
+    
+    protected $guarded = [
+        'id'
+    ];
+
+    // protected $fillable = [
+    //     'volume_capaian',
+    //     'uraian',
+    //     'nomor_dokumen',
+    //     'tanggal',
+    //     'one_input_id',
+    //     'file_dokumen'
+    // ];
 
     public function OneInput()
     {
