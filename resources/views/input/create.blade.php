@@ -11,9 +11,13 @@
     <div class="pt-3"></div>
 
     @if (session('status'))
-        <x-adminlte-alert class="bg-teal" dismissable>
-            {{ session('status') }}
-        </x-adminlte-alert>
+        <div class="row">
+            <div class="col">
+                <x-adminlte-alert theme="success" title="Success">
+                    {{ session('status') }}
+                </x-adminlte-alert>
+            </div>
+        </div>
     @endif
 
     <x-adminlte-card title="Tambahkan Laporan" theme="primary" theme-mode="outline">
@@ -64,9 +68,10 @@
                             Satuan Volume
                         </label>
                         <div class="input-group">
-                            <input type="text" list="bulan" value="" placeholder="Satuan Volume" class="form-control" name="satuan">
+                            <input type="text" list="bulan" value="" placeholder="Satuan Volume" class="form-control"
+                                name="satuan">
                             <datalist id="bulan">
-                              <option value="Bulan Layanan">
+                                <option value="Bulan Layanan">
                             </datalist>
                         </div>
                     </div>
