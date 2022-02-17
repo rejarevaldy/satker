@@ -124,7 +124,7 @@ class UserController extends Controller
                   'password' => 'required|confirmed',
             ]);
 
-            $user->password = $request->password;
+            $user->password = bcrypt($request->password);
             $user->update();
 
             return redirect()->back()->with('status', 'Password berhasil di edit!');
