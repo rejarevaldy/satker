@@ -91,7 +91,6 @@
                     <div class="col-md-12 d-flex justify-content-between">
                         @if (strpos(url()->current(), '/profil/edit'))
                             <div class="div">
-
                                 <a href="{{ route('profil') }}">
                                     <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
                                             class="fas fa-caret-square-left"></i>

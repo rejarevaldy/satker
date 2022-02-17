@@ -29,7 +29,9 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // Profil
 Route::get('/profil', [UserController::class, 'index'])->name('profil');
 Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit');
-      Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
+Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
+Route::put('/profil/{user}/edit/password', [UserController::class, 'update_password'])->name('profil.update.password');
+
 
 // User
 Route::get('/users', [UserController::class, 'list'])->name('users.list');
@@ -60,10 +62,10 @@ Route::get('/', [OutputController::class, 'index'])->name('dashboard');
 Route::get('/list', [OutputController::class, 'list'])->name('list');
 Route::get('/rekap/{user:id}', [OutputController::class, 'rekap'])->name('rekap');
 
-      // Output Excel
-      Route::get('/rekap/excel/all/table/', [ExportController::class, 'rekapAllExport'])->name('rekap.excel.table.all');
-      Route::get('/rekap/excel/table/{user:id}', [ExportController::class, 'rekapExport'])->name('rekap.excel.table');
-      Route::get('/output/excel/table', [ExportController::class, 'exportWithView'])->name('output.excel.table');
+// Output Excel
+Route::get('/rekap/excel/all/table/', [ExportController::class, 'rekapAllExport'])->name('rekap.excel.table.all');
+Route::get('/rekap/excel/table/{user:id}', [ExportController::class, 'rekapExport'])->name('rekap.excel.table');
+Route::get('/output/excel/table', [ExportController::class, 'exportWithView'])->name('output.excel.table');
 
 // Panduan & URK
 Route::put('/unggah/panduan/{panduan:id}', [PanduanController::class, 'update_panduan'])->name('panduan.update');
