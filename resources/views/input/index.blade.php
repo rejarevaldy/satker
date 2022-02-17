@@ -48,18 +48,24 @@ $config = [
                             <div class="col-sm">
                                 @if (auth()->user()->role == 'Satker')
                                     <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
-                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i
-                                                class="fas fa-plus"></i>
+                                        <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i class="fas fa-plus"></i>
                                             <div class="d-none d-sm-inline  p-3">Tambah
                                         </button>
                                     </a>
+                                    <a href="{{ route('output.excel.table', auth()->user()->id) }}" class="text-white text-decoration-none">
+                                        <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
+                                                class="far fa-file-excel"></i>
+                                            <div class="d-none d-sm-inline  p-3">Excel
+                                        </button>
+                                    </a>
+                                @else
+                                    <a href="{{ route('output.excel.table.all') }}" class="text-white text-decoration-none">
+                                        <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
+                                                class="far fa-file-excel"></i>
+                                            <div class="d-none d-sm-inline  p-3">Excel
+                                        </button>
+                                    </a>
                                 @endif
-                                <a href="{{ route('output.excel.table') }}" class="text-white text-decoration-none">
-                                    <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
-                                            class="far fa-file-excel"></i>
-                                        <div class="d-none d-sm-inline  p-3">Excel
-                                    </button>
-                                </a>
                             </div>
                         </div>
                     </div>

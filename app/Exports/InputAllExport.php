@@ -13,21 +13,19 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment as StyleAlignment;
 
 // class InputExport implements FromCollection, WithStyles, WithColumnWidths, WithMapping, WithEvents
-class InputExport implements FromView, ShouldAutoSize, WithEvents
+class InputAllExport implements FromView, ShouldAutoSize, WithEvents
 {
 
     public function view(): View
     {
         $role = Auth::user()->role;
-        $id = (int) substr(url()->current(), -1);
-        
+
         if ($role == 'Monitoring') {
             $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
             $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         } else {
             $user_id = Auth::user()->id;
-            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $id)->get();
-        //     $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
+            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
             $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         }
         
@@ -51,7 +49,7 @@ class InputExport implements FromView, ShouldAutoSize, WithEvents
                 } else {
                     $user_id = Auth::user()->id;
                     $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
-                    $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
+                    $twoinput = TwoInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
                 }
 
                 $oneinput = OneInput::whereYear('created_at', session('year'))->get();
