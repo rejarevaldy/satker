@@ -226,7 +226,7 @@ foreach ($datas2 as $data2) {
         @if (session('status'))
             <div class="row">
                 <div class="col">
-                    <x-adminlte-alert theme="success" title="Success">
+                    <x-adminlte-alert theme="success" title="Success" dismissable>
                         {{ session('status') }}
                     </x-adminlte-alert>
                 </div>

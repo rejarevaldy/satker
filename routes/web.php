@@ -29,7 +29,9 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // Profil
 Route::get('/profil', [UserController::class, 'index'])->name('profil');
 Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit');
-      Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
+Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
+Route::put('/profil/{user}/edit/password', [UserController::class, 'update_password'])->name('profil.update.password');
+
 
 // User
 Route::get('/users', [UserController::class, 'list'])->name('users.list');
@@ -60,15 +62,15 @@ Route::get('/', [OutputController::class, 'index'])->name('dashboard');
 Route::get('/list', [OutputController::class, 'list'])->name('list');
 Route::get('/rekap/{user:id}', [OutputController::class, 'rekap'])->name('rekap');
 
-      // Output Excel
+// Output Excel
 
-            // Rekap
-            Route::get('/rekap/excel/all/table/', [ExportController::class, 'rekapAllExport'])->name('rekap.excel.table.all'); // Monitoring
-            Route::get('/rekap/excel/table/{user:id}', [ExportController::class, 'rekapExport'])->name('rekap.excel.table'); // Satker
+// Rekap
+Route::get('/rekap/excel/all/table/', [ExportController::class, 'rekapAllExport'])->name('rekap.excel.table.all'); // Monitoring
+Route::get('/rekap/excel/table/{user:id}', [ExportController::class, 'rekapExport'])->name('rekap.excel.table'); // Satker
 
-            // Laporan
-            Route::get('/output/excel/all/table', [ExportController::class, 'exportWithAllView'])->name('output.excel.table.all'); // Monitoring
-            Route::get('/output/excel/table/{user:id}', [ExportController::class, 'exportWithView'])->name('output.excel.table'); // Satker
+// Laporan
+Route::get('/output/excel/all/table', [ExportController::class, 'exportWithAllView'])->name('output.excel.table.all'); // Monitoring
+Route::get('/output/excel/table/{user:id}', [ExportController::class, 'exportWithView'])->name('output.excel.table'); // Satker
 
 // Panduan & URK
 Route::put('/unggah/panduan/{panduan:id}', [PanduanController::class, 'update_panduan'])->name('panduan.update');

@@ -9,7 +9,7 @@
     @if (session('success'))
         <div class="row mt-3">
             <div class="col">
-                <x-adminlte-alert theme="success" title="Success">
+                <x-adminlte-alert theme="success" title="Success" dismissable>
                     {{ session('success') }}
                 </x-adminlte-alert>
             </div>

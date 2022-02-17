@@ -226,7 +226,7 @@ foreach ($datas2 as $data2) {
         @if (session('status'))
             <div class="row">
                 <div class="col">
-                    <x-adminlte-alert theme="success" title="Success">
+                    <x-adminlte-alert theme="success" title="Success" dismissable>
                         {{ session('status') }}
                     </x-adminlte-alert>
                 </div>
@@ -252,7 +252,7 @@ foreach ($datas2 as $data2) {
                 </div>
                 {{-- Col End --}}
                 @if (empty($query))
-                    <x-adminlte-alert class="bg-white mt-3 border-danger">
+                    <x-adminlte-alert class="bg-white mt-3 border-danger" dismissable>
                         <h5 class="text-danger text-center">Data Kosong</h5>
                     </x-adminlte-alert>
                     <form action="{{ route('store.dokumen') }}" method="POST" enctype="multipart/form-data">

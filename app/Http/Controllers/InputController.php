@@ -155,7 +155,7 @@ class InputController extends Controller
 
             $oneinput->update();
 
-            return redirect()->back()->with('status', 'Laporan admin berhasil diperbarui');
+            return redirect()->with('status', 'Laporan admin berhasil diperbarui');
       }
 
       public function destroy(OneInput $oneinput)

@@ -118,6 +118,18 @@ class UserController extends Controller
             return redirect(route('users.edit', $user->username))->with('success', 'Berhasil di edit!');
       }
 
+      public function update_password(Request $request, User $user)
+      {
+            $this->validate($request, [
+                  'password' => 'required|confirmed',
+            ]);
+
+            $user->password = $request->password;
+            $user->update();
+
+            return redirect()->back()->with('status', 'Password berhasil di edit!');
+      }
+
       public function delete($id)
       {
             $data = User::find($id);
