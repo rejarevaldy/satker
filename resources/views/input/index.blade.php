@@ -26,8 +26,9 @@
 //     'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
 // ];
 
-$heads = [['label' => 'ID', 'width' => 1], 'Nama', 'Username', ['label' => 'Opsi', 'width' => 10]];
+$heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', ['label' => 'Opsi', 'width' => 10]];
 
+$x = 1;
 $query = [];
 foreach ($data as $key => $item) {
     $dataUsername = $item->username;
@@ -35,12 +36,13 @@ foreach ($data as $key => $item) {
 
     $btnDetails =
         '<a href=" ' .
-        route('rekap', $item) .
+        route('laporan.list', $item->username) .
         '" class="btn btn-primary btn-xs ">
                         <i class="fa fa-fw fa-info"></i>Laporan</a>';
 
-    $query[] = [$item->id, $item->nama, $item->username, $btnDetails];
+    $query[] = [$x, $item->nama, $item->username, $btnDetails];
 }
+$x++;
 
 $config = [
     'data' => $query,

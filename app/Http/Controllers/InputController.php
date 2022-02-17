@@ -31,6 +31,7 @@ class InputController extends Controller
             // }
 
             $oneinputs = OneInput::whereYear('created_at', session('year'))->get();
+
             foreach ($oneinputs as $oneinput) {
                   $id = $oneinput->id;
 
@@ -42,8 +43,33 @@ class InputController extends Controller
                   $oneinput->update();
             }
 
+            $oneinputs = OneInput::whereYear('created_at', session('year'))->where('user_id', $user->id)->get();
+
+
             return view('input.index', [
-                  'data' => $user->where('role', 'Satker')->get()
+                  'data' => $user->where('role', 'Satker')->get(),
+
+            ]);
+      }
+
+      public function list(User $user)
+      {
+            $oneinputs = OneInput::whereYear('created_at', session('year'))->where('user_id', $user->id)->get();
+
+            foreach ($oneinputs as $oneinput) {
+                  $id = $oneinput->id;
+
+                  $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
+                  $oneinput = OneInput::find($id);
+                  $sum = array_sum($input);
+
+                  $oneinput->volume_jumlah = $sum;
+                  $oneinput->update();
+            }
+
+            return view('input.list', [
+                  'datas' => $oneinputs,
+                  'user' => $user
             ]);
       }
 
