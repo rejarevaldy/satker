@@ -20,7 +20,8 @@
 
                 @if (Auth()->user()->role == 'Satker')
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('laporan.list', Auth()->user()->username) }}">
+                        {{-- <a class="nav-link" href="{{ route('laporan.list', Auth()->user()->username) }}"> --}}
+                        <a class="nav-link" href="/laporan/{{ auth()->user()->username }}">
                             <i class="fa fa-th "></i>
                             <p>
                                 Laporan
