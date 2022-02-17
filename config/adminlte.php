@@ -238,17 +238,6 @@ return [
                   'icon'        => 'fa fa-tachometer-alt',
             ],
             ['header' => 'Menu Utama'],
-            [
-                  'text' => 'Laporan',
-                  'url'  => '/laporan',
-                  'icon' => ' fa fa-th',
-            ],
-            [
-                  'text' => 'Dokumen',
-                  'route' => 'dokumen',
-                  'icon' => 'fa fa-th',
-            ],
-
 
       ],
 

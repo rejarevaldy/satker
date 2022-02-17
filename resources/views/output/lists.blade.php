@@ -32,11 +32,11 @@ $config = [
 @section('content')
     <div class="row pt-3">
         <div class="col-md">
-            <x-adminlte-card theme="success" theme-mode="outline">
+            <div class="p-4 mb-4 border rounded shadow-sm bg-white">
                 <h2 class="mb-2 mb-2"> Monitoring Realisasi Dan Capaian Output Tahun {{ session('year') }}
                 </h2>
                 <div class="p-2 rounded bg-white">
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm">
                             <a href="{{ route('rekap.excel.table.all') }}" class="text-white text-decoration-none">
                                 <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i class="far fa-file-excel"></i>
@@ -44,10 +44,9 @@ $config = [
                                 </button>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
-
-                <div class="p-2 rounded bg-white">
+                {{-- <div class="p-2 rounded bg-white">
                     <div class="row">
                         <table id="datatable" class="table table-bordered " style="width:100%">
                             <thead>
@@ -81,9 +80,8 @@ $config = [
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </x-adminlte-card>
-
+                </div> --}}
+            </div>
         </div>
     </div>
     @if (session('success'))
