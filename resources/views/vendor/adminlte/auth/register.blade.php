@@ -34,7 +34,7 @@
                 </span>
             @enderror
         </div>
-        
+
         <div class="input-group mb-3">
             <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
                    value="{{ old('username') }}" placeholder="Username" autofocus>
@@ -69,7 +69,7 @@
                 </span>
             @enderror
         </div>
-        
+
         <div class="input-group mb-3">
             <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
                    value="{{ old('nip') }}" placeholder="NIP">
@@ -106,7 +106,7 @@
         </div>
 
         {{-- Confirm password field --}}
-        
+
         <div class="input-group mb-3">
             <input type="number" name="nomor_telepon"
                    class="form-control @error('nomor_telepon') is-invalid @enderror"
@@ -124,10 +124,10 @@
                 </span>
             @enderror
         </div>
-        
+
         <div class="input-group mb-3">
             <select class="form-control" name="gender">
-                <option selected disabled>Jenis Kelamin</option>
+                <option selected disabled>Gender</option>
                 <option value="Pria">Pria</option>
                 <option value="Wanita">Wanita</option>
             </select>
@@ -144,7 +144,7 @@
                 </span>
             @enderror
         </div>
-        
+
         <div class="input-group mb-3">
             <select class="form-control" name="role">
                 <option selected disabled>Role</option>
@@ -164,7 +164,7 @@
                 </span>
             @enderror
         </div>
-        
+
         <div class="input-group">
             {{-- <input type="file" name="user_profile" class="form-control-file"> --}}
             <x-adminlte-input-file name="user_profile" placeholder="Poto Profil" />
