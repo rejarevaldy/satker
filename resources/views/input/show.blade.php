@@ -1,5 +1,5 @@
 @php
-$heads = [['label' => 'No', 'width' => 1], ['label' => 'Nama RO', 'width' => 30], ['label' => 'Volume Capaian', 'width' => 30], ['label' => 'Uraian', 'width' => 30], ['label' => 'Nomor Dokumen', 'width' => 8], ['label' => 'Tanggal', 'width' => 8], ['label' => 'File', 'width' => 8]];
+$heads = [['label' => 'No', 'width' => 1], ['label' => 'Volume Capaian', 'width' => 1], ['label' => 'Uraian', 'width' => 30], ['label' => 'Nomor Dokumen', 'width' => 8], ['label' => 'Tanggal', 'width' => 8], ['label' => 'File', 'width' => 8]];
 if (auth()->user()->role == 'Satker') {
     $heads[] = ['label' => 'Opsi', 'no-export' => true, 'width' => 5];
 }
@@ -53,7 +53,7 @@ foreach ($datas2 as $data2) {
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalSuntingLabel">Edit Ruangan</h5>
+                        <h5 class="modal-title" id="modalSuntingLabel">Edit Dokumen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -180,14 +180,14 @@ foreach ($datas2 as $data2) {
     }
 
     if (auth()->user()->role == 'Satker') {
-        $query[] = [$loop, $data2->oneInput->nama_ro, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file, '<nobr>' . $btnEdit . $btnDelete . '</nobr>'];
+        $query[] = [$loop, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file, '<nobr>' . $btnEdit . $btnDelete . '</nobr>'];
         // $query[] =  ['<nobr>' .$btnEdit.$btnDelete. '</nobr>'];
         // array_push($query, );
         // dd($query);
         echo $mdlEdit;
         echo $mdlDelete;
     } else {
-        $query[] = [$loop, $data2->oneInput->nama_ro, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file];
+        $query[] = [$loop, $data2->volume_capaian, $data2->uraian, $data2->nomor_dokumen, $tanggal, $file];
     }
     // @dd($dataId);
     $loop++;
@@ -196,14 +196,14 @@ foreach ($datas2 as $data2) {
         $config = [
             'data' => $query,
             'order' => [[0, 'asc']],
-            'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
+            'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
             'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
         ];
     } elseif (auth()->user()->role == 'Satker') {
         $config = [
             'data' => $query,
             'order' => [[0, 'asc']],
-            'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
+            'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
             'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
         ];
     }
