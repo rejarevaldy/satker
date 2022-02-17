@@ -25,11 +25,13 @@
 
         $modalDelete = '
                     <div class="modal fade" id="exampleModal_' . $x . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">' . $dataName . '</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                                 </div>
                                 <div class="forum">
                                     <form action="' . route("users.delete", $item->id) . '" method="POST" style="display: inline;">

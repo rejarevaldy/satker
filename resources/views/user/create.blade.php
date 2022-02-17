@@ -6,13 +6,6 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col mt-4 bg-white p-3 shadow-sm border rounded">
-                <h2>Tambah Pengguna</h2>
-            </div>
-        </div>
-    </div>
     @if (session('success'))
         <div class="row mt-3">
             <div class="col">
@@ -22,16 +15,17 @@
             </div>
         </div>
     @endif
-    
+
     <div class="row">
         <div class="col-md my-3">
-            <x-adminlte-card theme="lime" theme-mode="outline">
+            <x-adminlte-card title="Tambahkan Pengguna" theme="primary" theme-mode="outline">
                 <form action="{{ route('users.post') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md mt-3">
                             <label for="">Nama</label>
-                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
+                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
+                                value="{{ old('nama') }}">
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -40,7 +34,8 @@
                         </div>
                         <div class="col-md mt-3">
                             <label for="">Username</label>
-                            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}">
+                            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                                value="{{ old('username') }}">
                             @error('username')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -49,7 +44,8 @@
                         </div>
                         <div class="col-md mt-3">
                             <label for="">Password</label>
-                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                            <input type="password" name="password"
+                                class="form-control @error('password') is-invalid @enderror">
                             @error('password')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -91,8 +87,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md my-3">
-                            <button type="submit" class="btn btn-primary">Daftar</button>
+                        <div class="col-md-12 d-flex justify-content-between">
+                            <div class="div">
+                                <a class="text-secondary text-secondary-hover d-none d-sm-inline text-decoration-none"
+                                    href="{{ route('users.list') }}">
+                                    <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
+                                            class="fas fa-caret-square-left"></i>
+                                        Kembali
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="div">
+                                <button type="reset" class="px-4 py-2 mt-3 btn btn-danger btn-sm fw-bold" value="reset"><i
+                                        class="fas fa-undo"></i>
+                                    <div class="d-none d-sm-inline"> Reset</div>
+                                </button>
+                                <button type="submit" class="px-4 py-2 mt-3 btn btn-primary btn-sm fw-bold"><i
+                                        class="fas fa-plus"></i>
+                                    <div class="d-none d-sm-inline"> Tambahkan</div>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -100,4 +114,3 @@
         </div>
     </div>
 @stop
-

@@ -19,11 +19,9 @@ class CreateOneInputsTable extends Migration
             $table->string('digit');
             $table->string('kd_kro');
             $table->string('kd_ro');
-            $table->enum('bidang' , ['Umum', 'PPA I', 'PPA II', 'SKKI', 'PAPK', 'Admin']);
             $table->string('nama_ro');
-            $table->string('capaian_ro')->nullable()->default(null);
             $table->integer('volume_target');
-            $table->enum('satuan', ['Kegiatan', 'Dokumen' ,'Pegawai', 'Rekomendasi' ,'ISO', 'Satker' , 'Laporan' ,'KPPN' , '-' , 'Bulan Layanan']);
+            $table->string('satuan');
             $table->integer('volume_jumlah')->nullable()->default(0);
             $table->float('rvo');
             $table->float('rvo_maksimal');

@@ -194,7 +194,7 @@
             {{-- endcard --}}
         </div>
     </div>
-    <div class="container-fluid">
+    {{-- <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
                 <x-adminlte-card title="Chart Bar Anggaran" theme="primary" icon="fas fa-chart-bar">
@@ -207,7 +207,7 @@
                 </x-adminlte-card>
             </div>
         </div>
-    </div>
+    </div> --}}
 @stop
 
 @section('css')

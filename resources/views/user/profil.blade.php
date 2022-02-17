@@ -19,7 +19,6 @@
 @stop
 
 @section('content')
-    <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
                 <x-adminlte-card theme="dark" theme-mode="outline" title="Foto Profil">
@@ -62,7 +61,7 @@
                                 <a href="{{ route('profil.edit') }}">
                                     <button class="px-4 py-2 btn btn-success fw-bold btn-sm" data-toggle="modal"
                                     data-target="#tambahDokumen"><i class="fas fa-edit"></i>
-                                    <div class="d-none d-sm-inline  p-3">Edit
+                                    <div class="d-none d-sm-inline  p-3">Sunting
                                     </button>
                                 </a>
                             @else
@@ -79,6 +78,6 @@
                 </x-adminlte-card>
             </div>
         </div>
-    </div>
+
 @stop
 

@@ -10,85 +10,103 @@
     <div class="pt-3"></div>
 
     @if (session('status'))
-        <x-adminlte-alert class="bg-teal" dismissable>
-            {{ session('status') }}
-        </x-adminlte-alert>
-    @endif
-
+    <div class="row">
+        <div class="col">
+            <x-adminlte-alert theme="success" title="Success">
+                {{ session('status') }}
+            </x-adminlte-alert>
+        </div>
+    </div>
+@endif
 
     <x-adminlte-card title="Sunting Laporan" theme="primary" theme-mode="outline">
         <form action="{{ route('laporan.update', $data) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="row">
+                <div class="col-lg-1">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold">
+                            ID</label>
+                        <div class="input-group">
+                            <input value="{{ $data->digit }}" placeholder="ID" class="form-control" name="digit"
+                                required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-1">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold">
+                            KD KRO</label>
+                        <div class="input-group">
+                            <input value="{{ $data->kd_kro }}" placeholder="KD KRO" class="form-control" name="kd_kro"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold">
+                            KD RO</label>
+                        <div class="input-group">
+                            <input value="{{ $data->kd_ro }}" placeholder="KD RO" class="form-control" name="kd_ro"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold">
+                            Nama Ro</label>
+                        <div class="input-group">
+                            <input value="{{ $data->nama_ro }}" placeholder="Nama Ro" class="form-control"
+                                name="nama_ro" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="mb-4 input-group">
+                        <label for="" class="mb-1 fw-bold">
+                            Satuan Volume
+                        </label>
+                        <div class="input-group">
+                            <input type="text" list="bulan" value="{{ $data->satuan }}" placeholder="Satuan Volume"
+                                class="form-control" name="satuan">
+                            <datalist id="bulan">
+                                <option value="Bulan Layanan">
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             <div class="row">
 
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="mb-4 form-input">
                         <label for="" class="mb-1 fw-bold">
-                            Nama RO</label>
+                            Target Volume</label>
                         <div class="input-group">
-                            <input value="{{ $data->nama_ro }}" placeholder="{{ $data->nama_ro }}" class="form-control"
-                                name="nama_ro">
+                            <input value="{{ $data->volume_target }}" type="number" value="" placeholder="Target Volume"
+                                class="form-control" name="volume_target" required>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            Capaian Ro</label>
-                        <div class="input-group">
-                            <input value="{{ $data->capaian_ro }}" placeholder="{{ $data->capaian_ro }}"
-                                class="form-control" name="capaian_ro">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="mb-4 input-group">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            Bagian/Bidang
-                        </label>
-                        <div class="input-group">
-                            <select class="custom-select" id="inputGroupSelect01" name="bidang" required>
-                                @foreach ($bidangs as $bidang)
-                                    @if ($data->bidang == $bidang)
-                                        <option value="{{ $data->bidang }}" selected>
-                                            {{ $data->bidang }}
-                                        </option>
-                                    @else
-                                        <option value="{{ $bidang }}">
-                                            {{ $bidang }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="mb-4 input-group">
-                        <label for="" class="mb-1 fw-bold"><span class="text-danger">*</span>
-                            Satuan
-                        </label>
-                        <div class="input-group">
-                            <select class="custom-select" id="inputGroupSelect01" name="satuan" required>
-                                @foreach ($satuans as $satuan)
-                                    @if ($data->satuan == $satuan)
-                                        <option value="{{ $data->satuan }}" selected>
-                                            {{ $data->satuan }}
-                                        </option>
-                                    @else
-                                        <option value="{{ $satuan }}">
-                                            {{ $satuan }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+                <div class="col-lg-6">
+                    <div class="mb-4 form-input">
+                        <label for="" class="mb-1 fw-bold">
+                            Jumlah Volume</label>
+                        <div class="input-group">
+                            <input value="{{ $data->volume_jumlah }}" type="number" value="" placeholder="Jumlah Volume"
+                                class="form-control" name="volume_jumlah">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             <div class="row">
                 <div class="col-lg-6">
@@ -96,8 +114,8 @@
                         <label for="" class="mb-1 fw-bold">
                             Pagu</label>
                         <div class="input-group">
-                            <input type="text" value="{{ $data->pagu }}" placeholder="{{ $data->pagu }}"
-                                class="form-control" name="pagu" id="rupiah">
+                            <input value="{{ $data->pagu }}" type="text" value="" placeholder="Pagu"
+                                class="form-control" id="rupiah" name="pagu" required>
                         </div>
                     </div>
                 </div>
@@ -106,75 +124,20 @@
                         <label for="" class="mb-1 fw-bold">
                             RP</label>
                         <div class="input-group">
-                            <input type="text" value="{{ $data->rp }}" placeholder="{{ $data->rp }}"
-                                class="form-control" name="rp" id="rupiah2">
+                            <input value="{{ $data->rp }}" type="text" value="" placeholder="RP" class="form-control"
+                                name="rp" id="rupiah2" required>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            ID</label>
-                        <div class="input-group">
-                            <input value="{{ $data->digit }}" placeholder="{{ $data->digit }}" class="form-control"
-                                name="digit">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-2">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            KD KRO</label>
-                        <div class="input-group">
-                            <input value="{{ $data->kd_kro }}" placeholder="{{ $data->kd_kro }}"
-                                class="form-control" name="kd_kro">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            KD RO</label>
-                        <div class="input-group">
-                            <input value="{{ $data->kd_ro }}" placeholder="{{ $data->kd_ro }}" class="form-control"
-                                name="kd_ro">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-3">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            Target Volume</label>
-                        <div class="input-group">
-                            <input type="number" value="{{ $data->volume_target }}"
-                                placeholder="{{ $data->volume_target }}" class="form-control" name="volume_target">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="mb-4 form-input">
-                        <label for="" class="mb-1 fw-bold">
-                            Jumlah Volume</label>
-                        <div class="input-group">
-                            <input type="number" value="{{ $data->volume_jumlah }}"
-                                placeholder="{{ $data->volume_jumlah }}" class="form-control" name="volume_jumlah">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-between">
                     <div class="div">
                         <a class="text-secondary text-secondary-hover d-none d-sm-inline text-decoration-none"
-                            href="{{ route('laporan.show', $data) }}">
+                            href="{{ route('laporan') }}">
                             <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
                                     class="fas fa-caret-square-left"></i>
                                 Kembali
@@ -192,7 +155,9 @@
                         </button>
                     </div>
                 </div>
+
             </div>
+
         </form>
 
         <!-- Form End -->
