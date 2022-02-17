@@ -20,29 +20,7 @@ class InputController extends Controller
 
       public function index(User $user)
       {
-            // $role = Auth::user()->role;
-            // $user_id = Auth::user()->id;
-
-
-            // if ($role == 'Monitoring') {
-            //       $datas = OneInput::whereYear('created_at', '=', session('year'))->get();
-            // } else {
-            //       $datas = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $user_id)->get();
-            // }
-
-            // foreach ($oneinputs as $oneinput) {
-            //       $id = $oneinput->id;
-
-            //       $input = TwoInput::where('one_input_id', $id)->pluck('volume_capaian')->toArray();
-            //       $oneinput = OneInput::find($id);
-            //       $sum = array_sum($input);
-
-            //       $oneinput->volume_jumlah = $sum;
-            //       $oneinput->update();
-            // }
-
             $users = $user->where('role', 'Satker')->get();
-
 
             return view('input.index', [
                   'data' => $users,
@@ -179,7 +157,7 @@ class InputController extends Controller
 
             $oneinput->update();
 
-            return redirect()->with('status', 'Laporan admin berhasil diperbarui');
+            return redirect()->back()->with('status', 'Laporan admin berhasil diperbarui');
       }
 
       public function destroy(OneInput $oneinput)
