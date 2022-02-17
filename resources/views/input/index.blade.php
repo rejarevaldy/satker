@@ -80,8 +80,7 @@ foreach ($data as $key => $item) {
     $dataName = $item->nama;
 
     $btnDetails =
-        '<a href=" ' .
-        route('laporan.list', $item->username) .
+        '<a href="/laporan/' . $item->username .
         '" class="btn btn-primary btn-xs ">
                         <i class="fa fa-fw fa-info"></i>Laporan</a>';
 

@@ -32,7 +32,7 @@ $config = [
 @section('content')
     <div class="row pt-3">
         <div class="col-md">
-            <x-adminlte-card theme="success" theme-mode="outline">
+            <div class="p-4 mb-4 border rounded shadow-sm bg-white">
                 <h2 class="mb-2 mb-2"> Monitoring Realisasi Dan Capaian Output Tahun {{ session('year') }}
                 </h2>
                 <div class="p-2 rounded bg-white">
@@ -46,8 +46,7 @@ $config = [
                         </div>
                     </div> --}}
                 </div>
-{{-- 
-                <div class="p-2 rounded bg-white">
+                {{-- <div class="p-2 rounded bg-white">
                     <div class="row">
                         <table id="datatable" class="table table-bordered " style="width:100%">
                             <thead>
@@ -82,8 +81,7 @@ $config = [
                         </table>
                     </div>
                 </div> --}}
-            </x-adminlte-card>
-
+            </div>
         </div>
     </div>
     @if (session('success'))
