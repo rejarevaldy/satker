@@ -200,19 +200,27 @@ class ExportController extends Controller
     
     public function exportWithAllView()
     {
+		$data = User::where('role', 'Satker')->get();
+        
+        // return view('output.sheet2', [
+        //     // 'oneinput' => OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get(),
+        //     // 'twoinput' => TwoInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get(),
+        //     'data' => $data,
+        // ]);
+
         // $oneinput = OneInput::all();
         // $twoinput = TwoInput::with('OneInput')->get();
 
-        $role = Auth::user()->role;
+        // $role = Auth::user()->role;
 
-        if ($role == 'Monitoring') {
-            $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-        } else {
-            $user_id = Auth::user()->id;
-            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-        }
+        // if ($role == 'Monitoring') {
+        //     $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
+        //     $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
+        // } else {
+        //     $user_id = Auth::user()->id;
+        //     $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
+        //     $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
+        // }
         // dd($twoinput);
 
         // $input = TwoInput::with('OneInput')->get();
@@ -236,18 +244,13 @@ class ExportController extends Controller
         // $twoinput = TwoInput::with('OneInput')->get();
 
         $role = Auth::user()->role;
-        $id = (int) substr(url()->current(), -1);
-        
-        if ($role == 'Monitoring') {
-            $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
-            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-        } else {
+        $id = (int) substr(url()->current(), strrpos(url()->current(), '/' )+1);
+
             $user_id = Auth::user()->id;
             $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $id)->get();
         //     $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
             $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
-        }
-        // dd($twoinput);
+        // dd($id);
 
         // $input = TwoInput::with('OneInput')->get();
         // $oneinput = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();

@@ -57,14 +57,14 @@ $config = [
                                         </button>
                                     </a>
                                 @else
-                                    <a href="{{ route('output.excel.table.all') }}"
-                                        class="text-white text-decoration-none">
-                                        <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
-                                                class="far fa-file-excel"></i>
-                                            <div class="d-none d-sm-inline  p-3">Excel
-                                        </button>
-                                    </a>
                                 @endif
+                                <a href="{{ route('output.excel.table', $user->id) }}"
+                                    class="text-white text-decoration-none">
+                                    <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i
+                                            class="far fa-file-excel"></i>
+                                        <div class="d-none d-sm-inline  p-3">Excel
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
