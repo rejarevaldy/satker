@@ -27,6 +27,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dokumen') }}">
+                            <i class="fa fa-th "></i>
+                            <p>
+                                Dokumen
+                            </p>
+                        </a>
+                    </li>
                 @endif
 
                 @if (Auth()->user()->role == 'Monitoring')
