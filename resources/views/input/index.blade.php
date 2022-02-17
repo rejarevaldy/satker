@@ -31,7 +31,51 @@ $heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', '% Realisasi', '%
 $x = 1;
 $query = [];
 foreach ($data as $key => $item) {
-      
+    $datas = $item->oneinput()->all();
+    // Chart Anggaran
+    $allPagu = [];
+    $allRP = [];
+
+    // Chart Output
+    $allTarget = [];
+    $allRP2 = [];
+
+    // Loop data and push to an empty array above
+    foreach ($datas as $data) {
+        array_push($allPagu, $data['pagu']);
+        array_push($allRP, $data['rp']);
+        array_push($allTarget, $data['volume_target']);
+        array_push($allRP2, $data['volume_jumlah']);
+    }
+
+    // Result Chart Anggaran
+    if ($allPagu and $allRP) {
+        $resultPagu = array_sum($allPagu);
+        $resultRP = array_sum($allRP);
+
+        // Result Percentage Pie Chart Anggaran
+        $percentage = ($resultRP / $resultPagu) * 100;
+        $resultPercentage = number_format(floor($percentage * 100) / 100, 1, '.', '');
+    } else {
+        $resultPagu = 0;
+        $resultRP = 0;
+        $resultPercentage = 0;
+    }
+
+    // Result Chart Output
+    if ($allTarget and $allRP2) {
+        $resultTarget = array_sum($allTarget);
+        $resultRP2 = array_sum($allRP2);
+
+        // Result Percentage Pie Chart Output
+        $percentage2 = ($resultRP2 / $resultTarget) * 100;
+        $resultPercentage2 = number_format(floor($percentage2 * 100) / 100, 2, '.', '');
+    } else {
+        $resultTarget = 0;
+        $resultRP2 = 0;
+        $resultPercentage2 = 0;
+    }
+
     $dataUsername = $item->username;
     $dataName = $item->nama;
 
@@ -41,7 +85,7 @@ foreach ($data as $key => $item) {
         '" class="btn btn-primary btn-xs ">
                         <i class="fa fa-fw fa-info"></i>Laporan</a>';
 
-    $query[] = [$x, $item->nama, $item->username, 'persen 1', 'persen 2', $btnDetails];
+    $query[] = [$x, $item->nama, $item->username, $resultPercentage . '%', $resultPercentage2 . '%', $btnDetails];
 }
 $x++;
 

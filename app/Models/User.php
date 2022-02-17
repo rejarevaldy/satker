@@ -43,8 +43,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
       ];
 
+      // public function oneinput()
+      // {
+      //       return $this->hasOne(OneInput::class, 'id', 'user_id');
+      // }
+
+      // public function oneinput()
+      // {
+      //       return $this->hasMany(OneInput::class);
+      // }
+
       public function oneinput()
       {
-            return $this->hasOne(OneInput::class, 'id', 'user_id');
+            return $this->hasMany(OneInput::class, 'user_id')->get();
       }
 }

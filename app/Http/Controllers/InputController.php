@@ -43,6 +43,7 @@ class InputController extends Controller
 
             $users = $user->where('role', 'Satker')->get();
 
+
             return view('input.index', [
                   'data' => $users,
             ]);
