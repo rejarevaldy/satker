@@ -1,32 +1,6 @@
 @php
-// $heads = [['label' => 'No', 'width' => 1], ['label' => 'Digit', 'width' => 5], ['label' => 'KD KRO', 'width' => 5], ['label' => 'KD RO', 'width' => 5], ['label' => 'Nama RO', 'width' => 50], ['label' => 'Target', 'width' => 10], ['label' => 'Satuan', 'width' => 10], 'Jumlah Volume', ['label' => '%', 'width' => 1], ['label' => 'Opsi', 'no-export' => true, 'width' => 5]];
-// $query = [];
-// $loop = 1;
-// // @dd($datas);
-// foreach ($datas as $data) {
-//     $dataId = $data->id;
-//     $dataNama = $data->nama;
-//     $btnDetail =
-//         '<a href=' .
-//         route('laporan.show', $data) .
-//         '><button class="btn btn-xs btn-primary mx-1 shadow-sm" title="Detail">
-//                 <i class="fa fa-fw fa-info"></i> Detail
-//             </button> </a>';
 
-//     $percent = round($data->volume_jumlah / $data->volume_target, 2) * 100 . ' %';
-
-//     $query[] = [$loop, $data->digit, $data->kd_kro, $data->kd_ro, $data->nama_ro, $data->volume_target, $data->satuan, $data->volume_jumlah, $percent, '<nobr>' . $btnDetail . '</nobr>'];
-//     // @dd($dataId);
-//     $loop++;
-// }
-// $config = [
-//     'data' => $query,
-//     'order' => [[0, 'asc']],
-//     'columns' => [['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center'], ['className' => 'text-center']],
-//     'language' => ['url' => 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/id.json'],
-// ];
-
-$heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', '% Realisasi', '% Volume RO', ['label' => 'Opsi', 'width' => 10]];
+$heads = [['label' => 'No', 'width' => 1], 'Nama', 'Username', ['label' => '% Realisasi', 'width' => 13], ['label' => '% Volume RO', 'width' => 13], ['label' => 'Opsi', 'width' => 10]];
 
 $x = 1;
 $query = [];
@@ -80,7 +54,8 @@ foreach ($data as $key => $item) {
     $dataName = $item->nama;
 
     $btnDetails =
-        '<a href="/laporan/' . $item->username .
+        '<a href="/laporan/' .
+        $item->username .
         '" class="btn btn-primary btn-xs ">
                         <i class="fa fa-fw fa-info"></i>Laporan</a>';
 
