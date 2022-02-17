@@ -6,9 +6,10 @@ use App\Models\User;
 use App\Models\OneInput;
 use App\Models\TwoInput;
 use App\Exports\InputExport;
-use App\Exports\RekapAllExport;
 use App\Exports\RekapExport;
 use Illuminate\Http\Request;
+use App\Exports\InputAllExport;
+use App\Exports\RekapAllExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -403,7 +404,7 @@ class ExportController extends Controller
         return Excel::download(new RekapAllExport, 'Laporan Semua Rekap Monitoring Tahun ' . session('year') . '.xlsx');
     }
     
-    public function exportWithView()
+    public function exportWithAllView()
     {
         // $oneinput = OneInput::all();
         // $twoinput = TwoInput::with('OneInput')->get();
@@ -416,7 +417,7 @@ class ExportController extends Controller
         } else {
             $user_id = Auth::user()->id;
             $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
-            $twoinput = TwoInput::with('OneInput')->whereYear('created_at', session('year'))->get();
+            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
         }
         // dd($twoinput);
 
@@ -425,13 +426,47 @@ class ExportController extends Controller
         // if(!$twoinput) {
         //     dd('empty');
         // }
-        return view('output.sheet1', [
-            'title' => 'Dashboard',
-            // 'input' => $input,
-            'oneinput' => $oneinputs,
-            'twoinput' => $twoinput
-        ]);
+        // return view('output.sheet1', [
+        //     'title' => 'Dashboard',
+        //     // 'input' => $input,
+        //     'oneinput' => $oneinputs,
+        //     'twoinput' => $twoinput
+        // ]);
 
-        return Excel::download(new InputExport, 'Laporan Realisasi ' . session('year') . '.xlsx');
+        return Excel::download(new InputAllExport, 'Laporan Realisasi ' . session('year') . ' ' . Auth::user()->role . '.xlsx');
+    }
+
+    public function exportWithView()
+    {
+        // $oneinput = OneInput::all();
+        // $twoinput = TwoInput::with('OneInput')->get();
+
+        $role = Auth::user()->role;
+        $id = (int) substr(url()->current(), -1);
+        
+        if ($role == 'Monitoring') {
+            $oneinputs =  OneInput::whereYear('created_at', '=', session('year'))->get();
+            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
+        } else {
+            $user_id = Auth::user()->id;
+            $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->where('user_id', $id)->get();
+        //     $oneinputs = OneInput::whereYear('created_at', '=', session('year'))->get();
+            $twoinput = TwoInput::whereYear('created_at', session('year'))->get();
+        }
+        // dd($twoinput);
+
+        // $input = TwoInput::with('OneInput')->get();
+        // $oneinput = OneInput::whereYear('created_at', session('year'))->where('user_id', $user_id)->get();
+        // if(!$twoinput) {
+        //     dd('empty');
+        // }
+        // return view('output.sheet1', [
+        //     'title' => 'Dashboard',
+        //     // 'input' => $input,
+        //     'oneinput' => $oneinputs,
+        //     'twoinput' => $twoinput
+        // ]);
+
+        return Excel::download(new InputExport, 'Laporan Realisasi ' . session('year') . ' ' . Auth::user()->role . '.xlsx');
     }
 }

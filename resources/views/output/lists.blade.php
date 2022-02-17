@@ -38,7 +38,7 @@ $config = [
                 <div class="p-2 rounded bg-white">
                     <div class="row">
                         <div class="col-sm">
-                            <a href="" class="text-white text-decoration-none">
+                            <a href="{{ route('rekap.excel.table.all') }}" class="text-white text-decoration-none">
                                 <button class="px-4 py-2 btn btn-success fw-bold btn-sm"><i class="far fa-file-excel"></i>
                                     <div class="d-none d-sm-inline  p-3">Excel
                                 </button>

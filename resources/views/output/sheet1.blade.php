@@ -6,6 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .table-output-excel {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .table-output-excel td {
+            padding: 15px;
+            text-align: center;
+            height: 50px;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
     <table border="1" class="table-output-excel">
@@ -39,7 +52,9 @@
             $index = 1;
         @endphp
         @foreach ($oneinput as $key => $one)
-
+            @if ($one->user_id)
+                
+            @endif
             {{-- ini mehitung jumlah row dalam item $two --}}
             @php
                 $n = 0;
@@ -63,7 +78,7 @@
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->kd_ro }}</td>
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->volume_target }}</td>
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->satuan }}</td>
-                {{-- @dd($one->)
+    
                 @if (!empty($one->TwoInput[0]))
                     <td>{{ !empty($one->TwoInput[0]->volume_capaian) ? $one->TwoInput[0]->volume_capaian : '' }}</td>
                     <td>{{ !empty($one->TwoInput[0]->uraian) ? $one->TwoInput[0]->uraian : '' }}</td>
@@ -74,7 +89,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                @endif --}}
+                @endif
     
     
                 <td {{ ($n != 0) ? "rowspan=$n" : "" }}>{{ $one->volume_jumlah }}</td>
@@ -93,8 +108,17 @@
                 <td></td>
             @else
                 @foreach ($twoinput as $keytwo => $two)
-                {{-- @dd($two) --}}
-                    {{-- @if (($two->one_input_id == $one->id) && ($two->deleted_at == null))
+                    @if (($two->one_input_id == $one->id) && ($two->deleted_at == null))
+                            {{-- @dd($twoinput)
+                            @dd($one->TwoInput[0]) --}}
+                        {{-- @if ($one->TwoInput->first())
+                            <p>{{ $two }} keke</p>
+                            <p>pepe</p>
+                        @else
+                        @endif
+                        <p>{{ $one->TwoInput->first() }} pepe</p> --}}
+                        {{-- @dd($two)
+                        @dd($one->TwoInput->first()) --}}
                         @if ($one->TwoInput->first() == $two)
                             <div class="kosong"></div>
                         @else
@@ -105,14 +129,13 @@
                                 <td>{{ \Carbon\Carbon::parse($two->tanggal)->format('d-m-Y') }}</td>
                             </tr>
                         @endif
-                    @endif --}}
+                    @endif
                 @endforeach
             @endif
-            @php
-                $index++;
-            @endphp
-        @endforeach
-                
+        @php
+            $index++;
+        @endphp
+        @endforeach        
         
     </table>
     

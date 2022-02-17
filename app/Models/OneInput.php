@@ -15,6 +15,6 @@ class OneInput extends Model
 
     public function TwoInput()
     {
-        $this->hasMany(TwoInput::class);
+        return $this->hasMany(TwoInput::class, 'one_input_id');
     }
 }
