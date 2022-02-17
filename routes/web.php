@@ -61,7 +61,7 @@ Route::post('/dokumen/edit/{twoinput:id}', [InputController::class, 'edit_dokume
 // Output
 Route::get('/', [OutputController::class, 'index'])->name('dashboard');
 Route::get('/list', [OutputController::class, 'list'])->name('list');
-Route::get('/rekap/{user:id}', [OutputController::class, 'rekap'])->name('rekap');
+Route::get('/rekap/{user:username}', [OutputController::class, 'rekap'])->name('rekap');
 
 // Output Excel
 
