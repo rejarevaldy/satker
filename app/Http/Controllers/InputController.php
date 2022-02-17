@@ -72,7 +72,7 @@ class InputController extends Controller
 
       public function create()
       {
-            return view('input.create');
+        return view('input.create');
       }
 
       public function store(Request $request)
