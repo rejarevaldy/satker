@@ -145,7 +145,7 @@ $config = [
 
                 <div class="row">
                     <div class="col-12">
-                        <x-adminlte-card title="Daftar Ruangan" theme="success" theme-mode="outline">
+                        <x-adminlte-card title="Daftar Laporan Satker" theme="success" theme-mode="outline">
                             <x-adminlte-datatable id="table" :heads="$heads" head-theme="white" :config="$config" striped
                                 hoverable bordered />
                         </x-adminlte-card>
