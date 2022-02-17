@@ -71,8 +71,8 @@
                         <div class="col-md mt-3">
                             <label for="">Jenis Kelamin</label>
                             <select name="gender" class="form-control">
-                                <option value="Pria">Pria</option>
-                                <option value="Perempuan">Perempuan</option>
+                                <option value="Pria">Laki-laki</option>
+                                <option value="Wanita">Perempuan</option>
                             </select>
                         </div>
                         <div class="col-md mt-3">

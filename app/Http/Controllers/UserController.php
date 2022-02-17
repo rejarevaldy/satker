@@ -20,7 +20,7 @@ class UserController extends Controller
       public function list(User $user)
       {
             return view('user.lists', [
-                  'data' => $user->where('role', 'Satker')->get()
+                  'data' => User::all()
             ]);
       }
 
