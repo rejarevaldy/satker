@@ -6,9 +6,9 @@
     <div class="container-fluid">
         <div class="row">
             @if (strpos(url()->current(), '/profil/edit'))
-            <h1>Profil</h1>
+                <h1>Profil</h1>
             @else
-            <h1>Pengguna</h1>
+                <h1>Pengguna</h1>
             @endif
         </div>
     </div>
@@ -27,29 +27,32 @@
     <div class="row">
         <div class="col-md">
             <x-adminlte-card theme="success" theme-mode="outline" title='Edit Pengguna "{{ $data->nama }}"'>
-            @if (strpos(url()->current(), '/profil/edit'))
-                <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="hidden" value="profil">
-            @else
-                <form action="{{ route('users.update', $data->username) }}" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="hidden" value="users">
-            @endif
+                @if (strpos(url()->current(), '/profil/edit'))
+                    <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="hidden" value="profil">
+                    @else
+                        <form action="{{ route('users.update', $data->username) }}" method="POST"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="hidden" value="users">
+                @endif
                 @method('put')
                 @csrf
                 <div class="row">
                     <div class="col-md">
-                        <x-adminlte-input name="nama" label="Nama" value="{{ $data->nama }}" disable-feedback/>
+                        <x-adminlte-input name="nama" label="Nama" value="{{ $data->nama }}" disable-feedback />
                     </div>
                     <div class="col-md">
-                        <x-adminlte-input name="email" type="email" label="Email" value="{{ $data->email }}" disable-feedback/>
+                        <x-adminlte-input name="email" type="email" label="Email" value="{{ $data->email }}"
+                            disable-feedback />
                     </div>
                     <div class="col-md">
-                        <x-adminlte-input name="nip" label="NIP" value="{{ $data->nip }}" disable-feedback/>
+                        <x-adminlte-input name="nip" label="NIP" value="{{ $data->nip }}" disable-feedback />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md mb-3">
-                        <x-adminlte-input name="nomor_telepon" type="number" label="No Telepon" value="{{ $data->nomor_telepon }}" disable-feedback/>
+                        <x-adminlte-input name="nomor_telepon" type="number" label="No Telepon"
+                            value="{{ $data->nomor_telepon }}" disable-feedback />
                     </div>
                     <div class="col-md mb-3">
                         @php
@@ -85,26 +88,37 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md">
+                    <div class="col-md-12 d-flex justify-content-between">
                         @if (strpos(url()->current(), '/profil/edit'))
-                            <a href="{{ route('profil') }}">
-                                <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
-                                    class="fas fa-caret-square-left"></i>
-                                Kembali
-                            </button>
-                            </a>
+                            <div class="div">
+
+                                <a href="{{ route('profil') }}">
+                                    <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
+                                            class="fas fa-caret-square-left"></i>
+                                        Kembali
+                                    </button>
+                                </a>
+                            </div>
                         @else
-                            <a href="{{ route('users.list.detail', $data->username) }}">
-                                <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
-                                        class="fas fa-caret-square-left"></i>
-                                    Kembali
-                                </button>
-                            </a>
+                            <div class="div">
+                                <a href="{{ route('users.list.detail', $data->username) }}">
+                                    <button type="button" class="px-4 py-2 mt-3 btn btn-secondary btn-sm fw-bold"><i
+                                            class="fas fa-caret-square-left"></i>
+                                        Kembali
+                                    </button>
+                                </a>
+                            </div>
                         @endif
-                        <button type="submit" class="px-4 py-2 mt-3 btn btn-primary btn-sm fw-bold"><i
-                                class="fas fa-plus"></i>
-                            <div class="d-none d-sm-inline"> Tambahkan</div>
-                        </button>
+                        <div class="div">
+                            <button type="reset" class="px-4 py-2 mt-3 btn btn-danger btn-sm fw-bold" value="reset"><i
+                                    class="fas fa-undo"></i>
+                                <div class="d-none d-sm-inline"> Reset</div>
+                            </button>
+                            <button type="submit" class="px-4 py-2 mt-3 btn btn-primary btn-sm fw-bold"><i
+                                    class="fas fa-edit"></i>
+                                <div class="d-none d-sm-inline"> Perbarui</div>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 </form>
@@ -112,4 +126,3 @@
         </div>
     </div>
 @stop
-
