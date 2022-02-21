@@ -43,12 +43,14 @@ $config = [
                     <div class="p-2 rounded bg-white">
                         <div class="row">
                             <div class="col-sm">
+                                @if (auth()->user()->role == 'Monitoring')
                                 <a href="{{ route('laporan') }}" class="text-decoration-none">
                                     <button class="px-4 py-2 btn btn-secondary fw-bold btn-sm"><i
                                             class="fas fa-caret-square-left"></i>
                                         <div class="d-none d-sm-inline p-3">Kembali</div>
                                     </button>
                                 </a>
+                                @endif
                                 @if (auth()->user()->role == 'Satker')
                                     <a href="{{ route('laporan.create') }}" class="text-white text-decoration-none">
                                         <button class="px-4 py-2 btn btn-primary fw-bold btn-sm"><i

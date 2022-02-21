@@ -20,6 +20,10 @@ class InputController extends Controller
 
       public function index(User $user)
       {
+            if (auth()->user()->role == 'Satker') {
+                return redirect()->route('laporan.list', auth()->user()->username);
+            }
+
             $users = $user->where('role', 'Satker')->get();
 
             return view('input.index', [

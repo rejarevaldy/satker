@@ -67,7 +67,7 @@
                         <input type="text" class="form-control" value="{{ $data->nomor_telepon }}" disabled>
                     </div>
                     <div class="col-md mb-3">
-                        <label>Jenis Kelamin</label>
+                        <label>Gender</label>
                         <input type="text" class="form-control" value="{{ $data->gender }}" disabled>
                     </div>
                     <div class="col-md mb-3">

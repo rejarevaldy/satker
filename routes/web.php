@@ -26,7 +26,7 @@ Route::put('/profil/{user}/edit/password', [UserController::class, 'update_passw
 Route::get('/users', [UserController::class, 'list'])->name('users.list');
 Route::get('/users/{user:username}', [UserController::class, 'userdetail'])->name('users.list.detail');
 Route::get('/users/{user:username}/edit', [UserController::class, 'useredit'])->name('users.edit');
-Route::put('/users/{user:username}/edit', [UserController::class, 'update'])->name('users.update');
+Route::put('/users/{user:username}/update', [UserController::class, 'update'])->name('users.update');
 Route::get('/user/tambah',  [UserController::class, 'create'])->name('users.create');
 Route::post('/user/tambah/post', [UserController::class, 'daftar'])->name('users.post');
 Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete');
