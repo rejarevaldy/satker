@@ -20,6 +20,43 @@ class OutputController extends Controller
 
       public function index()
       {
+            $rpmax = OneInput::whereYear('created_at', '=', session('year'))->get()->sortByDesc('rp')->take(5);
+            $rpmin = OneInput::whereYear('created_at', '=', session('year'))->get()->sortBy('rp')->take(5);
+            $rpmax5 = [];
+            $rpmin5 = [];
+            
+            foreach ($rpmax as $value) {
+                  array_push($rpmax5, $value->rp);
+            }
+            foreach ($rpmin as $value) {
+                  array_push($rpmin5, $value->rp);
+            }
+
+            // Top 5 User
+            $allusermax = [];
+            $allusermin = [];
+            for($i = 0; $i < 5; $i++) {
+                  $RPMax1 = OneInput::where('rp', $rpmax5[$i])->get()[0];
+                  array_push($allusermax, User::where('id', $RPMax1->user_id)->get()[0]);
+                  $RPMin1 = OneInput::where('rp', $rpmin5[$i])->get()[0];
+                  array_push($allusermin, User::where('id', $RPMin1->user_id)->get()[0]);
+            }
+
+            $totalrpmax5 = array_sum($rpmax5);
+            
+            $resultMax5RP = [];
+            $resultMin5RP = [];
+
+            // TOP 5 MAX RP
+            for($i = 0; $i < 5; $i++) {
+                  array_push($resultMax5RP, round(($rpmax5[$i] / $totalrpmax5) * 100, 1));
+            }
+            
+            // TOP 5 MIN RP
+            for($i = 0; $i < 5; $i++) {
+                  array_push($resultMin5RP, round(($rpmin5[$i] / $totalrpmax5) * 100, 1));
+            }
+            
             $role = Auth::user()->role;
 
             if ($role == 'Monitoring') {
@@ -87,6 +124,14 @@ class OutputController extends Controller
                   'urks' => $urks,
                   'panduans' => $panduans,
 
+                  // TOP RP MAX
+                  'allusermax' => $allusermax,
+                  'resultMax5RP' => $resultMax5RP,
+                  
+                  // TOP RP MIN
+                  'allusermin' => $allusermin,
+                  'resultMin5RP' => $resultMin5RP,
+
                   // datas
                   'pagu' => $resultPagu,
                   'rp' => $resultRP,
@@ -95,7 +140,6 @@ class OutputController extends Controller
                   'percentage' => $resultPercentage,
                   'percentage2' => $resultPercentage2,
                   'target' => $resultTarget
-
             ]);
       }
 
