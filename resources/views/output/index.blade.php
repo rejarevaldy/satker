@@ -194,20 +194,32 @@
             {{-- endcard --}}
         </div>
     </div>
-    {{-- <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Anggaran" theme="primary" icon="fas fa-chart-bar">
+                <x-adminlte-card title="5 Realisasi Tertinggi" theme="primary" icon="fas fa-chart-bar" collapsible>
+                    <canvas id="chartBarTopMaxRP" height="200"></canvas>
+                </x-adminlte-card>
+            </div>
+            <div class="col-md-6">
+                <x-adminlte-card title="5 Realisasi Terendah" theme="primary" icon="fas fa-chart-bar" collapsible>
+                    <canvas id="chartBarTopMinRP" height="200"></canvas>
+                </x-adminlte-card>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <x-adminlte-card title="Chart Bar Anggaran" theme="primary" icon="fas fa-chart-bar" collapsible>
                     <canvas id="chartBarAnggaran" height="200"></canvas>
                 </x-adminlte-card>
             </div>
             <div class="col-md-6">
-                <x-adminlte-card title="Chart Bar Output" theme="primary" icon="fas fa-chart-bar">
+                <x-adminlte-card title="Chart Bar Output" theme="primary" icon="fas fa-chart-bar" collapsible>
                     <canvas id="chartBarOutput" height="200"></canvas>
                 </x-adminlte-card>
             </div>
         </div>
-    </div> --}}
+    </div>
 @stop
 
 @section('css')
@@ -219,98 +231,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-        const dataBarAnggaranRealisasi = [{{ $rpUMUM }}, {{ $rpPPAI }}, {{ $rpPPAII }},
-            {{ $rpSKKI }}, {{ $rpPAPK }}
-        ]
-        const dataBarAnggaranPagu = [{{ $paguUMUM }}, {{ $paguPPAI }}, {{ $paguPPAII }}, {{ $paguSKKI }},
-            {{ $paguPAPK }}
-        ]
-        const dataBarAnggaranSisa = [{{ $sisaUMUM }}, {{ $sisaPPAI }}, {{ $sisaPPAII }}, {{ $sisaSKKI }},
-            {{ $sisaPAPK }}
-        ]
-
         const ResultMax = data => {
             return data * 2
         }
-
-        console.log({{ max([$sisaUMUM, $sisaPPAI, $sisaPPAII, $sisaSKKI, $sisaPAPK]) }})
-
-        // setup chart bar group
-        const dataGroup = {
-            labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
-            datasets: [{
-                    label: 'REALISASI',
-                    data: dataBarAnggaranRealisasi,
-                    backgroundColor: ['rgb(255, 99, 132)'],
-                    stack: 'Stack 0',
-                    yAxisID: 'percentage'
-                },
-                {
-                    label: 'PAGU',
-                    data: dataBarAnggaranPagu,
-                    backgroundColor: ['rgb(54, 162, 235)'],
-                    stack: 'Stack 1',
-                    yAxisID: 'percentage'
-                },
-                {
-                    label: 'SISA',
-                    data: dataBarAnggaranSisa,
-                    backgroundColor: ['rgb(255, 205, 86)'],
-                    stack: 'Stack 2',
-                    yAxisID: 'currency'
-                },
-            ]
-        };
-
-        // config chart bar group
-        const configGroup = {
-            type: 'bar',
-            data: dataGroup,
-            options: {
-                plugins: {
-                    title: {
-                        display: true
-                    },
-                },
-                responsive: true,
-                interaction: {
-                    intersect: false,
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true
-                    },
-                    currency: {
-                        type: 'linear',
-                        position: 'left',
-                        min: 0,
-                        max: ResultMax({{ $paguUMUM }}, {{ $paguPPAI }}, {{ $paguPPAII }},
-                            {{ $paguSKKI }}, {{ $paguPAPK }}),
-                        grid: {
-                            display: false
-                        }
-                    },
-                    percentage: {
-                        type: 'linear',
-                        position: 'right',
-                        min: 0,
-                        max: ResultMax({{ $paguUMUM }}, {{ $paguPPAI }}, {{ $paguPPAII }},
-                            {{ $paguSKKI }}, {{ $paguPAPK }}),
-                        grid: {
-                            display: false
-                        }
-                    },
-                }
-            }
-        };
-
-        const chartBarAnggaran = new Chart(
-            document.getElementById('chartBarAnggaran'),
-            configGroup
-        )
 
         const dataBarOutputRealisasi = [{{ $rp2UMUM }}, {{ $rp2PPAI }}, {{ $rp2PPAII }},
             {{ $rp2SKKI }}, {{ $rp2PAPK }}
@@ -387,6 +310,177 @@
         const chartBarOutput = new Chart(
             document.querySelector('#chartBarOutput'),
             configBarOutput
+        )
+    </script>
+    @php
+        // max
+        $rpmax1 = $resultMax5RP[0];
+        $rpmax2 = $resultMax5RP[1];
+        $rpmax3 = $resultMax5RP[2];
+        $rpmax4 = $resultMax5RP[3];
+        $rpmax5 = $resultMax5RP[4];
+
+        // user max
+        $usermax1 = $allusermax[0]->nama;
+        $usermax2 = $allusermax[1]->nama;
+        $usermax3 = $allusermax[2]->nama;
+        $usermax4 = $allusermax[3]->nama;
+        $usermax5 = $allusermax[4]->nama;
+
+        // $rpmax1 = strval($rpmax1) . '%';
+        // $rpmax2 = strval($rpmax2) . '%';
+        // $rpmax3 = strval($rpmax3) . '%';
+        // $rpmax4 = strval($rpmax4) . '%';
+        // $rpmax5 = strval($rpmax5) . '%';
+        
+        // min
+        $rpmin1 = $resultMin5RP[0];
+        $rpmin2 = $resultMin5RP[1];
+        $rpmin3 = $resultMin5RP[2];
+        $rpmin4 = $resultMin5RP[3];
+        $rpmin5 = $resultMin5RP[4];
+
+        // user min
+        $usermin1 = $allusermin[0]->nama;
+        $usermin2 = $allusermin[1]->nama;
+        $usermin3 = $allusermin[2]->nama;
+        $usermin4 = $allusermin[3]->nama;
+        $usermin5 = $allusermin[4]->nama;
+    @endphp
+
+    {{-- @dd($usermax1) --}}
+
+    {{-- TOP 5 MAX RP --}}
+    <script>
+        const dataBarMax5RP = [{{ $rpmax1 }}, {{ $rpmax2 }}, {{ $rpmax3 }}, {{ $rpmax4 }}, {{ $rpmax5 }}];
+        const maxLabel = ['{{ $usermax1 }}', '{{ $usermax2 }}', '{{ $usermax3 }}', '{{ $usermax4 }}', '{{ $usermax5 }}'];
+        const dataBarMaxRp = {
+            labels: maxLabel,
+            datasets: [{
+                    label: 'REALISASI',
+                    data: dataBarMax5RP,
+                    backgroundColor: ['rgb(255, 99, 132)'],
+                    yAxisID: 'percentage'
+                }
+            ]
+        };
+
+        const configBarTopMaxRP = {
+            type: 'bar',
+            data: dataBarMaxRp,
+            options: {
+                plugins: {
+                    title: {
+                        display: true
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true
+                    },
+                    currency: {
+                        type: 'linear',
+                        position: 'left',
+                        min: 0,
+                        max: ResultMax(
+                            {{ max($resultMax5RP) }}
+                        ),
+                        grid: {
+                            display: false
+                        }
+                    },
+                    percentage: {
+                        type: 'linear',
+                        position: 'right',
+                        min: 0,
+                        max: ResultMax(
+                            {{ max($resultMax5RP) }}
+                        ),
+                        grid: {
+                            display: false
+                        }
+                    },
+                }
+            }
+        };
+
+        const chartBarTopMaxRP = new Chart(
+            document.querySelector('#chartBarTopMaxRP'),
+            configBarTopMaxRP
+        )
+    </script>
+    
+    {{-- TOP 5 MIN RP --}}
+    <script>
+        const dataBarMin5RP = [{{ $rpmin1 }}, {{ $rpmin2 }}, {{ $rpmin3 }}, {{ $rpmin4 }}, {{ $rpmin5 }}];
+        const minLabel = ['{{ $usermin1 }}', '{{ $usermin2 }}', '{{ $usermin3 }}', '{{ $usermin4 }}', '{{ $usermin5 }}'];
+        const dataBarMinRp = {
+            labels: minLabel,
+            datasets: [{
+                    label: 'REALISASI',
+                    data: dataBarMin5RP,
+                    backgroundColor: ['rgb(255, 99, 132)'],
+                    yAxisID: 'percentage'
+                }
+            ]
+        };
+
+        const configBarTopMinRP = {
+            type: 'bar',
+            data: dataBarMinRp,
+            options: {
+                plugins: {
+                    title: {
+                        display: true
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true
+                    },
+                    currency: {
+                        type: 'linear',
+                        position: 'left',
+                        min: 0,
+                        max: ResultMax(
+                            {{ max($resultMin5RP) }}
+                        ),
+                        grid: {
+                            display: false
+                        }
+                    },
+                    percentage: {
+                        type: 'linear',
+                        position: 'right',
+                        min: 0,
+                        max: ResultMax(
+                            {{ max($resultMin5RP) }}
+                        ),
+                        grid: {
+                            display: false
+                        }
+                    },
+                }
+            }
+        };
+
+        const chartBarTopMinRP = new Chart(
+            document.querySelector('#chartBarTopMinRP'),
+            configBarTopMinRP
         )
     </script>
 @stop
