@@ -28,7 +28,8 @@
         <div class="col-md">
             <x-adminlte-card theme="success" theme-mode="outline" title='Edit Pengguna "{{ $data->nama }}"'>
                 @if (strpos(url()->current(), '/profil/edit'))
-                    <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('profil.update') }}" method="POST"
+                        enctype="multipart/form-data">
                         <input type="hidden" name="hidden" value="profil">
                     @else
                         <form action="{{ route('users.update', $data->username) }}" method="POST"

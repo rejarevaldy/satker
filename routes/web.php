@@ -18,7 +18,7 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // Profil
 Route::get('/profil', [UserController::class, 'index'])->name('profil');
 Route::get('/profil/edit', [UserController::class, 'edit'])->name('profil.edit');
-Route::put('/profil/edit', [UserController::class, 'update'])->name('profil.update');
+Route::put('/profil/edit/{user:username}', [UserController::class, 'update'])->name('profil.update');
 Route::put('/profil/{user}/edit/password', [UserController::class, 'update_password'])->name('profil.update.password');
 
 
