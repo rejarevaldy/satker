@@ -77,7 +77,7 @@
 
 
                 <li class="nav-item">
-                    <form action="/logout/" method="POST">
+                    <form action="{{route('logout')}}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-danger nav-link text-white" href="/logout/">
                             <i class="fas fa-fw fa-sign-out-alt "></i>

@@ -28,7 +28,7 @@
         <div class="col-md">
             <x-adminlte-card theme="success" theme-mode="outline" title='Edit Pengguna "{{ $data->nama }}"'>
                 @if (strpos(url()->current(), '/profil/edit'))
-                    <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('profil.update', $data->username) }}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="hidden" value="profil">
                     @else
                         <form action="{{ route('users.update', $data->username) }}" method="POST"
@@ -59,7 +59,7 @@
                             $kelamin = ['Pria' => 'Pria', 'Wanita' => 'Wanita'];
                             $pekerjaan = ['Monitoring' => 'Monitoring', 'Satker' => 'Satker'];
                         @endphp
-                        <label>Jenis Kelamin</label>
+                        <label>Gender</label>
                         <select name="gender" class="form-control">
                             @foreach ($kelamin as $item)
                                 @if (old('gender', $data->gender) == $item)
@@ -70,6 +70,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @if (auth()->user()->role == 'Monitoring')
                     <div class="col-md mb-3">
                         <label>Role</label>
                         <select name="role" class="form-control">
@@ -83,8 +84,11 @@
                         </select>
                     </div>
                     <div class="col-md mb-3">
+                    @else
+                    <div class="col-md mb-6">
+                    @endif
                         <label>Poto Profil</label>
-                        <x-adminlte-input-file name="user_profile" placeholder="Choose file..." />
+                        <x-adminlte-input-file name="user_profile" placeholder="Pilih foto" />
                     </div>
                 </div>
                 <div class="row">

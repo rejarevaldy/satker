@@ -6,20 +6,9 @@ use App\Http\Controllers\InputController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OutputController;
 use App\Http\Controllers\PanduanController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // Auth
 Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -37,7 +26,7 @@ Route::put('/profil/{user}/edit/password', [UserController::class, 'update_passw
 Route::get('/users', [UserController::class, 'list'])->name('users.list');
 Route::get('/users/{user:username}', [UserController::class, 'userdetail'])->name('users.list.detail');
 Route::get('/users/{user:username}/edit', [UserController::class, 'useredit'])->name('users.edit');
-Route::put('/users/{user:username}/edit', [UserController::class, 'update'])->name('users.update');
+Route::put('/users/{user:username}/update', [UserController::class, 'update'])->name('users.update');
 Route::get('/user/tambah',  [UserController::class, 'create'])->name('users.create');
 Route::post('/user/tambah/post', [UserController::class, 'daftar'])->name('users.post');
 Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->name('users.delete');
@@ -46,12 +35,13 @@ Route::delete('/users/{user:id}/delete', [UserController::class, 'delete'])->nam
 // Laporan
 Route::get('/laporan', [InputController::class, 'index'])->name('laporan');
 Route::get('/laporan/{user:username}', [InputController::class, 'list'])->name('laporan.list');
-Route::get('/laporan/tambah', [InputController::class, 'create'])->name('laporan.create');
-Route::post('/laporan/tambahkan', [InputController::class, 'store'])->name('laporan.store');
+Route::get('/tambah/laporan/', [InputController::class, 'create'])->name('laporan.create');
+Route::post('/tambah/laporan', [InputController::class, 'store'])->name('laporan.store');
 Route::get('/laporan/{oneinput}/detail', [InputController::class, 'show'])->name('laporan.show');
 Route::get('/laporan/{oneinput}/sunting', [InputController::class, 'edit'])->name('laporan.edit');
 Route::put('/laporan/{oneinput}/sunting', [InputController::class, 'update'])->name('laporan.update');
 Route::delete('/laporan/{oneinput}/hapus', [InputController::class, 'destroy'])->name('laporan.destroy');
+
 // Dokumen
 Route::get('/dokumen', [InputController::class, 'index_dokumen'])->name('dokumen');
 Route::delete('/dokumen/destroy/{twoinput:id}', [InputController::class, 'destroy_dokumen'])->name('destroy.dokumen');

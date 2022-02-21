@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Create')
+@section('title', 'Tambah Laporan')
 
 @section('content_header')
 
@@ -23,6 +23,7 @@
     <x-adminlte-card title="Tambahkan Laporan" theme="primary" theme-mode="outline">
         <!-- Form Start -->
         <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
+            @method('POST')
             @csrf
             <div class="row">
                 <div class="col-lg-1">
