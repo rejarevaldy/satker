@@ -234,121 +234,64 @@
         const ResultMax = data => {
             return data * 2
         }
-
-        const dataBarOutputRealisasi = [{{ $rp2UMUM }}, {{ $rp2PPAI }}, {{ $rp2PPAII }},
-            {{ $rp2SKKI }}, {{ $rp2PAPK }}
-        ]
-        const dataBarOutputTarget = [{{ $targetUMUM }}, {{ $targetPPAI }}, {{ $targetPPAII }},
-            {{ $targetSKKI }}, {{ $targetPAPK }}
-        ]
-
-        const dataBarOutput = {
-            labels: ['UMUM', 'PPA I', 'PPA II', 'SKKI', 'PAPK'],
-            datasets: [{
-                    label: 'REALISASI',
-                    data: dataBarOutputRealisasi,
-                    backgroundColor: ['rgb(255, 99, 132)'],
-                    stack: 'Stack 0',
-                    yAxisID: 'percentage'
-                },
-                {
-                    label: 'TARGET',
-                    data: dataBarOutputTarget,
-                    backgroundColor: ['rgb(54, 162, 235)'],
-                    stack: 'Stack 1',
-                    yAxisID: 'percentage'
-                }
-            ]
-        };
-
-        const configBarOutput = {
-            type: 'bar',
-            data: dataBarOutput,
-            options: {
-                plugins: {
-                    title: {
-                        display: true
-                    },
-                },
-                responsive: true,
-                interaction: {
-                    intersect: false,
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true
-                    },
-                    currency: {
-                        type: 'linear',
-                        position: 'left',
-                        min: 0,
-                        max: ResultMax(
-                            {{ max([$targetUMUM, $targetPPAI, $targetPPAII, $targetSKKI, $targetPAPK]) }}
-                        ),
-                        grid: {
-                            display: false
-                        }
-                    },
-                    percentage: {
-                        type: 'linear',
-                        position: 'right',
-                        min: 0,
-                        max: ResultMax(
-                            {{ max([$targetUMUM, $targetPPAI, $targetPPAII, $targetSKKI, $targetPAPK]) }}
-                        ),
-                        grid: {
-                            display: false
-                        }
-                    },
-                }
-            }
-        };
-
-        const chartBarOutput = new Chart(
-            document.querySelector('#chartBarOutput'),
-            configBarOutput
-        )
     </script>
     @php
-        // max
-        $rpmax1 = $resultMax5RP[0];
-        $rpmax2 = $resultMax5RP[1];
-        $rpmax3 = $resultMax5RP[2];
-        $rpmax4 = $resultMax5RP[3];
-        $rpmax5 = $resultMax5RP[4];
+    
+        $rpmax1 = 0;
+        $rpmax2 = 0;
+        $rpmax3 = 0;
+        $rpmax4 = 0;
+        $rpmax5 = 0;
 
-        // user max
-        $usermax1 = $allusermax[0]->nama;
-        $usermax2 = $allusermax[1]->nama;
-        $usermax3 = $allusermax[2]->nama;
-        $usermax4 = $allusermax[3]->nama;
-        $usermax5 = $allusermax[4]->nama;
+        $usermax1 = 'user';
+        $usermax2 = 'user';
+        $usermax3 = 'user';
+        $usermax4 = 'user';
+        $usermax5 = 'user';
+        if(!empty($resultMax5RP)) {
+            // max
+            $rpmax1 = $resultMax5RP[0];
+            $rpmax2 = $resultMax5RP[1];
+            $rpmax3 = $resultMax5RP[2];
+            $rpmax4 = $resultMax5RP[3];
+            $rpmax5 = $resultMax5RP[4];
 
-        // $rpmax1 = strval($rpmax1) . '%';
-        // $rpmax2 = strval($rpmax2) . '%';
-        // $rpmax3 = strval($rpmax3) . '%';
-        // $rpmax4 = strval($rpmax4) . '%';
-        // $rpmax5 = strval($rpmax5) . '%';
+            // user max
+            // $usermax1 = $allusermax[0]->nama;
+            // $usermax2 = $allusermax[1]->nama;
+            // $usermax3 = $allusermax[2]->nama;
+            // $usermax4 = $allusermax[3]->nama;
+            // $usermax5 = $allusermax[4]->nama;
+        }
         
-        // min
-        $rpmin1 = $resultMin5RP[0];
-        $rpmin2 = $resultMin5RP[1];
-        $rpmin3 = $resultMin5RP[2];
-        $rpmin4 = $resultMin5RP[3];
-        $rpmin5 = $resultMin5RP[4];
+        $rpmin1 = 0;
+        $rpmin2 = 0;
+        $rpmin3 = 0;
+        $rpmin4 = 0;
+        $rpmin5 = 0;
 
-        // user min
-        $usermin1 = $allusermin[0]->nama;
-        $usermin2 = $allusermin[1]->nama;
-        $usermin3 = $allusermin[2]->nama;
-        $usermin4 = $allusermin[3]->nama;
-        $usermin5 = $allusermin[4]->nama;
+        $usermin1 = 'user';
+        $usermin2 = 'user';
+        $usermin3 = 'user';
+        $usermin4 = 'user';
+        $usermin5 = 'user';
+        if(!empty($resultMin5RP)) {
+            // min
+            $rpmin1 = $resultMin5RP[0];
+            $rpmin2 = $resultMin5RP[1];
+            $rpmin3 = $resultMin5RP[2];
+            $rpmin4 = $resultMin5RP[3];
+            $rpmin5 = $resultMin5RP[4];
+
+            // user min
+            $usermin1 = $allusermin[0]->nama;
+            $usermin2 = $allusermin[1]->nama;
+            $usermin3 = $allusermin[2]->nama;
+            $usermin4 = $allusermin[3]->nama;
+            $usermin5 = $allusermin[4]->nama;
+        }
+
     @endphp
-
-    {{-- @dd($usermax1) --}}
 
     {{-- TOP 5 MAX RP --}}
     <script>
@@ -389,9 +332,7 @@
                         type: 'linear',
                         position: 'left',
                         min: 0,
-                        max: ResultMax(
-                            {{ max($resultMax5RP) }}
-                        ),
+                        max: 100,
                         grid: {
                             display: false
                         }
@@ -400,9 +341,7 @@
                         type: 'linear',
                         position: 'right',
                         min: 0,
-                        max: ResultMax(
-                            {{ max($resultMax5RP) }}
-                        ),
+                        max: 100,
                         grid: {
                             display: false
                         }
@@ -456,9 +395,7 @@
                         type: 'linear',
                         position: 'left',
                         min: 0,
-                        max: ResultMax(
-                            {{ max($resultMin5RP) }}
-                        ),
+                        max: 100,
                         grid: {
                             display: false
                         }
@@ -467,9 +404,7 @@
                         type: 'linear',
                         position: 'right',
                         min: 0,
-                        max: ResultMax(
-                            {{ max($resultMin5RP) }}
-                        ),
+                        max: 100,
                         grid: {
                             display: false
                         }

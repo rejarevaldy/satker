@@ -35,11 +35,13 @@ class OutputController extends Controller
             // Top 5 User
             $allusermax = [];
             $allusermin = [];
-            for($i = 0; $i < 5; $i++) {
-                  $RPMax1 = OneInput::where('rp', $rpmax5[$i])->get()[0];
-                  array_push($allusermax, User::where('id', $RPMax1->user_id)->get()[0]);
-                  $RPMin1 = OneInput::where('rp', $rpmin5[$i])->get()[0];
-                  array_push($allusermin, User::where('id', $RPMin1->user_id)->get()[0]);
+            if(!empty($rpmax5) && !empty($rpmin5)) {
+                  for($i = 0; $i < 5; $i++) {
+                        $RPMax1 = OneInput::where('rp', $rpmax5[$i])->get()[0];
+                        array_push($allusermax, User::where('id', $RPMax1->user_id)->get()[0]);
+                        $RPMin1 = OneInput::where('rp', $rpmin5[$i])->get()[0];
+                        array_push($allusermin, User::where('id', $RPMin1->user_id)->get()[0]);
+                  }
             }
 
             $totalrpmax5 = array_sum($rpmax5);
@@ -47,14 +49,16 @@ class OutputController extends Controller
             $resultMax5RP = [];
             $resultMin5RP = [];
 
-            // TOP 5 MAX RP
-            for($i = 0; $i < 5; $i++) {
-                  array_push($resultMax5RP, round(($rpmax5[$i] / $totalrpmax5) * 100, 1));
-            }
-            
-            // TOP 5 MIN RP
-            for($i = 0; $i < 5; $i++) {
-                  array_push($resultMin5RP, round(($rpmin5[$i] / $totalrpmax5) * 100, 1));
+            if(!empty($rpmax5) && !empty($rpmin5)) {
+                  // TOP 5 MAX RP
+                  for($i = 0; $i < 5; $i++) {
+                        array_push($resultMax5RP, round(($rpmax5[$i] / $totalrpmax5) * 100, 1));
+                  }
+                  
+                  // TOP 5 MIN RP
+                  for($i = 0; $i < 5; $i++) {
+                        array_push($resultMin5RP, round(($rpmin5[$i] / $totalrpmax5) * 100, 1));
+                  }
             }
             
             $role = Auth::user()->role;
