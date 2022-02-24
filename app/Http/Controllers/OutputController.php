@@ -20,45 +20,223 @@ class OutputController extends Controller
 
       public function index()
       {
-            $rpmax = OneInput::whereYear('created_at', '=', session('year'))->get()->sortByDesc('rp')->take(5);
-            $rpmin = OneInput::whereYear('created_at', '=', session('year'))->get()->sortBy('rp')->take(5);
-            $rpmax5 = [];
-            $rpmin5 = [];
+            $asf = User::where('role', 'Satker')->get();
+            $asd = OneInput::whereYear('created_at', '=', session('year'))->get();
+
+            $arrayforRP = [];
+            $arrayforOutput = [];
+            $arrayforTarget = [];
+            $arrayforUserId = [];
+            $sum = 0;
+            $sumOutput = 0;
+            $sumTarget = 0;
+            $total = 0;
+
+            foreach($asf as $user) {
+                  foreach ($asd as $one) {
+                        if ($one->user_id == $user->id) {
+                              $sumOutput += $one->volume_jumlah;
+                              $sumTarget += $one->volume_target;
+                              $total = $one->user_id;
+                              $sum += $one->rp;
+                        }
+                  }
+                  if($sum && $total) {
+                        array_push($arrayforUserId, $total);
+                        array_push($arrayforRP, $sum);
+                        array_push($arrayforOutput, $sumOutput);
+                        array_push($arrayforTarget, $sumTarget);
+                  }
+                  $sumOutput = 0;
+                  $sumTarget = 0;
+                  $sum = 0;
+                  $total = 0;
+            }
+
+            $output = [];
+            for($i = 0; $i < sizeof($arrayforOutput); $i++) {
+                  $www = round(($arrayforOutput[$i] / $arrayforTarget[$i]) * 100, 1);
+                  array_push($output, $www);
+            }
+
+            $combinedArrayOutput = collect(array_combine($arrayforUserId, $output));
+            $combinedArrayMaxOutput = $combinedArrayOutput->sortDesc()->take(5);
+            $combinedArrayMaxKeyOutput = $combinedArrayMaxOutput->keys();
             
-            foreach ($rpmax as $value) {
-                  array_push($rpmax5, $value->rp);
-            }
-            foreach ($rpmin as $value) {
-                  array_push($rpmin5, $value->rp);
-            }
+            $combinedArrayMinOutput = $combinedArrayOutput->sort()->take(5);
+            $combinedArrayMinKeyOutput = $combinedArrayMinOutput->keys();
 
-            // Top 5 User
-            $allusermax = [];
-            $allusermin = [];
-            if(!empty($rpmax5) && !empty($rpmin5)) {
-                  for($i = 0; $i < 5; $i++) {
-                        $RPMax1 = OneInput::where('rp', $rpmax5[$i])->get()[0];
-                        array_push($allusermax, User::where('id', $RPMax1->user_id)->get()[0]);
-                        $RPMin1 = OneInput::where('rp', $rpmin5[$i])->get()[0];
-                        array_push($allusermin, User::where('id', $RPMin1->user_id)->get()[0]);
-                  }
-            }
-
-            $totalrpmax5 = array_sum($rpmax5);
+            $combinedArray = collect(array_combine($arrayforUserId, $arrayforRP));
+            $combinedArrayMax = $combinedArray->sortDesc()->take(5);
+            $combinedArrayMaxKey = $combinedArrayMax->keys();
             
-            $resultMax5RP = [];
-            $resultMin5RP = [];
+            $combinedArrayMin = $combinedArray->sort()->take(5);
+            $combinedArrayMinKey = $combinedArrayMin->keys();
+            
+            $totalTopMax = [];
+            $totalTopMaxKey = [];
+            foreach($combinedArrayMax as $value) {
+                  array_push($totalTopMax, $value);
+            }
+            foreach($combinedArrayMaxKey as $value) {
+                  array_push($totalTopMaxKey, $value);
+            }
+            
+            $totalTopMin = [];
+            $totalTopMinKey = [];
+            foreach($combinedArrayMin as $value) {
+                  array_push($totalTopMin, $value);
+            }
+            foreach($combinedArrayMinKey as $value) {
+                  array_push($totalTopMinKey, $value);
+            }
 
-            if(!empty($rpmax5) && !empty($rpmin5)) {
-                  // TOP 5 MAX RP
-                  for($i = 0; $i < 5; $i++) {
-                        array_push($resultMax5RP, round(($rpmax5[$i] / $totalrpmax5) * 100, 1));
+            $topMaxOutput = [];
+            $topMaxOutputKey = [];
+            foreach($combinedArrayMaxOutput as $value) {
+                  array_push($topMaxOutput, $value);
+            }
+            foreach($combinedArrayMaxKeyOutput as $value) {
+                  array_push($topMaxOutputKey, $value);
+            }
+
+            $topMinOutput = [];
+            $topMinOutputKey = [];
+            foreach($combinedArrayMinOutput as $value) {
+                  array_push($topMinOutput, $value);
+            }
+            foreach($combinedArrayMinKeyOutput as $value) {
+                  array_push($topMinOutputKey, $value);
+            }
+
+            $totalMax = array_sum($totalTopMax);
+            $totalMin = array_sum($totalTopMin);
+            $topMax = [];
+            $topMin = [];
+            if($totalTopMax && $totalTopMin) {
+                  for($i = 0; $i < sizeof($totalTopMax); $i++) {
+                        $summarymax = round(($totalTopMax[$i] / $totalMax) * 100, 1);
+                        $summarymin = round(($totalTopMin[$i] / $totalMin) * 100, 1);
+                        array_push($topMax, $summarymax);
+                        array_push($topMin, $summarymin);
                   }
-                  
-                  // TOP 5 MIN RP
-                  for($i = 0; $i < 5; $i++) {
-                        array_push($resultMin5RP, round(($rpmin5[$i] / $totalrpmax5) * 100, 1));
-                  }
+            }
+            
+            if (!isset($topMax[1]) && !isset($topMin[1]) && !isset($topMaxOutput[1]) && !isset($topMinOutput[1])) {
+                  $topMax[1] = 0;
+                  $topMin[1] = 0;
+                  $topMaxOutput[1] = 0;
+                  $topMinOutput[1] = 0;
+            }
+            if (!isset($topMax[2]) && !isset($topMin[2]) && !isset($topMaxOutput[2]) && !isset($topMinOutput[2])) {
+                  $topMax[2] = 0;
+                  $topMin[2] = 0;
+                  $topMaxOutput[2] = 0;
+                  $topMinOutput[2] = 0;
+            }
+            if (!isset($topMax[3]) && !isset($topMin[3]) && !isset($topMaxOutput[3]) && !isset($topMinOutput[3])) {
+                  $topMax[3] = 0;
+                  $topMin[3] = 0;
+                  $topMaxOutput[3] = 0;
+                  $topMinOutput[3] = 0;
+            }
+            if (!isset($topMax[4]) && !isset($topMin[4]) && !isset($topMaxOutput[4]) && !isset($topMinOutput[4])) {
+                  $topMax[4] = 0;
+                  $topMin[4] = 0;
+                  $topMaxOutput[4] = 0;
+                  $topMinOutput[4] = 0;
+            }
+
+            // max
+            $usermax1 = 'user';
+            $usermax2 = 'user';
+            $usermax3 = 'user';
+            $usermax4 = 'user';
+            $usermax5 = 'user';
+            
+            if (isset($totalTopMaxKey[0])) {
+                  $usermax1 = User::where('id', $totalTopMaxKey[0])->first()->nama;
+            }
+            if (isset($totalTopMaxKey[1])) {
+                  $usermax2 = User::where('id', $totalTopMaxKey[1])->first()->nama;
+            }
+            if (isset($totalTopMaxKey[2])) {
+                  $usermax3 = User::where('id', $totalTopMaxKey[2])->first()->nama;
+            }
+            if (isset($totalTopMaxKey[3])) {
+                  $usermax4 = User::where('id', $totalTopMaxKey[3])->first()->nama;
+            }
+            if (isset($totalTopMaxKey[4])) {
+                  $usermax5 = User::where('id', $totalTopMaxKey[4])->first()->nama;
+            }
+
+            // min
+            $usermin1 = 'user';
+            $usermin2 = 'user';
+            $usermin3 = 'user';
+            $usermin4 = 'user';
+            $usermin5 = 'user';
+
+            if (isset($totalTopMinKey[0])) {
+                  $usermin1 = User::where('id', $totalTopMinKey[0])->first()->nama;
+            }
+            if (isset($totalTopMinKey[1])) {
+                  $usermin2 = User::where('id', $totalTopMinKey[1])->first()->nama;
+            }
+            if (isset($totalTopMinKey[2])) {
+                  $usermin3 = User::where('id', $totalTopMinKey[2])->first()->nama;
+            }
+            if (isset($totalTopMinKey[3])) {
+                  $usermin4 = User::where('id', $totalTopMinKey[3])->first()->nama;
+            }
+            if (isset($totalTopMinKey[4])) {
+                  $usermin5 = User::where('id', $totalTopMinKey[4])->first()->nama;
+            }
+            
+            // output max
+            $usermaxoutput1 = 'user';
+            $usermaxoutput2 = 'user';
+            $usermaxoutput3 = 'user';
+            $usermaxoutput4 = 'user';
+            $usermaxoutput5 = 'user';
+
+            if (isset($topMaxOutputKey[0])) {
+                  $usermaxoutput1 = User::where('id', $topMaxOutputKey[0])->first()->nama;
+            }
+            if (isset($topMaxOutputKey[1])) {
+                  $usermaxoutput2 = User::where('id', $topMaxOutputKey[1])->first()->nama;
+            }
+            if (isset($topMaxOutputKey[2])) {
+                  $usermaxoutput3 = User::where('id', $topMaxOutputKey[2])->first()->nama;
+            }
+            if (isset($topMaxOutputKey[3])) {
+                  $usermaxoutput4 = User::where('id', $topMaxOutputKey[3])->first()->nama;
+            }
+            if (isset($topMaxOutputKey[4])) {
+                  $usermaxoutput5 = User::where('id', $topMaxOutputKey[4])->first()->nama;
+            }
+            
+            // output min
+            $userminoutput1 = 'user';
+            $userminoutput2 = 'user';
+            $userminoutput3 = 'user';
+            $userminoutput4 = 'user';
+            $userminoutput5 = 'user';
+
+            if (isset($topMinOutputKey[0])) {
+                  $userminoutput1 = User::where('id', $topMinOutputKey[0])->first()->nama;
+            }
+            if (isset($topMinOutputKey[1])) {
+                  $userminoutput2 = User::where('id', $topMinOutputKey[1])->first()->nama;
+            }
+            if (isset($topMinOutputKey[2])) {
+                  $userminoutput3 = User::where('id', $topMinOutputKey[2])->first()->nama;
+            }
+            if (isset($topMinOutputKey[3])) {
+                  $userminoutput4 = User::where('id', $topMinOutputKey[3])->first()->nama;
+            }
+            if (isset($topMinOutputKey[4])) {
+                  $userminoutput5 = User::where('id', $topMinOutputKey[4])->first()->nama;
             }
             
             $role = Auth::user()->role;
@@ -129,12 +307,36 @@ class OutputController extends Controller
                   'panduans' => $panduans,
 
                   // TOP RP MAX
-                  'allusermax' => $allusermax,
-                  'resultMax5RP' => $resultMax5RP,
+                  'usermax1' => $usermax1,
+                  'usermax2' => $usermax2,
+                  'usermax3' => $usermax3,
+                  'usermax4' => $usermax4,
+                  'usermax5' => $usermax5,
+                  'topMax' => $topMax,
                   
                   // TOP RP MIN
-                  'allusermin' => $allusermin,
-                  'resultMin5RP' => $resultMin5RP,
+                  'usermin1' => $usermin1,
+                  'usermin2' => $usermin2,
+                  'usermin3' => $usermin3,
+                  'usermin4' => $usermin4,
+                  'usermin5' => $usermin5,
+                  'topMin' => $topMin,
+                  
+                  // TOP OUTPUT MAX
+                  'usermaxoutput1' => $usermaxoutput1,
+                  'usermaxoutput2' => $usermaxoutput2,
+                  'usermaxoutput3' => $usermaxoutput3,
+                  'usermaxoutput4' => $usermaxoutput4,
+                  'usermaxoutput5' => $usermaxoutput5,
+                  'topMaxOutput' => $topMaxOutput,
+                  
+                  // TOP OUTPUT MIN
+                  'userminoutput1' => $userminoutput1,
+                  'userminoutput2' => $userminoutput2,
+                  'userminoutput3' => $userminoutput3,
+                  'userminoutput4' => $userminoutput4,
+                  'userminoutput5' => $userminoutput5,
+                  'topMinOutput' => $topMinOutput,
 
                   // datas
                   'pagu' => $resultPagu,
