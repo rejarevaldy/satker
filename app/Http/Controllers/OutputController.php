@@ -122,6 +122,12 @@ class OutputController extends Controller
                   }
             }
             
+            if (!isset($topMax[0]) && !isset($topMin[0]) && !isset($topMaxOutput[0]) && !isset($topMinOutput[0])) {
+                  $topMax[0] = 0;
+                  $topMin[0] = 0;
+                  $topMaxOutput[0] = 0;
+                  $topMinOutput[0] = 0;
+            }
             if (!isset($topMax[1]) && !isset($topMin[1]) && !isset($topMaxOutput[1]) && !isset($topMinOutput[1])) {
                   $topMax[1] = 0;
                   $topMin[1] = 0;
