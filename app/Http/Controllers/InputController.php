@@ -310,7 +310,7 @@ class InputController extends Controller
             $id = $request->naro;
             $data1 = OneInput::where('id', $id)->value('satuan');
 
-            if ($data1 == 'Bulan Layanan') {
+            if ($data1 == 'bulan layanan') {
                   $input2->volume_capaian = 12;
             } else {
                   $input2->volume_capaian = $request->volume_capaian;
