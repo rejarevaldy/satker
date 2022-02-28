@@ -105,6 +105,8 @@ class InputController extends Controller
             $role = auth()->user()->role;
             $user_id = auth()->user()->id;
 
+            
+
             if ($role === 'Monitoring') {
                   $selection = OneInput::whereYear('created_at', session('year'))->get();
             } else {
@@ -310,7 +312,7 @@ class InputController extends Controller
             $id = $request->naro;
             $data1 = OneInput::where('id', $id)->value('satuan');
 
-            if ($data1 == 'bulan layanan') {
+            if (strtoupper($data1) == strtoupper('bulan layanan')) {
                   $input2->volume_capaian = 12;
             } else {
                   $input2->volume_capaian = $request->volume_capaian;
