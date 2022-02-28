@@ -98,6 +98,25 @@ class UserController extends Controller
             $validatedData['gender'] = $request->gender;
             $validatedData['email'] = $request->email;
 
+
+            if ($request->hidden == 'profil') {
+                  $user = User::where('id', Auth::user()->id);
+
+                  if ($request->file('user_profile')) {
+                        if ($user->user_profile && $user->user_profile !== 'user.png') {
+                              File::delete(public_path('/images/' . $user->user_profile));
+                        }
+                        $gambar = $request->file('user_profile');
+                        $file_name = time() . '_' . $gambar->getClientOriginalName();
+                        $img = Image::make($gambar);
+                        $img->save(\public_path("images/$file_name"), 20, 'jpg');
+                        $validatedData['user_profile'] = $file_name;
+                  }
+
+                  User::where('id', Auth::user()->id)->update($validatedData);
+                  return redirect(route('profil.edit'))->with('success', 'Berhasil di edit!');
+            }
+
             if ($request->file('user_profile')) {
                   if ($user->user_profile && $user->user_profile !== 'user.png') {
                         File::delete(public_path('/images/' . $user->user_profile));
@@ -109,12 +128,8 @@ class UserController extends Controller
                   $validatedData['user_profile'] = $file_name;
             }
 
-            if ($request->hidden == 'profil') {
-                  User::where('id', Auth::user()->id)->update($validatedData);
-                  return redirect(route('profil.edit'))->with('success', 'Berhasil di edit!');
-            }
-
             User::where('id', $user->id)->update($validatedData);
+
             return redirect(route('users.edit', $user->username))->with('success', 'Berhasil di edit!');
       }
 

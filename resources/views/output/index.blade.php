@@ -398,7 +398,7 @@
         const dataMaxOutput = {
             labels: maxLabelOutput,
             datasets: [{
-                    label: 'REALISASI %',
+                    label: 'CAPUT %',
                     data: dataBarMaxOutput,
                     backgroundColor: ['rgb(255, 99, 132)'],
                     yAxisID: 'percentage'
@@ -461,7 +461,7 @@
         const dataMinOutput = {
             labels: minLabelOutput,
             datasets: [{
-                    label: 'REALISASI %',
+                    label: 'CAPUT %',
                     data: dataBarMinOutput,
                     backgroundColor: ['rgb(255, 99, 132)'],
                     yAxisID: 'percentage'
